@@ -1,4 +1,2 @@
-﻿  Source.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\Source.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\quinton\b\repo\cpp_games\Rocket battle\Source.cpp(4,1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+﻿  GameManager.cpp
   Rocket battle.vcxproj -> C:\quinton\b\repo\cpp_games\Rocket battle\Debug\Rocket battle.exe
