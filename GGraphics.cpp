@@ -11,7 +11,7 @@ void GameGraphics::render(){
 	//Render screen background
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
+	//SDL_RenderPresent(renderer);
 
 }
 
@@ -56,6 +56,10 @@ void GameGraphics::release(){
 	gInstance = NULL;
 
 	gInitialized = false;
+}
+
+SDL_Renderer* GameGraphics::getrenderer() {
+	return renderer;
 }
 
 GameGraphics::GameGraphics() {
