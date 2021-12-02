@@ -11,6 +11,7 @@ int main() {
 
 	gm->Run();
 
+	//deleting gm pointer and freeing its memory
 	gm->release();
 	gm = NULL;
 

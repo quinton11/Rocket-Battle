@@ -148,15 +148,19 @@
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GGraphics.cpp" />
+    <ClCompile Include="HomeScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="gamemanager.h" />
     <ClInclude Include="GGraphics.h" />
+    <ClInclude Include="HomeScreen.h" />
     <ClInclude Include="Rocket.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
