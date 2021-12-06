@@ -9,6 +9,7 @@ public:
 
 private:
 	bool ismounted = true;
+	bool quit = false;
 	SDL_Texture* screentexture = nullptr;
 	SDL_Event events;
 	SDL_Rect play_rect = {250,350,70,70};
@@ -19,6 +20,7 @@ public:
 	void eventchecker();
 
 	bool getismounted();
+	bool getisquit();
 	void setismounted(bool);
 	bool mouse_in_play(int& x, int& y, SDL_Rect& rect);
 

@@ -1,55 +1,66 @@
 #include "Rocket.h"
+#include "iostream"
+#include "cmath"
 
 void Rocket::update() {
-	//connect lines
-	
+
+	rect.x += deltax;
+	rect.y += deltay;
 }
 
 void Rocket::render(SDL_Renderer* renderer) {
 	//Setting Draw Color
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-
-	SDL_RenderDrawLine(renderer, a.x, a.y, b.x, b.y);
-	SDL_RenderDrawLine(renderer, a.x, a.y, c.x, c.y);
-	SDL_RenderDrawLine(renderer, b.x, b.y, c.x, c.y);
 }
 
-void Rocket::movedown() {
-	//adjust all y values by speed
-	/*a.y += speed;
-	b.y += speed;
-	c.y += speed;*/
-	rect.y += speed;
+
+void Rocket::moveleft(double dt) {
+	std::cout << "Delta Time: " << dt << std::endl;
+	
+	deltax = (speed * (dt / 1000.0f));
+
+
+	rect.x -= deltax;
+
 }
 
-void Rocket::moveup() {
-	/*a.y -= speed;
-	b.y -= speed;
-	c.y -= speed;*/
-	rect.y -= speed;
+void Rocket::moveright(double dt) {
+	std::cout << "Delta Time: " << dt << std::endl;
+	deltax = (speed * (dt / 1000.0f));
+
+	rect.x = ceil(rect.x + deltax);
+
+	
+
 }
 
-void Rocket::moveleft() {
-	/*a.x -= speed;
-	b.x -= speed;
-	c.x -= speed;*/
-	rect.x -= speed;
+void Rocket::movedown(double dt) {
+	std::cout << "Delta Time: " << dt << std::endl;
+	deltay = (speed * (dt / 1000.0f));
+
+	
+
+	rect.y = ceil(rect.y + deltay);
+
+	
 }
 
-void Rocket::moveright() {
+void Rocket::moveup(double dt) {
+	std::cout << "Delta Time: " << dt << std::endl;
+	deltay = (speed * (dt / 1000.0f));
 
-	/*a.x += speed;
-	b.x += speed;
-	c.x += speed;*/
-	rect.x += speed;
+
+	rect.y -= deltay;
+
 }
+
 
 Rocket::Rocket() {
-	rect.x = 200;
+	rect.x = 400;
 	rect.y = 400;
-	rect.w = 70;
-	rect.h = 60;
+	rect.w = 60;
+	rect.h = 50;
 }
 
 Rocket::~Rocket() {

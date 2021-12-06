@@ -23,7 +23,8 @@ void HomeScreen::eventchecker() {
 	switch (events.type) {
 	case SDL_QUIT:
 		ismounted = false;
-		SDL_Quit();
+		quit = true;
+		//SDL_Quit();
 		break;
 
 	case SDL_MOUSEMOTION:
@@ -51,6 +52,10 @@ bool HomeScreen::mouse_in_play(int& x, int& y, SDL_Rect& rect) {
 
 bool HomeScreen::getismounted() {
 	return ismounted;
+}
+
+bool HomeScreen::getisquit() {
+	return quit;
 }
 
 void HomeScreen::setismounted(bool is) {

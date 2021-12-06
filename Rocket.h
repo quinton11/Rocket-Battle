@@ -7,8 +7,12 @@ class Rocket: public GameEntity{
 public:
 	SDL_Rect rect;
 private:
-	SDL_Point a = {350,300}, b = {335,340}, c = {365,340};
-	int speed = 10;
+	double speed = 10.0f;
+	double angle = 3.0f;
+	double DEGTORAD = 0.017453f;
+	bool thrust = false; 
+	double deltax = 0;
+    double deltay = 0;
 
 	
 
@@ -18,9 +22,9 @@ public:
 
 	void update();
 	void render(SDL_Renderer* renderer);
-	void moveleft();
-	void moveright();
-	void moveup();
-	void movedown();
+	void moveleft(double dt);
+	void moveright(double dt);
+	void moveup(double dt);
+	void movedown(double dt);
 
 };
