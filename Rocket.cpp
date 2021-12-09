@@ -8,28 +8,42 @@ void Rocket::update() {
 	rect.y += deltay;
 }
 
-void Rocket::render(SDL_Renderer* renderer) {
+void Rocket::render(SDL_Renderer* renderer, SDL_Texture* texture) {
 	//Setting Draw Color
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
 
 }
 
 
 void Rocket::moveleft(double dt) {
-	std::cout << "Delta Time: " << dt << std::endl;
+	/*std::cout << "Delta Time: " << dt << std::endl;
 	
 	deltax = (speed * (dt / 1000.0f));
 
 
-	rect.x -= deltax;
+	rect.x -= deltax;*/
+
+	if (angle == 0) {
+		angle = 360;
+	}
+
+	angle -= rot_speed * (dt/10 );
 
 }
 
 void Rocket::moveright(double dt) {
-	std::cout << "Delta Time: " << dt << std::endl;
+	/*std::cout << "Delta Time: " << dt << std::endl;
 	deltax = (speed * (dt / 1000.0f));
 
-	rect.x = ceil(rect.x + deltax);
+	rect.x = ceil(rect.x + deltax);*/
+	std::cout << "X y position before rotation: " << rect.x << "," << rect.y << std::endl;
+
+	if (angle == 360.f)
+		angle = 0;
+
+	angle += rot_speed * (dt/10);
+	std::cout<<"X y position after roration: " << rect.x << "," << rect.y << std::endl;
 
 	
 

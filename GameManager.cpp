@@ -94,7 +94,10 @@ void GameManager::Run() {
 
 			 //rocket.update();
 
-			 SDL_RenderCopy(nGraphics->getrenderer(), texture, nullptr, &rocket.rect);
+			 //SDL_RenderCopy(nGraphics->getrenderer(), texture, nullptr, &rocket.rect);
+
+			 rocket.render(nGraphics->getrenderer(), texture);
+
 			 //rocket.resetrotangle();
 			 //Updating screen
 			 SDL_RenderPresent(nGraphics->getrenderer());

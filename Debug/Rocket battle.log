@@ -1,8 +1,6 @@
 ﻿  Rocket.cpp
 C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(7,18): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
 C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(8,18): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(24,18): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(32,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(44,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(54,18): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
+C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(58,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(68,18): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
   Rocket battle.vcxproj -> C:\quinton\b\repo\cpp_games\Rocket battle\Debug\Rocket battle.exe
