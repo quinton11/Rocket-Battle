@@ -31,7 +31,7 @@ void GameManager::Run() {
 	//Rocket object
 	Rocket rocket = Rocket();
 	TextureManager txman = TextureManager();
-	SDL_Texture* texture = txman.loadTexture("textures/spaceship3.png", nGraphics->getrenderer());
+	SDL_Texture* texture = txman.loadTexture("textures/Asset1.png", nGraphics->getrenderer());
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
 
 	//TimeSetting

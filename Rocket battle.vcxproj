@@ -154,6 +154,7 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TimeSetting.cpp" />
+    <ClCompile Include="Vector2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TimeSetting.h" />
+    <ClInclude Include="Vector2d.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />

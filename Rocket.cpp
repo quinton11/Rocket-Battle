@@ -43,7 +43,7 @@ void Rocket::moveright(double dt) {
 		angle = 0;
 
 	angle += rot_speed * (dt/10);
-	std::cout<<"X y position after roration: " << rect.x << "," << rect.y << std::endl;
+	std::cout<<"X y position after rotation: " << rect.x << "," << rect.y << std::endl;
 
 	
 
