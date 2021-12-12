@@ -1,30 +1,45 @@
 #include "Vector2d.h"
+#include "cmath"
 
-/*Vector2d::Vector Vector2d::add() {
-	//add two vectors
-	return;
-}
 
 int Vector2d::magnitude() {
 	//find magnitude of vector
 	//sqrt(x^2 + y^2)
-	return;
+	int mag =  0;
+	mag = sqrt((vec.x * vec.x) + (vec.y * vec.y));
+	return mag;
 }
 
-Vector2d:: Vector Vector2d::getvector() {
-	return Vector;
-}
 
 Vector2d::Vector Vector2d::normalize() {
 	//return vector divided by its magnitude
-	return;
+	int mag = magnitude();
+	Vector vnorm = { vec.x/mag, vec.y/mag };
+
+	return vnorm;
 }
 
-Vector2d::Vector Vector2d::rotate(double angle) {
-	return;
+void Vector2d::rotate(double angle) {
+	rotmat.calcrotation(angle);
+	// x' = xcos(angle) - ysin(angle) 
+	int xrot = (vec.x * rotmat.x1) + (vec.y * rotmat.y1);
+
+	// y' = xsin(angle) - ycos(angle)
+	int yrot = (vec.x * rotmat.x2) + (vec.y * rotmat.y2);
+
+	vec.x = xrot;
+	vec.y = yrot;
 }
 
-Vector2d::Vector Vector2d::subtract() {
-	//Subtract two vectors
-	return;
-}*/
+void Vector2d::setvector(int x, int y) {
+	vec.x = x;
+	vec.y = y;
+}
+
+
+Vector2d::Vector2d(int x, int y) {
+	vec.x = x;
+	vec.y = y;
+}
+
+Vector2d::Vector2d(){}

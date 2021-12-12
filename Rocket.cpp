@@ -69,12 +69,24 @@ void Rocket::moveup(double dt) {
 
 }
 
+void Rocket::calc_center() {
+	int cx = 0;
+	int cy = 0;
+
+	cx = rect.x / 2;
+	cy = rect.y / 2;
+	centervec.setvector(cx, cy);
+}
+
 
 Rocket::Rocket() {
 	rect.x = 400;
 	rect.y = 400;
 	rect.w = 60;
 	rect.h = 50;
+
+	rectvec.setvector(rect.x, rect.y);
+	rotvec.setvector(rect.x, rect.y); 
 }
 
 Rocket::~Rocket() {
