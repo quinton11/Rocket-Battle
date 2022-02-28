@@ -1,71 +1,100 @@
 #include "Rocket.h"
 #include "iostream"
 #include "cmath"
+#include "tuple"
 
-void Rocket::update() {
+void Rocket::update(double dt) {
 
-	rect.x += deltax;
-	rect.y += deltay;
+	//Speed after multiplying with deltatime
+	tspeed = (speed * (dt / 1000.0f));
+
+	//if (thrust) 
+		//std::cout << "Rect before movement: (" << rect.x << "," << rect.y << ")" << std::endl;
+	
+
+	rect.x = rect.x + deltax;
+	rect.y = rect.y + deltay;
+	
+	//if (thrust)
+		//std::cout << "Rect after movement: (" << rect.x << "," << rect.y << ")" << std::endl;
+
+		
+	calc_center();
+	
+	//Zeroing out changes in x and y
+	deltax = 0;
+	deltay = 0;
+	thrust = false;
+	//tspeed = 0;
+	changevec.setvector(deltax, deltay);
+
 }
 
-void Rocket::render(SDL_Renderer* renderer, SDL_Texture* texture) {
-	//Setting Draw Color
-	//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
+void Rocket::render(SDL_Renderer* renderer, SDL_Texture* texture,double dt) {
+	
+	update(dt);
+	//angle in degrees
+	SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
 
 }
+
+
+void Rocket::calc_rotvec() {
+
+	/*//Get center of rocket
+	calc_center();
+
+	float cx=0.0;
+	float cy = 0.0;
+	std::tie(cx,cy) = centervec.getvector();
+
+	//SDL 2 rotates clockwise
+	ang_inv = abs(360 - angle);
+
+	//Calculating rotvec after rotation
+	float x_rot = ((rectvec.getx() - cx) * cos(ang_inv*degtorad)) - ((cy - rectvec.gety()) * sin(ang_inv*degtorad)) + cx;
+	float y_rot = cy - ((cy-rectvec.gety()) * cos(ang_inv* degtorad)) + ((rectvec.getx() - cx) * sin(ang_inv* degtorad));
+
+	rotvec.setvector(x_rot, y_rot);*/
+}
+
 
 
 void Rocket::moveleft(double dt) {
-	/*std::cout << "Delta Time: " << dt << std::endl;
 	
-	deltax = (speed * (dt / 1000.0f));
 
-
-	rect.x -= deltax;*/
-
-	if (angle == 0) {
+	if (angle <= 0) {
 		angle = 360;
 	}
 
-	angle -= rot_speed * (dt/10 );
+	angle -= rot_speed * (dt/1000 );
 
 }
 
 void Rocket::moveright(double dt) {
-	/*std::cout << "Delta Time: " << dt << std::endl;
-	deltax = (speed * (dt / 1000.0f));
 
-	rect.x = ceil(rect.x + deltax);*/
-	std::cout << "X y position before rotation: " << rect.x << "," << rect.y << std::endl;
-
-	if (angle == 360.f)
+	if (angle >= 360.f)
 		angle = 0;
 
-	angle += rot_speed * (dt/10);
-	std::cout<<"X y position after rotation: " << rect.x << "," << rect.y << std::endl;
-
-	
+	angle += rot_speed * (dt/1000);
 
 }
 
-void Rocket::movedown(double dt) {
-	std::cout << "Delta Time: " << dt << std::endl;
-	deltay = (speed * (dt / 1000.0f));
-
+void Rocket::movedown() {
 	
+	thrust = true;
 
-	rect.y = ceil(rect.y + deltay);
-
-	
+	deltax = -(tspeed * sin(angle * degtorad));
+	deltay = 1 * (tspeed * cos(angle * degtorad));
+		
 }
 
-void Rocket::moveup(double dt) {
-	std::cout << "Delta Time: " << dt << std::endl;
-	deltay = (speed * (dt / 1000.0f));
-
-
-	rect.y -= deltay;
+void Rocket::moveup() {
+	
+	thrust = true;
+	
+	deltax = (tspeed * sin(angle * degtorad));
+	deltay = -1 * (tspeed * cos(angle * degtorad));
 
 }
 
@@ -73,17 +102,20 @@ void Rocket::calc_center() {
 	int cx = 0;
 	int cy = 0;
 
-	cx = rect.x / 2;
-	cy = rect.y / 2;
+	//Setting rectvector
+	rectvec.setvector(rect.x, rect.y);
+
+	cx = (rect.x + rect.w/2);
+	cy = (rect.y + rect.h/2);
 	centervec.setvector(cx, cy);
 }
 
 
 Rocket::Rocket() {
-	rect.x = 400;
-	rect.y = 400;
-	rect.w = 60;
-	rect.h = 50;
+	rect.x = 300;
+	rect.y = 350;
+	rect.w =50;
+	rect.h = 45;
 
 	rectvec.setvector(rect.x, rect.y);
 	rotvec.setvector(rect.x, rect.y); 

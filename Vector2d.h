@@ -1,11 +1,12 @@
 #pragma once
 #include "cmath"
+#include "iostream"
 class Vector2d {
 
 private:
 	struct Vector {
-		int x;
-		int y;
+		float x;
+		float y;
 
 		Vector operator+(Vector& obj) {
 			Vector res = { 0,0 };
@@ -26,12 +27,12 @@ private:
 		 x2 y2
 	*/
 	struct Matrix {
-		double angle = 0;
+		float angle = 0;
 
-		int x1 = cos(angle);
-		int y1 = -sin(angle);
-		int x2 = sin(angle);
-		int y2 = cos(angle);
+		float x1 = cos(angle);
+		float y1 = -sin(angle);
+		float x2 = sin(angle);
+		float y2 = cos(angle);
 
 		void calcrotation(double ang) {
 			angle = ang;
@@ -41,7 +42,7 @@ private:
 		    y2 = cos(angle);
 		}
 	};
-	Vector vec;
+	Vector vec = {0,0};
 	Matrix rotmat;
 
 
@@ -49,11 +50,15 @@ private:
 
 public:
 
-	Vector2d(int x, int y);
+	Vector2d(float x, float y);
 	Vector2d();
 
 	int magnitude();
-	Vector normalize();
+	Vector2d normalize();
 	void rotate(double angle);
-	void setvector(int x, int y);
+	void setvector(float x, float y);
+	std::tuple<float,float> getvector();
+	float getx();
+	float gety();
+	void printvector();
 };

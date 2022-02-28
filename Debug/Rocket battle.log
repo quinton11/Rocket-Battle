@@ -1,34 +1,6 @@
 ﻿  GameManager.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(31,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(32,12): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(33,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(34,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(38,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(39,9): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(40,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(41,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Rocket.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(31,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(32,12): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(33,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(34,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(38,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(39,9): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(40,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(41,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(7,18): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(8,18): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(58,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Rocket.cpp(68,18): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
-  Vector2d.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(31,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(32,12): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(33,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(34,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(38,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(39,9): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(40,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(41,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.cpp(9,12): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(38,12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  KeyBoardHandler.cpp
+C:\quinton\b\repo\cpp_games\Rocket battle\Vector2d.h(38,12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
   Rocket battle.vcxproj -> C:\quinton\b\repo\cpp_games\Rocket battle\Debug\Rocket battle.exe

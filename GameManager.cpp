@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "HomeScreen.h"
 #include "TimeSetting.h"
+#include "KeyBoardHandler.h"
 
 GameManager* GameManager::gmInstance = NULL;
 
@@ -23,6 +24,7 @@ void GameManager::release() {
 
 GameManager::~GameManager() {
 	GameGraphics::release();
+	KeyboardHandler::release();
 	nGraphics = NULL;
 }
 
@@ -31,13 +33,15 @@ void GameManager::Run() {
 	//Rocket object
 	Rocket rocket = Rocket();
 	TextureManager txman = TextureManager();
-	SDL_Texture* texture = txman.loadTexture("textures/Asset1.png", nGraphics->getrenderer());
+	SDL_Texture* texture = txman.loadTexture("textures/rocken.png", nGraphics->getrenderer());
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
+	KeyboardHandler* kb_handler = KeyboardHandler::instance();
 
 	//TimeSetting
 	TimeSetting tset = TimeSetting();
 
-	float dt;
+	float dt; 
+	const Uint8* state = SDL_GetKeyboardState(NULL);
 
 
 	
@@ -55,34 +59,20 @@ void GameManager::Run() {
 		}
 
 		else {
+
+			//keyboard input
+			kb_handler->keyboard_input(state, rocket, dt);
+
+
+			//single hit keys
+			// 
+			//SDL Poll Event logs every event in some sort of ds .
+			
 			//Check event queue to exeute events
 			while (SDL_PollEvent(&nevents)) {
 				if (nevents.type == SDL_QUIT) {
 					isDone = true;
 				}
-
-				const Uint8* state = SDL_GetKeyboardState(NULL);
-
-				if (nevents.type == SDL_KEYDOWN) {
-					if (state[SDL_SCANCODE_UP]) {
-						rocket.moveup(dt);
-						std::cout << "UP" << std::endl;
-					}
-					else if (state[SDL_SCANCODE_DOWN]) {
-						rocket.movedown(dt);
-						std::cout << "DOWN" << std::endl;
-					}
-					else if (state[SDL_SCANCODE_RIGHT]) {
-						rocket.moveright(dt);
-						std::cout << "RIGHT" << std::endl;
-					}
-					else if (state[SDL_SCANCODE_LEFT]) {
-						rocket.moveleft(dt);
-						std::cout << "LEFT" << std::endl;
-					}
-
-				}
-
 				
 			}
 
@@ -90,13 +80,8 @@ void GameManager::Run() {
 			 nGraphics->render();
 
 			 //Render rocket
-			 //rocket.render(nGraphics->getrenderer());
 
-			 //rocket.update();
-
-			 //SDL_RenderCopy(nGraphics->getrenderer(), texture, nullptr, &rocket.rect);
-
-			 rocket.render(nGraphics->getrenderer(), texture);
+			 rocket.render(nGraphics->getrenderer(), texture,dt);
 
 			 //rocket.resetrotangle();
 			 //Updating screen

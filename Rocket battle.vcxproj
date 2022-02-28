@@ -149,6 +149,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GGraphics.cpp" />
     <ClCompile Include="HomeScreen.cpp" />
+    <ClCompile Include="KeyBoardHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="gamemanager.h" />
     <ClInclude Include="GGraphics.h" />
     <ClInclude Include="HomeScreen.h" />
+    <ClInclude Include="KeyBoardHandler.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="TextureManager.h" />
