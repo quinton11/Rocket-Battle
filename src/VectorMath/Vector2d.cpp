@@ -33,15 +33,21 @@ void Vector2d::rotate(double angle) {
 
 	vec.x = xrot;
 	vec.y = yrot;
+
+	return;
 }
 
 void Vector2d::setvector(float x, float y) {
 	vec.x = x;
 	vec.y = y;
+
+	return;
 }
 
 void Vector2d::printvector() {
 	std::cout <<"("<< vec.x << ", " << vec.y << ")" << std::endl;
+	return;
+
 }
 
 float Vector2d::getx() {
@@ -64,6 +70,8 @@ std::tuple<float,float> Vector2d::getvector() {
 Vector2d::Vector2d(float x, float y) {
 	vec.x = x;
 	vec.y = y;
+	return;
+
 }
 
 Vector2d::Vector2d() {};

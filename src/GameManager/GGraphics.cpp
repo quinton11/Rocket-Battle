@@ -1,5 +1,5 @@
 #include "GGraphics.h"
-#include "iostream";
+#include "iostream"
 
 
 GameGraphics* GameGraphics::gInstance = NULL;
