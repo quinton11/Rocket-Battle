@@ -1,0 +1,9 @@
+space rocket game.
+Main objective was to set up a game to train algorithm on and compete with it.
+Competing in the sense of either highscore leaderboard or versus.
+For highscore leaderboard, its how long you can survive and defeat enemies,
+gain power ups and increase points.
+For the versus, AI plays against you and other cpu controlled opponents.
+Last man standing is the winner.
+It could be made into a 5 round or 3 round set where majority wins makes
+one the winner.

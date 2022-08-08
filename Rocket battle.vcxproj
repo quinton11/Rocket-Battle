@@ -72,9 +72,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)Dependencies\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)Dependencies\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -145,32 +147,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameEntity.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GGraphics.cpp" />
-    <ClCompile Include="HomeScreen.cpp" />
-    <ClCompile Include="KeyBoardHandler.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Rocket.cpp" />
-    <ClCompile Include="Screen.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="TimeSetting.cpp" />
-    <ClCompile Include="Vector2d.cpp" />
+    <ClCompile Include="src\Entities\GameEntity.cpp" />
+    <ClCompile Include="src\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\GameManager\GGraphics.cpp" />
+    <ClCompile Include="src\Screens\HomeScreen.cpp" />
+    <ClCompile Include="src\Controllers\KeyBoardHandler.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Entities\Rocket.cpp" />
+    <ClCompile Include="src\Screens\Screen.cpp" />
+    <ClCompile Include="src\GameManager\TextureManager.cpp" />
+    <ClCompile Include="src\Utils\TimeSetting.cpp" />
+    <ClCompile Include="src\VectorMath\Vector2d.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameEntity.h" />
-    <ClInclude Include="gamemanager.h" />
-    <ClInclude Include="GGraphics.h" />
-    <ClInclude Include="HomeScreen.h" />
-    <ClInclude Include="KeyBoardHandler.h" />
-    <ClInclude Include="Rocket.h" />
-    <ClInclude Include="Screen.h" />
-    <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="TimeSetting.h" />
-    <ClInclude Include="Vector2d.h" />
+    <ClInclude Include="src\Entities\GameEntity.h" />
+    <ClInclude Include="src\GameManager\gamemanager.h" />
+    <ClInclude Include="src\GameManager\GGraphics.h" />
+    <ClInclude Include="src\Screens\HomeScreen.h" />
+    <ClInclude Include="src\Controllers\KeyBoardHandler.h" />
+    <ClInclude Include="src\Entities\Rocket.h" />
+    <ClInclude Include="src\Screens\Screen.h" />
+    <ClInclude Include="src\GameManager\TextureManager.h" />
+    <ClInclude Include="src\Utils\TimeSetting.h" />
+    <ClInclude Include="src\VectorMath\Vector2d.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SDL2.dll" />
+    <None Include="src\SDL2.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

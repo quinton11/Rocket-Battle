@@ -15,73 +15,73 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GGraphics.cpp">
+    <ClCompile Include="src\GameManager\GGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
+    <ClCompile Include="src\GameManager\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameEntity.cpp">
+    <ClCompile Include="src\Entities\GameEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rocket.cpp">
+    <ClCompile Include="src\Entities\Rocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
+    <ClCompile Include="src\GameManager\TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.cpp">
+    <ClCompile Include="src\Screens\Screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HomeScreen.cpp">
+    <ClCompile Include="src\Screens\HomeScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TimeSetting.cpp">
+    <ClCompile Include="src\Utils\TimeSetting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vector2d.cpp">
+    <ClCompile Include="src\VectorMath\Vector2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyBoardHandler.cpp">
+    <ClCompile Include="src\Controllers\KeyBoardHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gamemanager.h">
+    <ClInclude Include="src\GameManager\gamemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GGraphics.h">
+    <ClInclude Include="src\GameManager\GGraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameEntity.h">
+    <ClInclude Include="src\Entities\GameEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rocket.h">
+    <ClInclude Include="src\Entities\Rocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
+    <ClInclude Include="src\GameManager\TextureManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Screen.h">
+    <ClInclude Include="src\Screens\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HomeScreen.h">
+    <ClInclude Include="src\Screens\HomeScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TimeSetting.h">
+    <ClInclude Include="src\Utils\TimeSetting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2d.h">
+    <ClInclude Include="src\VectorMath\Vector2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyBoardHandler.h">
+    <ClInclude Include="src\Controllers\KeyBoardHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SDL2.dll" />
+    <None Include="src\SDL2.dll" />
   </ItemGroup>
 </Project>
