@@ -45,6 +45,7 @@ void HomeScreen::eventchecker() {
 	
 }
 
+//Check if mouse is on play button
 bool HomeScreen::mouse_in_play(int& x, int& y, SDL_Rect& rect) {
 	return (x >= rect.x) && (y >= rect.y) &&
 		(x < rect.x + rect.w) && (y < rect.y + rect.h);
@@ -66,7 +67,7 @@ HomeScreen::HomeScreen(SDL_Renderer *renderer) {
 	screentexture = textm.loadTexture("textures/amongus2.png", renderer);
 }
 
-
+//Destructor releasing pointers
 HomeScreen::~HomeScreen() {
 	//delete screentexture;
 	//delete events;

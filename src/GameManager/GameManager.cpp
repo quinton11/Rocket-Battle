@@ -49,7 +49,7 @@ void GameManager::Run() {
 	//TimeSetting
 	TimeSetting tset = TimeSetting();
 
-	float dt; 
+	float dt; //deltaTime
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 
 
