@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "GameEntity.h"
+#include "Rocket.h"
 
 // Enemy Class. Describes an enemy ship
 // Implements GameEntity
@@ -14,10 +15,11 @@ private:
     SDL_FRect rect; // describes position of ship
     float min_dist = 10.0;
     int attack_count = 5; // number of attacks ship has till reload
+    float angle;
 
 public:
-    void update(double dt);
-    void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
+    void update(Rocket *rocket, double dt);
+    void render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket *rocket, double dt);
 };
 
 /*
