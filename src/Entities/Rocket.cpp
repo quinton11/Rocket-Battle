@@ -123,7 +123,7 @@ void Rocket::moveup() {
 
 }
 
-void Rocket::set_speed(double sp) {
+void Rocket::set_speed(float sp) {
 	speed_ph = sp;
 }
 

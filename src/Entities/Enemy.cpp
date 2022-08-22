@@ -1,9 +1,31 @@
 #include "Enemy.h"
+#include "cmath"
 
 void Enemy::update(Rocket *rocket, double dt)
 {
     // takes in deltatime and updates
     // rocket position
+    float rocx = rocket->rect.x;
+    float rocy = rocket->rect.y;
+
+    float distx = rocx - rect.x;
+    float disty = rocy - rect.y;
+
+    // normalize vector
+    float mag = 0;
+    mag = sqrt((distx * distx) + (disty * disty));
+
+    // normalize
+    float normx = distx / mag;
+    float normy = disty / mag;
+
+    // translate enemy ship
+    rect.x += normx * (dt / 1000.0f) * speed;
+    rect.y += normy * (dt / 1000.0f) * speed;
+
+    angle = ((asin(normx) / degtorad) + (acos(normy) / degtorad)) * (dt / 1000.0f);
+
+    // enemy doesn't rotate towards rocket
 }
 
 void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket *rocket, double dt)

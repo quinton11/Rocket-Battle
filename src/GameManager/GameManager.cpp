@@ -101,7 +101,7 @@ void GameManager::Run()
 			// Render rocket
 
 			rocket.render(nGraphics->getrenderer(), texture, dt);
-			ship.render(nGraphics->getrenderer(), e_text, dt);
+			ship.render(nGraphics->getrenderer(), e_text, &rocket, dt);
 
 			// rocket.resetrotangle();
 			// Updating screen

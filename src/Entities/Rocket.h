@@ -16,17 +16,17 @@ public:
 	bool reverse = false;
 
 private:
-	double speed = 70.0f;
-	double max_speed = 200.0f;
-	double speed_ph = 70.0f;
-	double tspeed = 0;
-	double angle = 0.0f;
-	double ang_inv = 0.0f;
-	double rot_speed = 90.0f;
-	double degtorad = 0.017453f;
+	float speed = 70.0f;
+	float max_speed = 200.0f;
+	float speed_ph = 70.0f;
+	float tspeed = 0;
+	float angle = 0.0f;
+	float ang_inv = 0.0f;
+	float rot_speed = 90.0f;
+	float degtorad = 0.017453f;
 	
-	double deltax = 0;
-    double deltay = 0;
+	float deltax = 0;
+    float deltay = 0;
 
 	
 
@@ -40,7 +40,7 @@ public:
 	void moveright(double dt);
 	void moveup();
 	void movedown();
-	void set_speed(double sp);
+	void set_speed(float sp);
 
 	void calc_rotvec();
 
