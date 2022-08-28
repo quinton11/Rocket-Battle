@@ -18,11 +18,28 @@ void BulletManager::release()
     bminstance = NULL;
 }
 
+BulletManager::BulletManager() {}
+
 BulletManager::~BulletManager()
 {
     //
 }
 
+void BulletManager::makeBullet(Rocket *rocket)
+{
+    sum += 1;
+    std::cout << "Bullet shot: " << sum << std::endl;
+};
+
+void BulletManager::stallShooting(bool check)
+{
+    stall = check;
+}
+
+bool BulletManager::isStalled()
+{
+    return stall;
+}
 void BulletManager::update()
 {
     // loop through list of bullets

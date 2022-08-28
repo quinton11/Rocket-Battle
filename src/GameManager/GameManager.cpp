@@ -6,6 +6,7 @@
 #include "..\Utils\TimeSetting.h"
 #include "..\Controllers\KeyBoardHandler.h"
 #include "..\Entities\Enemy.h"
+#include "..\Entities\BulletManager.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -48,6 +49,7 @@ void GameManager::Run()
 
 	Add bullet shooting mechanism for rocket when 'b' is pressed. Bullets should be small and indefinite for now
 	*/
+	BulletManager *bm = BulletManager::getBMInstance();
 	/*rwbgd1ed*/
 	/*bgdraft1*/
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
@@ -79,20 +81,14 @@ void GameManager::Run()
 		{
 
 			// keyboard input
-			kb_handler->keyboard_input(state, rocket, dt);
+			kb_handler->keyboard_input(state, &rocket, dt);
 
 			// single hit keys
 			//
 			// SDL Poll Event logs every event in some sort of ds .
 
 			// Check event queue to exeute events
-			while (SDL_PollEvent(&nevents))
-			{
-				if (nevents.type == SDL_QUIT)
-				{
-					isDone = true;
-				}
-			}
+			kb_handler->keyboard_events(nevents, isDone);
 
 			SDL_RenderClear(nGraphics->getrenderer());
 			// Renderscreen
