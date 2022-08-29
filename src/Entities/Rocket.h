@@ -3,7 +3,8 @@
 #include "GameEntity.h"
 #include "..\VectorMath\Vector2d.h"
 
-class Rocket: public GameEntity{
+class Rocket : public GameEntity
+{
 
 public:
 	SDL_FRect rect;
@@ -24,26 +25,25 @@ private:
 	float ang_inv = 0.0f;
 	float rot_speed = 90.0f;
 	float degtorad = 0.017453f;
-	
-	float deltax = 0;
-    float deltay = 0;
 
-	
+	float deltax = 0;
+	float deltay = 0;
 
 public:
 	Rocket();
 	~Rocket();
 
 	void update(double dt);
-	void render(SDL_Renderer* renderer, SDL_Texture* texture,double dt);
+	void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
 	void moveleft(double dt);
 	void moveright(double dt);
 	void moveup();
 	void movedown();
 	void set_speed(float sp);
 
+	void Fdirection(float &sx, float &sy);
+
 	void calc_rotvec();
 
 	void calc_center();
-
 };

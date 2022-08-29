@@ -11,7 +11,7 @@ public:
 	static KeyboardHandler *instance();
 	static void release();
 	void keyboard_input(const Uint8 *state, Rocket *rocket, float dt);
-	void keyboard_events(SDL_Event &event, bool &isDone);
+	void keyboard_events(SDL_Event &event, bool &isDone, Rocket *rocket);
 
 private:
 	KeyboardHandler();

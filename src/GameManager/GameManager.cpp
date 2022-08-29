@@ -88,7 +88,7 @@ void GameManager::Run()
 			// SDL Poll Event logs every event in some sort of ds .
 
 			// Check event queue to exeute events
-			kb_handler->keyboard_events(nevents, isDone);
+			kb_handler->keyboard_events(nevents, isDone, &rocket);
 
 			SDL_RenderClear(nGraphics->getrenderer());
 			// Renderscreen
