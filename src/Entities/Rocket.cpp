@@ -60,25 +60,19 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 	// angle in degrees
 	// line should point in direction rocket is facing
 	// Get top direction, and rocket rotated direction
-	float sx, sy, nsx, nsy, xrot, yrot, dirx, diry, mag;
+	float cx, cy, sx, sy, nsx, nsy, xrot, yrot, dirx, diry, mag;
+	float Ax, Ay, angx, angy, Atangx, Atangy,Arefx,Arefy;
 	// float an = atan2(-deltay, -deltax) * 180 / 3.147;
 
-	sx = cos((angle+ 90.0f) * 0.017453f);
-	sy = sin((angle+90.0f) * 0.017453f );
+	cx = (rect.x + rect.w / 2); // Centres
+	cy = (rect.y + rect.h / 2);
+	angx = sin(((angle)*0.017453f));	 // rect local coordinates x and y
+	angy = -cos(((angle)*0.017453f)); // after rotation - works
+	Ax = (rect.x) * angx;					 // top centre x and y
+	Ay = (rect.y) * angy;					 // after rotation
 
-	// nsx = (sx * 90.0f) + (rect.x + rect.w / 2);
-	// nsy = (sy * 90.0f) + (rect.y + rect.h / 2);
-	//  rotating top center point with rocket
-	xrot = (((rect.y + rect.h / 2) - (rect.x + rect.w / 2)) * sy) + (rect.x + rect.w / 2);
-	yrot = (rect.y + rect.h / 2) - (((rect.y + rect.h / 2) - rect.y) * sx);
+	//Look at SDL2 rotation function
 
-	nsx = (xrot - (rect.x + rect.w / 2));
-	nsy = (yrot - (rect.y + rect.h / 2));
-	mag = sqrt((nsx * nsx) + (nsy * nsy));
-	// dirx = sy * 40;
-	// diry = sx * 40;
-	dirx = (nsx / mag) * 20.f + (rect.x + rect.w / 2);
-	diry = (nsy / mag) * 20.f + (rect.y + rect.h / 2);
 	SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
@@ -86,9 +80,9 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 	// SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), nsx, nsy);
 	// SDL_RenderDrawLineF(renderer, xrot, yrot, xrot, yrot - diry);
-	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), dirx, diry);
+	SDL_RenderDrawLineF(renderer, 0, 0, Ax + rect.w / 2, Ay + rect.h / 2);
 
-	// SDL_RenderDrawPointF(renderer, nsx, nsy + 70);
+	SDL_RenderDrawPointF(renderer, rect.x, rect.y);
 	// SDL_RenderDrawPointF(renderer, xrot, yrot);
 	//  SDL_RenderDrawPointF(renderer, (rect.x + rect.w / 2) + nsx, ((rect.y + rect.h / 2) + nsy));
 }
