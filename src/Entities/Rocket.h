@@ -11,6 +11,7 @@ public:
 	Vector2d rectvec;
 	Vector2d centervec;
 	Vector2d rotvec;
+	Vector2d dirvec;//Direction vector
 	Vector2d changevec;
 
 	bool thrust = false;
@@ -40,6 +41,8 @@ public:
 	void moveup();
 	void movedown();
 	void set_speed(float sp);
+	void aimPoint();
+	Vector2d getDirection();
 
 	void Fdirection(float &sx, float &sy);
 

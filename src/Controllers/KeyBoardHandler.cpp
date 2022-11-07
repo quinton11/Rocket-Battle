@@ -72,7 +72,7 @@ void KeyboardHandler::keyboard_input(const Uint8 *state, Rocket *rocket, float d
 	}
 }
 
-void KeyboardHandler::keyboard_events(SDL_Event &event, bool &isDone, Rocket *rocket)
+void KeyboardHandler::keyboard_events(SDL_Event &event, bool &isDone, Rocket *rocket,BulletManager *bm)
 {
 	while (SDL_PollEvent(&event))
 	{
@@ -85,9 +85,13 @@ void KeyboardHandler::keyboard_events(SDL_Event &event, bool &isDone, Rocket *ro
 			std::cout << "Shoot" << std::endl;
 			// Calculate bullets starting position which will be the rockets top middle
 			// the rockets top middle with respect to its angle of rotation
-			float sx;
+			float cx = ((rocket->rect.x)+(rocket->rect.w/2));
+			float cy=((rocket->rect.y)+(rocket->rect.h/2));
+			Vector2d direction = rocket->getDirection();
+			bm->makeBullet(cx,cy,direction,true);
+			/* float sx;
 			float sy;
-			rocket->Fdirection(sx, sy);
+			rocket->Fdirection(sx, sy); */
 			// the bullets direction will be the direction the rocket is facing
 
 			// For player,when key is pressed,

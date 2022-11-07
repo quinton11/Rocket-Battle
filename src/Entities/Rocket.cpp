@@ -53,6 +53,11 @@ void Rocket::update(double dt)
 	// changevec.setvector(deltax, deltay);
 }
 
+void Rocket::aimPoint(){
+	//calculate rotated point using angle and centre of rect
+	//formula for rotated point
+}
+
 void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 {
 
@@ -60,31 +65,20 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 	// angle in degrees
 	// line should point in direction rocket is facing
 	// Get top direction, and rocket rotated direction
-	float cx, cy, sx, sy, nsx, nsy, xrot, yrot, dirx, diry, mag;
-	float Ax, Ay, angx, angy, Atangx, Atangy,Arefx,Arefy;
-	// float an = atan2(-deltay, -deltax) * 180 / 3.147;
-
-	cx = (rect.x + rect.w / 2); // Centres
-	cy = (rect.y + rect.h / 2);
-	angx = sin(((angle)*0.017453f));	 // rect local coordinates x and y
-	angy = -cos(((angle)*0.017453f)); // after rotation - works
-	Ax = (rect.x) * angx;					 // top centre x and y
-	Ay = (rect.y) * angy;					 // after rotation
 
 	//Look at SDL2 rotation function
+	//Currently point is rotating with respect to origin 0,0
+	//Instead it should rotate with respect to orign cx,cy
 
 	SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
 	// SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (rect.x + rect.w / 2) + nsx, ((rect.y + rect.h / 2) + nsy));
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-	// SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), nsx, nsy);
-	// SDL_RenderDrawLineF(renderer, xrot, yrot, xrot, yrot - diry);
-	SDL_RenderDrawLineF(renderer, 0, 0, Ax + rect.w / 2, Ay + rect.h / 2);
+	
 
 	SDL_RenderDrawPointF(renderer, rect.x, rect.y);
-	// SDL_RenderDrawPointF(renderer, xrot, yrot);
-	//  SDL_RenderDrawPointF(renderer, (rect.x + rect.w / 2) + nsx, ((rect.y + rect.h / 2) + nsy));
+	
 }
 
 void Rocket::calc_rotvec()
@@ -153,6 +147,12 @@ void Rocket::moveup()
 
 	deltax = (tspeed * sin(angle * degtorad));
 	deltay = -1 * (tspeed * cos(angle * degtorad));
+
+	dirvec.setvector(sin(angle*degtorad),(-1*cos(angle*degtorad)));
+}
+
+Vector2d Rocket::getDirection(){
+	return dirvec;
 }
 
 void Rocket::set_speed(float sp)

@@ -17,7 +17,7 @@ lib/%.o: src/%.cpp
 
 
 clean:
-	rm -f output.exe *.o
+	rm -f run.exe *.o
 
 play:
 	./bin/run

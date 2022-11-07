@@ -42,6 +42,7 @@ void GameManager::Run()
 
 	// Enemy ship
 	SDL_Texture *e_text = txman.loadTexture("textures/rockblue.png", nGraphics->getrenderer());
+	SDL_Texture *laser_text=txman.loadTexture("textures/laser.png",nGraphics->getrenderer());
 	Enemy ship = Enemy();
 	/*
 	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
@@ -88,7 +89,7 @@ void GameManager::Run()
 			// SDL Poll Event logs every event in some sort of ds .
 
 			// Check event queue to exeute events
-			kb_handler->keyboard_events(nevents, isDone, &rocket);
+			kb_handler->keyboard_events(nevents, isDone, &rocket,bm);
 
 			SDL_RenderClear(nGraphics->getrenderer());
 			// Renderscreen
@@ -98,6 +99,7 @@ void GameManager::Run()
 
 			rocket.render(nGraphics->getrenderer(), texture, dt);
 			ship.render(nGraphics->getrenderer(), e_text, rocket, dt);
+			bm->render(nGraphics->getrenderer(),laser_text,dt,nGraphics->window_width,nGraphics->window_height);
 
 			// rocket.resetrotangle();
 			// Updating screen
