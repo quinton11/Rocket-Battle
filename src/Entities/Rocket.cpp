@@ -62,21 +62,10 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 {
 
 	update(dt);
-	// angle in degrees
-	// line should point in direction rocket is facing
-	// Get top direction, and rocket rotated direction
-
-	//Look at SDL2 rotation function
-	//Currently point is rotating with respect to origin 0,0
-	//Instead it should rotate with respect to orign cx,cy
 
 	SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
-	// SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (rect.x + rect.w / 2) + nsx, ((rect.y + rect.h / 2) + nsy));
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-	
-
 	SDL_RenderDrawPointF(renderer, rect.x, rect.y);
 	
 }
@@ -158,6 +147,10 @@ Vector2d Rocket::getDirection(){
 void Rocket::set_speed(float sp)
 {
 	speed_ph = sp;
+}
+
+float Rocket::getAngle(){
+	return angle;
 }
 
 void Rocket::calc_center()

@@ -92,7 +92,7 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
 
     // Drawing enemy ship aim
     SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (normx), (normy));
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
     /* SDL_RenderDrawPointF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2));
     SDL_RenderDrawPointF(renderer, (rect.x), (rect.y));
     SDL_RenderDrawPointF(renderer, (rect.x + rect.w), (rect.y));

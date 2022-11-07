@@ -14,8 +14,7 @@ private:
     bool stall = false; // Control shooting
 
 public:
-    Bullet bullets[10];
-    //std::vector<Bullet> all;
+    std::vector<Bullet> all;
 
 private:
     void update(SDL_Renderer *r, SDL_Texture *t, double dt,const int wW,const int wH);    // loop through bullet list and update each bullet position
@@ -26,7 +25,7 @@ public:
     static BulletManager *getBMInstance();                   // get instance of bullet manager
     static void release();                                   // Instance Released at end of game
     void render(SDL_Renderer *r, SDL_Texture *t, double dt,const int wW,const int wH); // Render bullets
-    void makeBullet(float cx,float cy,Vector2d dir,bool playerShot);                         // make bullet takes in a rocket pointer and  instantiates a new bullet
+    void makeBullet(float cx,float cy,float angle,bool playerShot);                         // make bullet takes in a rocket pointer and  instantiates a new bullet
     // into the bullets list
     void stallShooting(bool check);
     bool isStalled();

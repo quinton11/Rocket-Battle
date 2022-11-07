@@ -1,17 +1,24 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float sx,float sy,Vector2d d,bool f)
+Bullet::Bullet(float sx,float sy,float ang,bool f)
 {
     // Instantiate bullet object
+    //std::cout<<"Direction vector: "<<d.getx()<<","<<d.gety()<<std::endl;
+	std::cout <<"In make bullet constructor with centres: "<< sx << "," << sy << std::endl;
     from=f;
     rect.x=sx;
     rect.y=sy;
     rect.w=8;
     rect.h=15;
-    direction=d;
+    angle=ang;
+    deltax=speed*sin(angle*degtorad);
+    deltay=speed*(-1*cos(angle*degtorad));
 }
 
-Bullet::Bullet(){}
+Bullet::Bullet(){
+    rect.w=8;
+    rect.h=15;
+}
 
 Bullet::~Bullet()
 {
@@ -21,7 +28,14 @@ Bullet::~Bullet()
 
 bool Bullet::collision(const int wW,const int wH)
 {
-    if (((rect.x+rect.w)>=wW || (rect.x<=0)) ||  ((rect.y+rect.h)>=wH || (rect.y<=0)))
+	std::cout <<"In collission: "<< rect.x << "," << rect.y << std::endl;
+    std::cout<<"Angle: "<<angle<<" Width& height"<<rect.w<<","<<rect.y<<std::endl;
+    std::cout<<"Deltas: "<<deltax<<","<<deltay<<std::endl;
+    float rectsidex=rect.x+rect.w;
+    float rectsidey=rect.y+rect.h;
+    std::cout<<rectsidex<<","<<rectsidey<<std::endl;
+    std::cout<<"Window: "<<wW<<","<<wH<<std::endl;
+    if ((rectsidex>=wW || (rect.x<=0)) ||  (rectsidey>=wH || (rect.y<=0)))
     {
         return true;
     }
@@ -31,14 +45,19 @@ bool Bullet::collision(const int wW,const int wH)
 void Bullet::update(double dt)
 {
     // update bullet position as time moves on
-    rect.x+=speed*direction.getx();
-    rect.y+=speed*direction.gety();
+    deltax=speed*(dt/1000.f)*sin(angle*degtorad);
+    deltay=speed*(dt/1000.0f)*(-1*cos(angle*degtorad));
+    rect.x=rect.x + deltax;
+    rect.y= rect.y+ deltay;
 }
 
 void Bullet::render(SDL_Renderer *r, SDL_Texture *t, double dt)
 {
     //Update position
+    std::cout<<"Bullet Render"<<std::endl;
     update(dt);
     // render bullet on screen
-    SDL_RenderCopyF(r,t,nullptr,&rect);
+    std::cout<<"After update"<<std::endl;
+    SDL_RenderCopyExF(r,t,nullptr,&rect,angle,NULL,SDL_FLIP_NONE);
+    std::cout<<"After rendercopy"<<std::endl;
 }

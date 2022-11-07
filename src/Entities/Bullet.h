@@ -6,15 +6,21 @@
 class Bullet : public GameEntity
 {
 public:
-    Bullet(float sx,float sy,Vector2d d,bool from);  // Constructor
+    Bullet(float sx,float sy,float angle,bool from);  // Constructor
     Bullet();
     ~Bullet(); // Destructor
+    SDL_FRect rect; // holds bullet position and size
+    bool from;
+
 
 private:
-    SDL_FRect rect; // holds bullet position and size
-    float speed=30.0f;    // how fast it changes position
+    float speed=10.0f;    // how fast it changes position
     Vector2d direction;
-    bool from;
+    float angle=0.f;
+    float deltax=0.f;
+    float deltay=0.f;
+	float degtorad = 0.017453f;
+
 
 public:
     void update(double dt);

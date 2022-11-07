@@ -40,6 +40,7 @@ public:
 	void moveright(double dt);
 	void moveup();
 	void movedown();
+	float getAngle();
 	void set_speed(float sp);
 	void aimPoint();
 	Vector2d getDirection();

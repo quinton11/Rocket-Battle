@@ -1,16 +1,7 @@
-﻿  GameEntity.cpp
-  GameManager.cpp
-  GGraphics.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\src\GameManager\GGraphics.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  HomeScreen.cpp
-  KeyBoardHandler.cpp
-  main.cpp
-  Rocket.cpp
-  Screen.cpp
-  TextureManager.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\src\GameManager\TextureManager.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  TimeSetting.cpp
-C:\quinton\b\repo\cpp_games\Rocket battle\src\Utils\TimeSetting.cpp(6,28): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  Vector2d.cpp
-  Generating Code...
-  Rocket battle.vcxproj -> C:\quinton\b\repo\cpp_games\Rocket battle\Debug\Rocket battle.exe
+﻿GameManager.obj : error LNK2019: unresolved external symbol "public: static class BulletManager * __cdecl BulletManager::getBMInstance(void)" (?getBMInstance@BulletManager@@SAPAV1@XZ) referenced in function "public: void __thiscall GameManager::Run(void)" (?Run@GameManager@@QAEXXZ)
+GameManager.obj : error LNK2019: unresolved external symbol "public: void __thiscall BulletManager::render(struct SDL_Renderer *,struct SDL_Texture *,double,int,int)" (?render@BulletManager@@QAEXPAUSDL_Renderer@@PAUSDL_Texture@@NHH@Z) referenced in function "public: void __thiscall GameManager::Run(void)" (?Run@GameManager@@QAEXXZ)
+GameManager.obj : error LNK2019: unresolved external symbol "public: __thiscall Enemy::Enemy(void)" (??0Enemy@@QAE@XZ) referenced in function "public: void __thiscall GameManager::Run(void)" (?Run@GameManager@@QAEXXZ)
+GameManager.obj : error LNK2019: unresolved external symbol "public: __thiscall Enemy::~Enemy(void)" (??1Enemy@@QAE@XZ) referenced in function "public: void __thiscall GameManager::Run(void)" (?Run@GameManager@@QAEXXZ)
+GameManager.obj : error LNK2019: unresolved external symbol "public: void __thiscall Enemy::render(struct SDL_Renderer *,struct SDL_Texture *,class Rocket,double)" (?render@Enemy@@QAEXPAUSDL_Renderer@@PAUSDL_Texture@@VRocket@@N@Z) referenced in function "public: void __thiscall GameManager::Run(void)" (?Run@GameManager@@QAEXXZ)
+KeyBoardHandler.obj : error LNK2019: unresolved external symbol "public: void __thiscall BulletManager::makeBullet(float,float,float,bool)" (?makeBullet@BulletManager@@QAEXMMM_N@Z) referenced in function "public: void __thiscall KeyboardHandler::keyboard_events(union SDL_Event &,bool &,class Rocket *,class BulletManager *)" (?keyboard_events@KeyboardHandler@@QAEXAATSDL_Event@@AA_NPAVRocket@@PAVBulletManager@@@Z)
+C:\quinton\b\repo\cpp_games\Rocket battle\Debug\Rocket battle.exe : fatal error LNK1120: 6 unresolved externals
