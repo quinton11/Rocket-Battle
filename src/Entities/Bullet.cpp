@@ -45,8 +45,8 @@ bool Bullet::collision(const int wW,const int wH)
 void Bullet::update(double dt)
 {
     // update bullet position as time moves on
-    deltax=speed*(dt/1000.f)*sin(angle*degtorad);
-    deltay=speed*(dt/1000.0f)*(-1*cos(angle*degtorad));
+    deltax=speed*(dt/100.f)*sin(angle*degtorad);
+    deltay=speed*(dt/100.0f)*(-1*cos(angle*degtorad));
     rect.x=rect.x + deltax;
     rect.y= rect.y+ deltay;
 }

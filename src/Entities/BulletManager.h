@@ -4,6 +4,7 @@
 #include <list>
 #include "Rocket.h"
 #include <vector>
+#include <memory>
 
 class BulletManager
 {
@@ -14,7 +15,7 @@ private:
     bool stall = false; // Control shooting
 
 public:
-    std::vector<Bullet> all;
+    std::list<Bullet*> all;
 
 private:
     void update(SDL_Renderer *r, SDL_Texture *t, double dt,const int wW,const int wH);    // loop through bullet list and update each bullet position

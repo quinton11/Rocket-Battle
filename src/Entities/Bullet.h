@@ -14,7 +14,7 @@ public:
 
 
 private:
-    float speed=10.0f;    // how fast it changes position
+    float speed=50.0f;    // how fast it changes position
     Vector2d direction;
     float angle=0.f;
     float deltax=0.f;
