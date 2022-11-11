@@ -67,6 +67,13 @@ void Enemy::angleCheck()
         angle = 0;
 }
 
+bool Enemy::lifeEmpty(){
+    //check if health is empty,
+    //return true if empty
+    //else false
+    return false;
+}
+
 void Enemy::rocketAim(Rocket rocket, float &normy, float &normx)
 {
     float dx, dy, mag;
@@ -102,10 +109,10 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
 
 // angle and position should change based on rocket position
 
-Enemy::Enemy()
+Enemy::Enemy(int x,int y)
 {
-    rect.x = 20;
-    rect.y = 180;
+    rect.x = x;
+    rect.y = y;
     rect.w = 60;
     rect.h = 45;
 }

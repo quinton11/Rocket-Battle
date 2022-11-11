@@ -30,19 +30,17 @@ BulletManager::~BulletManager()
 
 void BulletManager::makeBullet(float cx, float cy, float angle, bool playerShot)
 {
-    std::cout << "Bullet shot: " << shot << std::endl;
-    std::cout << "In make bullet with centres: " << cx << "," << cy << std::endl;
+    //std::cout << "Bullet shot: " << shot << std::endl;
+    //std::cout << "In make bullet with centres: " << cx << "," << cy << std::endl;
     Bullet *bullet = new Bullet(cx, cy, angle, playerShot);
-    // Bullet(cx, cy, angle, playerShot);
-    std::cout << "Created" << std::endl;
-    std::cout << "Bullet created: " << shot << std::endl;
-    // bullets.insert(bullets.end(), bullet);
-    // bullets.push_back(bullet);
-    // bullets[shot]= bullet;
+    
+    //std::cout << "Created" << std::endl;
+    //std::cout << "Bullet created: " << shot << std::endl;
+    
     all.push_back(bullet);
-    shot += 1;
-    std::cout << "Bullet Inserted: " << shot << std::endl;
-    std::cout << "After insertion" << bullet->rect.x << "," << bullet->rect.y << std::endl;
+    //shot += 1;
+    //std::cout << "Bullet Inserted: " << shot << std::endl;
+    //std::cout << "After insertion" << bullet->rect.x << "," << bullet->rect.y << std::endl;
 };
 
 void BulletManager::stallShooting(bool check)
@@ -58,32 +56,19 @@ void BulletManager::update(SDL_Renderer *r, SDL_Texture *t, double dt, const int
 {
     // std::unique_ptr<Bullet> b;
     //  Bullet *temp;
-    for (std::list<Bullet *>::iterator it = all.begin(); it != all.end();)
+    for (std::list<Bullet *>::iterator bullet = all.begin(); bullet != all.end();)
     {
-        (*it)->render(r, t, dt);
-        if ((*it)->collision(wW, wH))
+        (*bullet)->render(r, t, dt);
+        if ((*bullet)->collision(wW, wH))
         {
-            delete (*it);
-            all.erase(it++); // remove from the list and take next
+            delete (*bullet);
+            all.erase(bullet++); // remove from the list and take next
         }
         else
         {
-            ++it; // take next object
+            ++bullet; // take next object
         }
     }
-    /* for ( auto &b : all)
-    {
-        std::cout << "In loop: " << b->rect.w << "," << b->rect.h << std::endl;
-        std::cout << b->from << std::endl;
-        b->render(r, t, dt);
-
-        if (b->collision(wW, wH))
-        {
-            std::cout << "Collide" << std::endl;
-            delete &b;
-            //all.erase(std::remove(all.begin(),all.end(),b));
-        }
-    } */
 }
 
 void BulletManager::render(SDL_Renderer *r, SDL_Texture *t, double dt, const int wW, const int wH)

@@ -8,7 +8,7 @@
 class Enemy : public GameEntity
 {
 public:
-    Enemy();
+    Enemy(int x,int y);
     ~Enemy();
 
 private:
@@ -17,15 +17,16 @@ private:
     int attack_count = 5;   // number of attacks ship has till reload
     double angle = 0.0f;
     float degtorad = 0.017453f;
-    float speed = 50.0f;
+    float speed = 30.0f;
     float max_dist = 50.0f; // If distance from rocket is greater than this move.
-    float rot_speed = 70.0f;
+    float rot_speed = 20.0f;
     float aimmag = 30.0f;
 
 public:
     void
     update(Rocket rocket, double dt);
     void angleCheck();
+    bool lifeEmpty();
     void angleCalc(Rocket rocket, double dt);
     void rocketAim(Rocket rocket, float &normy, float &normx);
     void render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, double dt);
