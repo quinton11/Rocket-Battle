@@ -11,9 +11,9 @@ class Enemy : public GameEntity
 public:
     Enemy(int x, int y);
     ~Enemy();
+    SDL_FRect rect; // describes position of ship
 
 private:
-    SDL_FRect rect;         // describes position of ship
     float min_dist = 50.0f; // If distance from rocket is less than this stop.
     int attack_count = 5;   // number of attacks ship has till reload
     double angle = 0.0f;

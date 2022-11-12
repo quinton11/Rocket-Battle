@@ -54,8 +54,10 @@ void GameManager::Run()
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager();
 
-	//em.spawn(80,120); // test spawn
-	//em.spawn(150,280);
+	bm->setEnemyList(em.enemyships);
+
+	// em.spawn(80,120); // test spawn
+	// em.spawn(150,280);
 	/*rwbgd1ed*/
 	/*bgdraft1*/
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
@@ -111,7 +113,6 @@ void GameManager::Run()
 			SDL_RenderPresent(nGraphics->getrenderer());
 		}
 	}
-
 }
 
 GameManager::GameManager()
