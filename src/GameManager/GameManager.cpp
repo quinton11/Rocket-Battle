@@ -54,8 +54,8 @@ void GameManager::Run()
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager();
 
-	em.spawn(80,120); // test spawn
-	em.spawn(150,280);
+	//em.spawn(80,120); // test spawn
+	//em.spawn(150,280);
 	/*rwbgd1ed*/
 	/*bgdraft1*/
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
@@ -107,14 +107,11 @@ void GameManager::Run()
 			// ship.render(nGraphics->getrenderer(), e_text, rocket, dt);
 			bm->render(nGraphics->getrenderer(), laser_text, dt, nGraphics->window_width, nGraphics->window_height);
 
-			// rocket.resetrotangle();
 			// Updating screen
 			SDL_RenderPresent(nGraphics->getrenderer());
 		}
 	}
 
-	// delete texture;
-	// texture = NULL;
 }
 
 GameManager::GameManager()

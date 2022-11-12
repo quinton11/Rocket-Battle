@@ -56,10 +56,14 @@ void BulletManager::update(SDL_Renderer *r, SDL_Texture *t, double dt, const int
 {
     // std::unique_ptr<Bullet> b;
     //  Bullet *temp;
+    bool collideScreen;
+    bool collideEntity;
     for (std::list<Bullet *>::iterator bullet = all.begin(); bullet != all.end();)
     {
         (*bullet)->render(r, t, dt);
-        if ((*bullet)->collision(wW, wH))
+        collideScreen = (*bullet)->collideScreen(wW, wH);
+        //collide
+        if (collideScreen)
         {
             delete (*bullet);
             all.erase(bullet++); // remove from the list and take next

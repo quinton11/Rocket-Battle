@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "Bullet.h"
+#include "EnemyManager.h"
 #include <list>
 #include "Rocket.h"
 #include <vector>
@@ -16,6 +17,7 @@ private:
 
 public:
     std::list<Bullet*> all;
+    std::list<Enemy*> allE;
 
 private:
     void update(SDL_Renderer *r, SDL_Texture *t, double dt,const int wW,const int wH);    // loop through bullet list and update each bullet position

@@ -13,27 +13,26 @@ void Enemy::update(Rocket rocket, double dt)
 
     // normalize vector
     float mag = 0;
+    // magnitude of distance vector between ship and rocket
     mag = sqrt((distx * distx) + (disty * disty));
     // normalize
     float normx = distx / mag;
     float normy = disty / mag;
+
+    // Enemy direction angle
     angleCalc(rocket, dt);
 
-    if (mag > min_dist)
+    // if enemy ship is getting closer to rocket speed up
+    if (mag < max_dist)
     {
         // translate enemy ship
         rect.x += normx * (dt / 1000.0f) * speed;
         rect.y += normy * (dt / 1000.0f) * speed;
-        // angleCheck(); // Check if angle is passed bounds
-        //(asin(normx) / degtorad) rot_speed
-        //  angle += ((asin(normx) / degtorad) * (dt / 1000.0f));
-        //  std::cout << angle << std::endl;
-        /*
-            Currently angle just increments, implement check
-            to get correct direction to move angle in,whether
-            increment or decrement to allow visual following
-            of rocket's direcotry
-         */
+    }
+    else if (mag > max_dist)
+    {
+        rect.x += normx * (dt / 1000.0f) * stallSpeed;
+        rect.y += normy * (dt / 1000.0f) * stallSpeed;
     }
 
     // enemy doesn't rotate towards rocket
@@ -67,11 +66,71 @@ void Enemy::angleCheck()
         angle = 0;
 }
 
-bool Enemy::lifeEmpty(){
-    //check if health is empty,
-    //return true if empty
-    //else false
+bool Enemy::lifeEmpty()
+{
+    // check if health is empty,
+    // return true if empty
+    // else false
     return false;
+}
+
+bool Enemy::collision(SDL_FRect other)
+{
+    // Check for collision with other rect
+    float leftA, leftB;
+    float rightA, rightB;
+    float topA, topB;
+    float bottomA, bottomB;
+
+    // Sides of Bullet rect
+    leftA = rect.x;
+    rightA = rect.x + rect.w;
+    topA = rect.y;
+    bottomA = rect.y + rect.h;
+
+    // Sides of other rect
+    leftB = other.x;
+    rightB = other.x + other.w;
+    topB = other.y;
+    bottomB = other.y + other.h;
+
+    if (bottomA <= topB)
+    {
+        return false;
+    }
+
+    if (topA >= bottomB)
+    {
+        return false;
+    }
+
+    if (rightA <= leftB)
+    {
+        return false;
+    }
+
+    if (leftA >= rightB)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void Enemy::takeHit(CustomEnums::Entity e)
+{
+    if (e == 0)
+    {
+        // Bullet collision
+    }
+    else if (e == 1)
+    {
+        // Rock collision
+    }
+    else if (e == 3)
+    {
+        // Rocket collision
+    }
 }
 
 void Enemy::rocketAim(Rocket rocket, float &normy, float &normx)
@@ -99,7 +158,7 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
 
     // Drawing enemy ship aim
     SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (normx), (normy));
-    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
     /* SDL_RenderDrawPointF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2));
     SDL_RenderDrawPointF(renderer, (rect.x), (rect.y));
     SDL_RenderDrawPointF(renderer, (rect.x + rect.w), (rect.y));
@@ -109,7 +168,7 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
 
 // angle and position should change based on rocket position
 
-Enemy::Enemy(int x,int y)
+Enemy::Enemy(int x, int y)
 {
     rect.x = x;
     rect.y = y;

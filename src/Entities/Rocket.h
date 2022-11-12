@@ -43,6 +43,8 @@ public:
 	float getAngle();
 	void set_speed(float sp);
 	void aimPoint();
+    bool collision(SDL_FRect other);
+
 	Vector2d getDirection();
 
 	void Fdirection(float &sx, float &sy);

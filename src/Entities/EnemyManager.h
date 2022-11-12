@@ -7,7 +7,7 @@
 class EnemyManager
 {
 private:
-    
+    int max=5;
 
 public:
     EnemyManager(); // Constructor
@@ -20,10 +20,11 @@ public:
     // Ships for now would have the same look
     void render(SDL_Renderer *renderer, SDL_Texture *texture,Rocket rocket, double dt,int ScreenW, int ScreenH);
     void spawn(int x,int y);
+    void InitSpawn(int ScreenW, int ScreenH);
 
     // Set each enemy ship starting position randomly within the bounds of screen
     // returns an SDL_FRect with its start position calculated randomly
-    SDL_FRect randomSpawn(int ScreenW, int ScreenH);
+    SDL_FRect randomSpawn(int spawnAmt,int ScreenW, int ScreenH);
 
     // Function to check list of enemy ships for their life.
     // If life is empty then delete ship

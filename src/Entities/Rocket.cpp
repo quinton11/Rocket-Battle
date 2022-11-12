@@ -53,9 +53,10 @@ void Rocket::update(double dt)
 	// changevec.setvector(deltax, deltay);
 }
 
-void Rocket::aimPoint(){
-	//calculate rotated point using angle and centre of rect
-	//formula for rotated point
+void Rocket::aimPoint()
+{
+	// calculate rotated point using angle and centre of rect
+	// formula for rotated point
 }
 
 void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
@@ -67,7 +68,48 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
 	SDL_RenderDrawPointF(renderer, rect.x, rect.y);
-	
+}
+bool Rocket::collision(SDL_FRect other)
+{
+	// Check for collision with other rect
+	float leftA, leftB;
+	float rightA, rightB;
+	float topA, topB;
+	float bottomA, bottomB;
+
+	// Sides of Bullet rect
+	leftA = rect.x;
+	rightA = rect.x + rect.w;
+	topA = rect.y;
+	bottomA = rect.y + rect.h;
+
+	// Sides of other rect
+	leftB = other.x;
+	rightB = other.x + other.w;
+	topB = other.y;
+	bottomB = other.y + other.h;
+
+	if (bottomA <= topB)
+	{
+		return false;
+	}
+
+	if (topA >= bottomB)
+	{
+		return false;
+	}
+
+	if (rightA <= leftB)
+	{
+		return false;
+	}
+
+	if (leftA >= rightB)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 void Rocket::calc_rotvec()
@@ -137,10 +179,11 @@ void Rocket::moveup()
 	deltax = (tspeed * sin(angle * degtorad));
 	deltay = -1 * (tspeed * cos(angle * degtorad));
 
-	dirvec.setvector(sin(angle*degtorad),(-1*cos(angle*degtorad)));
+	dirvec.setvector(sin(angle * degtorad), (-1 * cos(angle * degtorad)));
 }
 
-Vector2d Rocket::getDirection(){
+Vector2d Rocket::getDirection()
+{
 	return dirvec;
 }
 
@@ -149,7 +192,8 @@ void Rocket::set_speed(float sp)
 	speed_ph = sp;
 }
 
-float Rocket::getAngle(){
+float Rocket::getAngle()
+{
 	return angle;
 }
 

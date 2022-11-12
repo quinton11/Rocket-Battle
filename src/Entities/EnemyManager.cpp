@@ -15,16 +15,31 @@ EnemyManager::~EnemyManager()
     // Release any pointers used here
 }
 
-SDL_FRect EnemyManager::randomSpawn(int ScreenW, int ScreenH)
+SDL_FRect EnemyManager::randomSpawn(int spawnAmt,int ScreenW, int ScreenH)
 {
     // At enemy Manager class instantiation, set create and set
     // enemy ship spawning location
     // return enemy ship
 }
 
-void EnemyManager::spawn(int x,int y)
+void EnemyManager::InitSpawn(int ScreenW, int ScreenH)
 {
-    Enemy *ship = new Enemy(x,y);
+    // loop max times and spawn ships randomly on screen
+    int randx = 0;
+    int randy = 0;
+    for (int i = 0; i < max; i++)
+    {
+        // generate random x and y
+        // use to spawn enemy ship and add to list
+        randx = rand() % ScreenW;
+        randy = rand() % ScreenH;
+        spawn(randx, randy);
+    }
+}
+
+void EnemyManager::spawn(int x, int y)
+{
+    Enemy *ship = new Enemy(x, y);
     enemyships.push_back(ship);
 }
 
@@ -32,6 +47,11 @@ void EnemyManager::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket r
 {
     // Check length of enemy ship list(number of enemy ships on screen)
     int length = enemyships.size();
+    if (length == 0)
+    {
+        //If enemy ship are zero,at the start of game
+        InitSpawn(ScreenW, ScreenH);
+    }
 
     // Generate random number less than 5
     int random = rand() % 5 + 1;
@@ -40,7 +60,8 @@ void EnemyManager::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket r
     bool spawn = (random > length) || (length < 2);
     if (spawn)
     {
-        randomSpawn(ScreenW, ScreenH);
+        int spawnamt = random-length;
+        randomSpawn(spawnamt,ScreenW, ScreenH);
     }
 
     for (std::list<Enemy *>::iterator enemy = enemyships.begin(); enemy != enemyships.end();)

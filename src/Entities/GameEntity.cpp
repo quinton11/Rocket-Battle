@@ -1,19 +1,26 @@
 #include "GameEntity.h"
 
-void GameEntity::render(SDL_Renderer* renderer) {
+void GameEntity::render(SDL_Renderer *renderer)
+{
 
-	//Render is called after position updated
+	// Render is called after position updated
 }
 
-void GameEntity::update() {
+void GameEntity::update()
+{
 
-	//Update object position based on events
+	// Update object position based on events
 }
 
-GameEntity::GameEntity() {
-
+bool GameEntity::collision(SDL_FRect other)
+{
+	// Check for collision with other rect
 }
 
-GameEntity::~GameEntity() {
+GameEntity::GameEntity()
+{
+}
 
+GameEntity::~GameEntity()
+{
 }
