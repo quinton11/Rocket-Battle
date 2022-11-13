@@ -69,6 +69,11 @@ void Enemy::angleCheck()
 bool Enemy::lifeEmpty()
 {
     // check if health is empty,
+    if (myLife <= 0)
+    {
+        return true;
+    }
+
     // return true if empty
     // else false
     return false;
@@ -119,15 +124,19 @@ bool Enemy::collision(SDL_FRect other)
 
 void Enemy::takeHit(CustomEnums::Entity e)
 {
-    if (e == 0)
+    if (e == CustomEnums::Entity::Bullet)
     {
         // Bullet collision
+        if (myLife >= 0)
+        {
+            myLife -= 1;
+        }
     }
-    else if (e == 1)
+    else if (e == CustomEnums::Entity::Rock)
     {
         // Rock collision
     }
-    else if (e == 3)
+    else if (e == CustomEnums::Entity::Rocket)
     {
         // Rocket collision
     }

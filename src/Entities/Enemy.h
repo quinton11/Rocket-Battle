@@ -23,6 +23,7 @@ private:
     float max_dist = 50.0f; // If distance from rocket is greater than this move.
     float rot_speed = 20.0f;
     float aimmag = 30.0f;
+    float myLife = 5.0f;
 
 public:
     void

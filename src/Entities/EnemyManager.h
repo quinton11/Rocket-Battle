@@ -24,7 +24,7 @@ public:
 
     // Set each enemy ship starting position randomly within the bounds of screen
     // returns an SDL_FRect with its start position calculated randomly
-    SDL_FRect randomSpawn(int spawnAmt,int ScreenW, int ScreenH);
+    void randomSpawn(int spawnAmt,int ScreenW, int ScreenH);
 
     // Function to check list of enemy ships for their life.
     // If life is empty then delete ship

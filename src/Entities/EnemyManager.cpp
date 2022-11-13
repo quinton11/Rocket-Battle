@@ -15,11 +15,19 @@ EnemyManager::~EnemyManager()
     // Release any pointers used here
 }
 
-SDL_FRect EnemyManager::randomSpawn(int spawnAmt,int ScreenW, int ScreenH)
+void EnemyManager::randomSpawn(int spawnAmt, int ScreenW, int ScreenH)
 {
     // At enemy Manager class instantiation, set create and set
     // enemy ship spawning location
     // return enemy ship
+    int randx = 0;
+    int randy = 0;
+    for (int i = 0; i < spawnAmt; i++)
+    {
+        randx = rand() % ScreenW;
+        randy = rand() % ScreenH;
+        spawn(randx, randy);
+    }
 }
 
 void EnemyManager::InitSpawn(int ScreenW, int ScreenH)
@@ -47,21 +55,30 @@ void EnemyManager::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket r
 {
     // Check length of enemy ship list(number of enemy ships on screen)
     int length = enemyships.size();
+    // std::cout << "Enemy Ships size" << std::endl;
+
     if (length == 0)
     {
-        //If enemy ship are zero,at the start of game
+        // If enemy ships are zero,at the start of game
+
         InitSpawn(ScreenW, ScreenH);
+        // std::cout << "Init Spawn" << std::endl;
     }
 
     // Generate random number less than 5
     int random = rand() % 5 + 1;
+    // determines number of remaining enemy ships needed to trigger respawning
+    int randid = rand() % 2 + 1;
     // if random number is greater than number of ships
     // if number of ships is less than 2 spawn a ship
-    bool spawn = (random > length) || (length < 2);
+
+    // NB:: Fix spawning mechanism
+    bool spawn = (random > length) && (length <= randid);
     if (spawn)
     {
-        int spawnamt = random-length;
-        randomSpawn(spawnamt,ScreenW, ScreenH);
+        int spawnamt = random - length;
+        randomSpawn(spawnamt, ScreenW, ScreenH);
+        // std::cout << "Random Spawn" << std::endl;
     }
 
     for (std::list<Enemy *>::iterator enemy = enemyships.begin(); enemy != enemyships.end();)

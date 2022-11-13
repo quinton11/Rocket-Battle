@@ -45,8 +45,10 @@ bool BulletManager::checkCollision(Bullet *b)
 
         if (b->collision((*ene)->rect))
         {
+            CustomEnums::Entity a = CustomEnums::Entity::Bullet;
             collided = true;
-            std::cout << "Bullet Collided with enemy ship" << std::endl;
+            (*ene)->takeHit(a);
+            //std::cout << "Bullet Collided with enemy ship" << std::endl;
             //  call enemy takehit function
         }
     }
