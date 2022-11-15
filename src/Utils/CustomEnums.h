@@ -10,4 +10,12 @@ public:
         Enemy,
         Rocket
     };
+
+    enum Spawn
+    {
+        Top,
+        Bottom,
+        Right,
+        Left
+    };
 };

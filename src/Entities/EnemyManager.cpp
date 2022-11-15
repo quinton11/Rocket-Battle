@@ -20,33 +20,73 @@ void EnemyManager::randomSpawn(int spawnAmt, int ScreenW, int ScreenH)
     // At enemy Manager class instantiation, set create and set
     // enemy ship spawning location
     // return enemy ship
-    int randx = 0;
-    int randy = 0;
+    int random = 0;
+    CustomEnums::Spawn pos;
     for (int i = 0; i < spawnAmt; i++)
     {
-        randx = rand() % ScreenW;
-        randy = rand() % ScreenH;
-        spawn(randx, randy);
+
+        random = rand() % 4;
+        pos = positions[random];
+        spawn(pos, ScreenW, ScreenH);
     }
 }
 
 void EnemyManager::InitSpawn(int ScreenW, int ScreenH)
 {
     // loop max times and spawn ships randomly on screen
-    int randx = 0;
-    int randy = 0;
+    int random = 0;
+    CustomEnums::Spawn pos;
     for (int i = 0; i < max; i++)
     {
         // generate random x and y
         // use to spawn enemy ship and add to list
-        randx = rand() % ScreenW;
-        randy = rand() % ScreenH;
-        spawn(randx, randy);
+        /* Spawn ships at random positions around edge of screen */
+        // have a list of spawn positions(enums).. then for every iteration
+        // generate a random number between the length of the list and 0
+        // index the list at the random number and retrieve the spawnposition
+        // pass it to spawn function
+        random = rand() % 4;
+        pos = positions[random];
+
+        // In spawn function, using spawn position and deviation
+        // and generating a random position(x or y) we set the random spawn position
+        spawn(pos, ScreenW, ScreenH);
     }
 }
 
-void EnemyManager::spawn(int x, int y)
+void EnemyManager::spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH)
 {
+    int x = 0;
+    int y = 0;
+
+    if (pos == CustomEnums::Spawn::Bottom)
+    {
+        // Spawn at bottom
+        // X is random y is max - deviation
+        x = rand() % ScreenW + 1;
+        y = ScreenH - deviation;
+    }
+    else if (pos == CustomEnums::Spawn::Top)
+    {
+        // Spawn at top
+        // X is random y is min+deviation
+        x = rand() % ScreenW + 1;
+        y = deviation;
+    }
+    else if (pos == CustomEnums::Spawn::Right)
+    {
+        // Spawn at right
+        //  X is max -deviation and y is random
+        x = ScreenW - deviation;
+        y = rand() % ScreenH + 1;
+    }
+    else if (pos == CustomEnums::Spawn::Left)
+    {
+        // Spawn at left
+        // X is min + deviation and y is random
+        x = deviation;
+        y = rand() % ScreenH + 1;
+    }
     Enemy *ship = new Enemy(x, y);
     enemyships.push_back(ship);
 }
