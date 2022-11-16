@@ -9,6 +9,22 @@ EnemyManager::EnemyManager()
     // position of Enemy ship, store result in list
 }
 
+EnemyManager::EnemyManager(SDL_Texture *r, SDL_Texture *s, SDL_Texture *w)
+{
+    srand(time(NULL));
+    // set regular
+    reg.text = r;
+    reg.etype = CustomEnums::EnemyT::Regular;
+
+    // set space bane
+    sbane.text = s;
+    sbane.etype = CustomEnums::EnemyT::SpaceBane;
+
+    // set war veteran
+    wv.text = w;
+    wv.etype = CustomEnums::EnemyT::WarVet;
+}
+
 EnemyManager::~EnemyManager()
 {
     // Destructor
@@ -91,7 +107,7 @@ void EnemyManager::spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH)
     enemyships.push_back(ship);
 }
 
-void EnemyManager::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, double dt, int ScreenW, int ScreenH)
+void EnemyManager::render(SDL_Renderer *renderer, Rocket rocket, double dt, int ScreenW, int ScreenH)
 {
     // Check length of enemy ship list(number of enemy ships on screen)
     int length = enemyships.size();
@@ -124,7 +140,7 @@ void EnemyManager::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket r
     for (std::list<Enemy *>::iterator enemy = enemyships.begin(); enemy != enemyships.end();)
     {
         // render ship with its position
-        (*enemy)->render(renderer, texture, rocket, dt);
+        (*enemy)->render(renderer, reg.text, rocket, dt);
         // Check if enemyship life is empty
         // if empty, delete from list and move to next iteration
         if ((*enemy)->lifeEmpty())

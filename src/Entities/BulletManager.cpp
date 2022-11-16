@@ -34,6 +34,18 @@ void BulletManager::setEnemyList(std::list<Enemy *> &aE)
     // std::cout << allE->size() << std::endl;
 };
 
+void BulletManager::setTextures(SDL_Texture *rtext, SDL_Texture *riftext, SDL_Texture *kbtext)
+{
+    reg.text = rtext;
+    reg.type = CustomEnums::BulletT::RegularB;
+
+    sniper.text = riftext;
+    sniper.type = CustomEnums::BulletT::Rifle;
+
+    kb.text = kbtext;
+    kb.type = CustomEnums::BulletT::Kaboom;
+}
+
 bool BulletManager::checkCollision(Bullet *b)
 {
     // collision bool
@@ -48,8 +60,8 @@ bool BulletManager::checkCollision(Bullet *b)
             CustomEnums::Entity a = CustomEnums::Entity::Bullet;
             collided = true;
             (*ene)->takeHit(a);
-            //std::cout << "Bullet Collided with enemy ship" << std::endl;
-            //  call enemy takehit function
+            // std::cout << "Bullet Collided with enemy ship" << std::endl;
+            //   call enemy takehit function
         }
     }
     return collided;
@@ -71,7 +83,7 @@ bool BulletManager::isStalled()
 {
     return stall;
 }
-void BulletManager::update(SDL_Renderer *r, SDL_Texture *t, double dt, const int wW, const int wH)
+void BulletManager::update(SDL_Renderer *r, double dt, const int wW, const int wH)
 {
     // std::unique_ptr<Bullet> b;
     //  Bullet *temp;
@@ -80,7 +92,7 @@ void BulletManager::update(SDL_Renderer *r, SDL_Texture *t, double dt, const int
     bool collideEntity;
     for (std::list<Bullet *>::iterator bullet = all.begin(); bullet != all.end();)
     {
-        (*bullet)->render(r, t, dt);
+        (*bullet)->render(r, reg.text, dt);
         collideScreen = (*bullet)->collideScreen(wW, wH);
         collideEntity = checkCollision((*bullet)); // Entity Collision
         // collide
@@ -98,7 +110,7 @@ void BulletManager::update(SDL_Renderer *r, SDL_Texture *t, double dt, const int
     }
 }
 
-void BulletManager::render(SDL_Renderer *r, SDL_Texture *t, double dt, const int wW, const int wH)
+void BulletManager::render(SDL_Renderer *r, double dt, const int wW, const int wH)
 {
-    update(r, t, dt, wW, wH);
+    update(r,dt, wW, wH);
 }

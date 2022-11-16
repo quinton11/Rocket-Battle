@@ -18,4 +18,18 @@ public:
         Right,
         Left
     };
+
+    enum EnemyT
+    {
+        Regular,
+        SpaceBane,
+        WarVet
+    };
+
+    enum BulletT
+    {
+        RegularB,
+        Rifle,
+        Kaboom
+    };
 };
