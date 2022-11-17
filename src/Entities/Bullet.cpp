@@ -9,7 +9,7 @@ Bullet::Bullet(float sx, float sy, float ang, bool f)
     rect.x = sx - 4;
     rect.y = sy;
     rect.w = 8;
-    rect.h = 15;
+    rect.h = 25;
     angle = ang;
     deltax = speed * sin(angle * degtorad);
     deltay = speed * (-1 * cos(angle * degtorad));

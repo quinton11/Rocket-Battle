@@ -142,6 +142,69 @@ void Enemy::takeHit(CustomEnums::Entity e)
     }
 }
 
+EnemyShoot Enemy::attack(Rocket rocket)
+{
+    float rcx, rcy; // rocket centres
+    float cx, cy;   // enemy centres
+    float disx, disy;
+    float distance;
+    rcx = rocket.rect.x + rocket.rect.w / 2;
+    rcy = rocket.rect.y + rocket.rect.h / 2;
+    cx = rect.x + rect.w / 2;
+    cy = rect.y + rect.h / 2;
+    disx = abs(cx - rcx);
+    disy = abs(cy - rcy);
+    distance = sqrt((disy * disy) + (disx * disx));
+
+    EnemyShoot shoot;
+    shoot.btype = CustomEnums::BulletT::RegularB;
+    shoot.shoot = false;
+    shoot.speed = 0.0f;
+
+    // check rocket position
+    // based on enemy type, we perform certain actions
+    if (type == CustomEnums::EnemyT::Regular)
+    {
+        // Do something if enemy is regular
+        // If distance between rocket and ship is within a range
+        // decrease interval by one
+        // if interval is less than 0,set interval to 2 x init value - 1
+        // return shoot with appropriate bullet
+        // return shoot
+        // std::cout << "Shoot" << std::endl;
+        // std::cout << distance << "," << attackRange << std::endl;
+        if (attackRange > distance)
+        {
+            if ((interval % 50) == 0)
+            {
+                shoot.btype = CustomEnums::BulletT::RegularB;
+                shoot.shoot = true;
+                shoot.speed = 50.0f;
+                // std::cout << "Enemy shoot" << std::endl;
+                if (interval < 0)
+                {
+                    //std::cout << "Less than" << std::endl;
+                    interval = 100;
+                }
+            }
+            interval -= 1;
+            return shoot;
+        }
+    }
+    else if (type == CustomEnums::EnemyT::SpaceBane)
+    {
+        // Do another thing if enemy is Space Bane
+        return shoot;
+    }
+    else if (type == CustomEnums::EnemyT::WarVet)
+    {
+        // Do another thing if enemy is War Vet
+        return shoot;
+    }
+
+    return shoot;
+}
+
 void Enemy::rocketAim(Rocket rocket, float &normy, float &normx)
 {
     float dx, dy, mag;
@@ -166,23 +229,19 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
     // SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), rect.y, (rect.x + rect.w / 2), (rect.y - 50));
 
     // Drawing enemy ship aim
-    SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (normx), (normy));
+    // SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (normx), (normy));
     // SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-    /* SDL_RenderDrawPointF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2));
-    SDL_RenderDrawPointF(renderer, (rect.x), (rect.y));
-    SDL_RenderDrawPointF(renderer, (rect.x + rect.w), (rect.y));
-    SDL_RenderDrawPointF(renderer, (rect.x), (rect.y + rect.h));
-    SDL_RenderDrawPointF(renderer, (rect.x + rect.w), (rect.y + rect.h)); */
 }
 
 // angle and position should change based on rocket position
 
-Enemy::Enemy(int x, int y)
+Enemy::Enemy(int x, int y, CustomEnums::EnemyT t)
 {
     rect.x = x;
     rect.y = y;
     rect.w = 60;
     rect.h = 45;
+    type = t;
 }
 
 Enemy::~Enemy() {}

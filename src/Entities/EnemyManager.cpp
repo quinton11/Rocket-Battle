@@ -5,6 +5,7 @@
 EnemyManager::EnemyManager()
 {
     srand(time(NULL));
+
     // Using screen width and height, set x and y starting
     // position of Enemy ship, store result in list
 }
@@ -103,22 +104,22 @@ void EnemyManager::spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH)
         x = deviation;
         y = rand() % ScreenH + 1;
     }
-    Enemy *ship = new Enemy(x, y);
+    Enemy *ship = new Enemy(x, y, CustomEnums::EnemyT::Regular);
     enemyships.push_back(ship);
 }
 
-void EnemyManager::render(SDL_Renderer *renderer, Rocket rocket, double dt, int ScreenW, int ScreenH)
+void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rocket, double dt, int ScreenW, int ScreenH)
 {
     // Check length of enemy ship list(number of enemy ships on screen)
     int length = enemyships.size();
-    // std::cout << "Enemy Ships size" << std::endl;
+    //std::cout << "Enemy Ships size" << std::endl;
 
     if (length == 0)
     {
         // If enemy ships are zero,at the start of game
 
         InitSpawn(ScreenW, ScreenH);
-        // std::cout << "Init Spawn" << std::endl;
+        //std::cout << "Init Spawn" << std::endl;
     }
 
     // Generate random number less than 5
@@ -127,6 +128,7 @@ void EnemyManager::render(SDL_Renderer *renderer, Rocket rocket, double dt, int 
     int randid = rand() % 2 + 1;
     // if random number is greater than number of ships
     // if number of ships is less than 2 spawn a ship
+    EnemyShoot shoot;
 
     // NB:: Fix spawning mechanism
     bool spawn = (random > length) && (length <= randid);
@@ -137,12 +139,22 @@ void EnemyManager::render(SDL_Renderer *renderer, Rocket rocket, double dt, int 
         // std::cout << "Random Spawn" << std::endl;
     }
 
+    //std::cout << "In enemy loop" << std::endl;
     for (std::list<Enemy *>::iterator enemy = enemyships.begin(); enemy != enemyships.end();)
     {
         // render ship with its position
         (*enemy)->render(renderer, reg.text, rocket, dt);
         // Check if enemyship life is empty
         // if empty, delete from list and move to next iteration
+
+        // check if enemy shot a buller
+        shoot = (*enemy)->attack(rocket);
+        if (shoot.shoot)
+        {
+            float cx = (*enemy)->rect.x + (*enemy)->rect.w / 2;
+            float cy = (*enemy)->rect.y + (*enemy)->rect.h / 2;
+            bm->makeBullet(cx, cy, (*enemy)->angle, false);
+        }
         if ((*enemy)->lifeEmpty())
         {
             delete (*enemy);

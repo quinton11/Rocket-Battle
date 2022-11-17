@@ -51,7 +51,6 @@ void GameManager::Run()
 	SDL_Texture *sniper_text = txman.loadTexture("textures/laser24.png", nGraphics->getrenderer());
 	SDL_Texture *kb_text = txman.loadTexture("textures/laser64.png", nGraphics->getrenderer());
 
-
 	/*
 	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
 	by ROcket depending on the level.
@@ -61,8 +60,8 @@ void GameManager::Run()
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager(e_text, sb_text, wv_text);
 
-	//Enemy attributes
-	bm->setTextures(laser_text,sniper_text,kb_text);
+	// Enemy attributes
+	bm->setTextures(laser_text, sniper_text, kb_text);
 	bm->setEnemyList(em.enemyships);
 
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
@@ -92,11 +91,11 @@ void GameManager::Run()
 
 		else
 		{
-			// std::cout<<"Starting Loop"<<std::endl;
+			//std::cout<<"Starting Loop"<<std::endl;
 
 			// keyboard input
 			kb_handler->keyboard_input(state, &rocket, dt);
-			// std::cout<<"After keyboard input"<<std::endl;
+			//std::cout<<"After keyboard input"<<std::endl;
 
 			// single hit keys
 			//
@@ -104,28 +103,28 @@ void GameManager::Run()
 
 			// Check event queue to exeute events
 			kb_handler->keyboard_events(nevents, isDone, &rocket, bm);
-			// std::cout<<"Keyboard events"<<std::endl;
+			//std::cout<<"Keyboard events"<<std::endl;
 
 			SDL_RenderClear(nGraphics->getrenderer());
-			// std::cout<<"Clearing Renderer"<<std::endl;
+			//std::cout<<"Clearing Renderer"<<std::endl;
 			//  Renderscreen
 			nGraphics->render(screen_texture);
-			// std::cout<<"Rendering Screen"<<std::endl;
+			//std::cout<<"Rendering Screen"<<std::endl;
 
 			// Render rocket
 
 			rocket.render(nGraphics->getrenderer(), texture, dt);
-			// std::cout<<"Rendering rocket"<<std::endl;
-			em.render(nGraphics->getrenderer(), rocket, dt, nGraphics->window_width, nGraphics->window_height);
-			// std::cout<<"Enemy Manager render"<<std::endl;
+			//std::cout<<"Rendering rocket"<<std::endl;
+			em.render(nGraphics->getrenderer(), bm, rocket, dt, nGraphics->window_width, nGraphics->window_height);
+			//std::cout<<"Enemy Manager render"<<std::endl;
 
 			// ship.render(nGraphics->getrenderer(), e_text, rocket, dt);
 			bm->render(nGraphics->getrenderer(), dt, nGraphics->window_width, nGraphics->window_height);
-			// std::cout<<"Bullet Manager render"<<std::endl;
+			//std::cout<<"Bullet Manager render"<<std::endl;
 
 			// Updating screen
 			SDL_RenderPresent(nGraphics->getrenderer());
-			// std::cout<<"Render Present"<<std::endl;
+			//std::cout<<"Render Present"<<std::endl;
 		}
 	}
 }

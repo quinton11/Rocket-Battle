@@ -1,7 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "Bullet.h"
-#include "EnemyManager.h"
+#include "Enemy.h"
 #include <list>
 #include "Rocket.h"
 #include <vector>

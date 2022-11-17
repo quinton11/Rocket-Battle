@@ -55,7 +55,7 @@ bool BulletManager::checkCollision(Bullet *b)
     {
         // std::cout << "Size of enemy: " << (allE)->size();
 
-        if (b->collision((*ene)->rect))
+        if (b->collision((*ene)->rect) && b->from)
         {
             CustomEnums::Entity a = CustomEnums::Entity::Bullet;
             collided = true;
@@ -112,5 +112,5 @@ void BulletManager::update(SDL_Renderer *r, double dt, const int wW, const int w
 
 void BulletManager::render(SDL_Renderer *r, double dt, const int wW, const int wH)
 {
-    update(r,dt, wW, wH);
+    update(r, dt, wW, wH);
 }

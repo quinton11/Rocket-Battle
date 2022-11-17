@@ -24,7 +24,7 @@ private:
 	float tspeed = 0;
 	float angle = 0.0f;
 	float ang_inv = 0.0f;
-	float rot_speed = 150.0f; //90.0f 150.0f
+	float rot_speed = 120.0f; //90.0f 150.0f
 	float degtorad = 0.017453f;
 
 	float deltax = 0;
