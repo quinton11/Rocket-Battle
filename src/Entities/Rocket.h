@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "GameEntity.h"
 #include "..\VectorMath\Vector2d.h"
+#include "..\Utils\CustomEnums.h"
 
 class Rocket : public GameEntity
 {
@@ -11,7 +12,7 @@ public:
 	Vector2d rectvec;
 	Vector2d centervec;
 	Vector2d rotvec;
-	Vector2d dirvec;//Direction vector
+	Vector2d dirvec; // Direction vector
 	Vector2d changevec;
 
 	bool thrust = false;
@@ -24,18 +25,23 @@ private:
 	float tspeed = 0;
 	float angle = 0.0f;
 	float ang_inv = 0.0f;
-	float rot_speed = 120.0f; //90.0f 150.0f
+	float rot_speed = 120.0f; // 90.0f 150.0f
 	float degtorad = 0.017453f;
 
 	float deltax = 0;
 	float deltay = 0;
+	float health = 20.0f;
+	float healthMax = 20.0f;
+	float healthPercent = 1.0f;
 
 public:
 	Rocket();
 	~Rocket();
-
+	void takeHit(CustomEnums::Entity e);
 	void update(double dt);
 	void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
+    void renderHealthBar(SDL_Renderer *renderer);
+
 	void moveleft(double dt);
 	void moveright(double dt);
 	void moveup();
@@ -43,7 +49,8 @@ public:
 	float getAngle();
 	void set_speed(float sp);
 	void aimPoint();
-    bool collision(SDL_FRect other);
+	void calcHealthP();
+	bool collision(SDL_FRect other);
 
 	Vector2d getDirection();
 

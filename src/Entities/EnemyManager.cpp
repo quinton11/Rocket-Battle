@@ -147,7 +147,7 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rock
         // Check if enemyship life is empty
         // if empty, delete from list and move to next iteration
 
-        // check if enemy shot a buller
+        // check if enemy shot a bullet
         shoot = (*enemy)->attack(rocket);
         if (shoot.shoot)
         {

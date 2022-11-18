@@ -33,9 +33,11 @@ private:
     float max_dist = 50.0f; // If distance from rocket is greater than this move.
     float rot_speed = 20.0f;
     float aimmag = 30.0f;
-    float myLife = 5.0f;
     float attackRange = 200.0f;
     int interval=100;
+    float health = 5.0f;
+    float healthMax = 5.0f;
+    float healthPercent =1.0f;
 
 public:
     void update(Rocket rocket, double dt);
@@ -46,6 +48,8 @@ public:
     void angleCalc(Rocket rocket, double dt);
     void rocketAim(Rocket rocket, float &normy, float &normx);
     void render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, double dt);
+    void renderHealthBar(SDL_Renderer *renderer);
+    void calcHealthP();
     EnemyShoot attack(Rocket rocket);
 };
 

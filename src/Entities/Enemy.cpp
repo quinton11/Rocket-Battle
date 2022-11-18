@@ -69,7 +69,7 @@ void Enemy::angleCheck()
 bool Enemy::lifeEmpty()
 {
     // check if health is empty,
-    if (myLife <= 0)
+    if (health <= 0)
     {
         return true;
     }
@@ -127,9 +127,9 @@ void Enemy::takeHit(CustomEnums::Entity e)
     if (e == CustomEnums::Entity::Bullet)
     {
         // Bullet collision
-        if (myLife >= 0)
+        if (health >= 0)
         {
-            myLife -= 1;
+            health -= 1;
         }
     }
     else if (e == CustomEnums::Entity::Rock)
@@ -140,6 +140,22 @@ void Enemy::takeHit(CustomEnums::Entity e)
     {
         // Rocket collision
     }
+
+    // calcHealthP();
+}
+
+void Enemy::calcHealthP()
+{
+    //
+    if (health > healthMax)
+    {
+        health = healthMax;
+    }
+    else if (health < 0.0f)
+    {
+        health = 0.0f;
+    }
+    healthPercent = (health / healthMax) * 1.0f;
 }
 
 EnemyShoot Enemy::attack(Rocket rocket)
@@ -183,7 +199,7 @@ EnemyShoot Enemy::attack(Rocket rocket)
                 // std::cout << "Enemy shoot" << std::endl;
                 if (interval < 0)
                 {
-                    //std::cout << "Less than" << std::endl;
+                    // std::cout << "Less than" << std::endl;
                     interval = 100;
                 }
             }
@@ -215,6 +231,30 @@ void Enemy::rocketAim(Rocket rocket, float &normy, float &normx)
     normy = (dy / mag) * 30.0f + (rect.y + rect.h / 2);               // aim from ship centre towards rocket centreF
 }
 
+void Enemy::renderHealthBar(SDL_Renderer *renderer)
+{
+    // calc health percentage
+    calcHealthP();
+
+    // use percentage to render life
+    // RED BACKGROUND
+    float bgx = rect.x + 20;
+    float bgy = rect.y + rect.h + 10;
+    float bgw = rect.w - 20;
+    float bgh = 2;
+    SDL_FRect bgrect = {bgx, bgy, bgw, bgh};
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderFillRectF(renderer, &bgrect);
+    // GREEN FOREGROUND
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+    float fw = bgw * healthPercent;
+    float fx = bgx + (bgw - fw);
+    SDL_FRect fgrect = {fx, bgy, fw, bgh};
+    SDL_RenderFillRectF(renderer, &fgrect);
+    // Setting color to white
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+}
+
 void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, double dt)
 {
     update(rocket, dt); // Takes in reference to rocket ship for knowledge on its position
@@ -226,6 +266,7 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
 
     SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    renderHealthBar(renderer);
     // SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), rect.y, (rect.x + rect.w / 2), (rect.y - 50));
 
     // Drawing enemy ship aim
@@ -239,8 +280,8 @@ Enemy::Enemy(int x, int y, CustomEnums::EnemyT t)
 {
     rect.x = x;
     rect.y = y;
-    rect.w = 60;
-    rect.h = 45;
+    rect.w = 45;
+    rect.h = 60;
     type = t;
 }
 

@@ -59,6 +59,64 @@ void Rocket::aimPoint()
 	// formula for rotated point
 }
 
+void Rocket::takeHit(CustomEnums::Entity e)
+{
+	if (e == CustomEnums::Entity::Bullet)
+	{
+		// Bullet collision
+		if (health >= 0)
+		{
+			health -= 1;
+		}
+	}
+	else if (e == CustomEnums::Entity::Rock)
+	{
+		// Rock collision
+	}
+	else if (e == CustomEnums::Entity::Enemy)
+	{
+		// Enemy collision
+	}
+}
+
+void Rocket::calcHealthP()
+{
+	//
+	if (health > healthMax)
+	{
+		health = healthMax;
+	}
+	else if (health < 0.0f)
+	{
+		health = 0.0f;
+	}
+	healthPercent = (health / healthMax) * 1.0f;
+}
+
+void Rocket::renderHealthBar(SDL_Renderer *renderer)
+{
+	// calc health percentage
+	calcHealthP();
+
+	// use percentage to render life
+	// RED BACKGROUND
+	float bgx = rect.x - 10;
+	float bgy = rect.y + rect.h + 10;
+	float bgw = rect.w + 20;
+	float bgh = 2;
+	SDL_FRect bgrect = {bgx, bgy, bgw, bgh};
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRectF(renderer, &bgrect);
+	// GREEN FOREGROUND
+	SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+	float fw = bgw * healthPercent;
+	float fx = bgx + (bgw - fw);
+	SDL_FRect fgrect = {fx, bgy, fw, bgh};
+	SDL_RenderFillRectF(renderer, &fgrect);
+	// Setting color to white
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+}
+
 void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 {
 
@@ -68,6 +126,8 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
 	SDL_RenderDrawPointF(renderer, rect.x, rect.y);
+
+	renderHealthBar(renderer);
 }
 bool Rocket::collision(SDL_FRect other)
 {
