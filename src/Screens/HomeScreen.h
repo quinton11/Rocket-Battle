@@ -9,13 +9,15 @@ struct Button
 	std::string name;
 	bool isActive;
 	bool isSelected;
+	SDL_FRect rect;
 };
 
 struct Menu
 {
 	std::string name;
-	std::list<Button> buttons;
+	std::list<Button *> buttons;
 	bool active;
+	bool set;
 };
 
 class HomeScreen : public Screen
@@ -24,23 +26,23 @@ class HomeScreen : public Screen
 public:
 	TextureManager textm;
 	// Main menu
-	Button start = {"start", false, false};
-	Button settings = {"settings", false, false};
-	Button mquit = {"quit", false, false};
-	Menu main = {"Main-Menu", {start, settings, mquit}, true};
+	Button *start = new Button{"start", false, false};
+	Button *settings = new Button{"settings", false, false};
+	Button *mquit = new Button{"quit", false, false};
+	Menu mainM = {"Main-Menu", {start, settings, mquit}, true, false};
 
 	// Start menu
-	Button newPlayer = {"New Player", false, false};
-	Button selectPlayer = {"Select Player", false, false};
-	Button highScore = {"High Score", false, false};
-	Button back = {"Back", false, false};
-	Menu Start = {"Start-Menu", {newPlayer, selectPlayer, highScore, back}, false};
+	Button *newPlayer = new Button{"New Player", false, false};
+	Button *selectPlayer = new Button{"Select Player", false, false};
+	Button *highScore = new Button{"High Score", false, false};
+	Button *back = new Button{"Back", false, false};
+	Menu Start = {"Start-Menu", {newPlayer, selectPlayer, highScore, back}, false, false};
 
 	// Play Menu
-	Button play = {"Play", false, false};
-	Button msettings = {"Settings", false, false};
-	Button pback = {"Back", false, false};
-	Menu Play = {"Play-Menu", {play, msettings, pback}, false};
+	Button *play = new Button{"Play", false, false};
+	Button *msettings = new Button{"Settings", false, false};
+	Button *pback = new Button{"Back", false, false};
+	Menu Play = {"Play-Menu", {play, msettings, pback}, false, false};
 
 private:
 	bool ismounted = true;
@@ -49,20 +51,23 @@ private:
 	bool quit = false;
 	SDL_Texture *screentexture = nullptr;
 	SDL_Event events;
-	SDL_Rect play_rect = {250, 350, 70, 70};
+	SDL_FRect play_rect = {250, 350, 70, 70};
 	int mouse_x, mouse_y = 0;
 
 public:
-	void render(SDL_Renderer *renderer);
-	void renderMenu(SDL_Renderer *renderer);
+	void render(SDL_Renderer *renderer, int screenW, int screenH);
+	void renderMenu(SDL_Renderer *renderer, int screenW, int screenH);
 	void eventchecker();
 
 	bool getismounted();
 	bool getisquit();
 	void setismounted(bool);
-	bool mouse_in_play(int &x, int &y, SDL_Rect &rect);
+	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
 	HomeScreen(SDL_Renderer *renderer);
 	HomeScreen();
 	~HomeScreen();
+
+private:
+	void inButton(bool isClicked);
 };
