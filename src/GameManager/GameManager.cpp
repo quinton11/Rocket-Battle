@@ -77,6 +77,7 @@ void GameManager::Run()
 	{
 
 		// Deltatime
+		//std::cout<<"Started";
 		dt = tset.getDeltaTime();
 
 		if (homescreen.getismounted())

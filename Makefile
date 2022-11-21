@@ -2,7 +2,7 @@ CC = g++
 INC_DIR = Dependencies\SDL2\include
 CPP_FILES := $(wildcard src/*.cpp src/*/*.cpp)
 OBJ_FILES := $(patsubst src/%,lib/%,$(CPP_FILES:.cpp=.o))
-LIBS:=-L Dependencies\SDL2\lib\x64 -lSDL2main -lSDL2 -lSDL2_image
+LIBS:=-L Dependencies\SDL2\lib\x64 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 TARGET:=bin/run
 CC_FLAGS = -c -I$(INC_DIR)
 
