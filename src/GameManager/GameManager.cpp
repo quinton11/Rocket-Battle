@@ -51,6 +51,10 @@ void GameManager::Run()
 	SDL_Texture *sniper_text = txman.loadTexture("textures/laser24.png", nGraphics->getrenderer());
 	SDL_Texture *kb_text = txman.loadTexture("textures/laser64.png", nGraphics->getrenderer());
 
+	// FONTS
+	std::string fontPath = "textures/fonts/Starjedi.ttf";
+	TTF_Font *font = TTF_OpenFont(fontPath.c_str(), 25);
+
 	/*
 	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
 	by ROcket depending on the level.
@@ -64,7 +68,7 @@ void GameManager::Run()
 	bm->setTextures(laser_text, sniper_text, kb_text);
 	bm->setEnemyList(em.enemyships);
 
-	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
+	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), font);
 	KeyboardHandler *kb_handler = KeyboardHandler::instance();
 
 	// TimeSetting
@@ -77,7 +81,7 @@ void GameManager::Run()
 	{
 
 		// Deltatime
-		//std::cout<<"Started";
+		// std::cout<<"Started";
 		dt = tset.getDeltaTime();
 
 		if (homescreen.getismounted())

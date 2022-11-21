@@ -60,15 +60,9 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 		float startby = my + initdist;
 		float settingsby = startby + bh + ydist;
 		float quitby = settingsby + bh + ydist;
-		// std::cout << "Main menu is active" << std::endl;
-		//  create menu buttons
-		// SDL_FRect startRect = {bx, startby, bw, bh};
-		// SDL_FRect settingsRect = {bx, settingsby, bw, bh};
-		// SDL_FRect quitRect = {bx, quitby, bw, bh};
+
 		if (!(*activeMenu).set)
 		{
-			// std::cout << "Not set" << std::endl;
-			//  start,settings,quit
 			SDL_FRect startRect = {bx, startby, bw, bh};
 			SDL_FRect settingsRect = {bx, settingsby, bw, bh};
 			SDL_FRect quitRect = {bx, quitby, bw, bh};
@@ -80,6 +74,13 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In start" << std::endl;
 
 					(*b)->rect = startRect;
+					// Create text
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+					// read in font
+					// use font to create texture
+					// create start rect text texture and assign to rect
 				}
 				else if ((*b)->name == "settings")
 				{
@@ -100,6 +101,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 		// Rendering
 		SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRectF(renderer, &(start->rect));
+		SDL_RenderCopyF(renderer, start->text, NULL, &(start->rect));
 		SDL_RenderFillRectF(renderer, &(settings->rect));
 		SDL_RenderFillRectF(renderer, &(mquit->rect));
 	}
@@ -356,9 +358,10 @@ void HomeScreen::setismounted(bool is)
 	ismounted = is;
 }
 
-HomeScreen::HomeScreen(SDL_Renderer *renderer)
+HomeScreen::HomeScreen(SDL_Renderer *renderer, TTF_Font *font)
 {
 	screentexture = textm.loadTexture("textures/amongus2.png", renderer);
+	selffont = font;
 	activeMenu = &mainM;
 }
 
