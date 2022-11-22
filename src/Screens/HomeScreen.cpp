@@ -47,8 +47,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 	SDL_FRect settingsRect;
 	SDL_FRect quitRect;
 
-	float bw = 120;
-	float bh = 30;
+	float bw = 100;
+	float bh = 25;
 	float bx = (mx + mw / 2) - bw / 2; //- button's width
 	float initdist = 50;			   // Initial vertical distance btwn first button and container
 	float ydist = 10;				   // vertical distance between buttons
@@ -78,20 +78,50 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
 					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
 					SDL_FreeSurface(surf);
-					// read in font
-					// use font to create texture
-					// create start rect text texture and assign to rect
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
+					// query texture for width and height
+					/* int tw;
+					int th;
+					SDL_QueryTexture(nullptr, nullptr, nullptr, &tw, &th);
+					int tx = ((*b)->rect.x + (*b)->rect.w / 2) - tw / 2;
+					int ty = (*b)->rect.y + 2;
+					(*b)->trect = {tx, ty, tw, th}; */
+
+					// populate text rect
+					//  read in font
+					//  use font to create texture
+					//  create start rect text texture and assign to rect
 				}
 				else if ((*b)->name == "settings")
 				{
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = settingsRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				else if ((*b)->name == "quit")
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = quitRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				++b;
 			}
@@ -99,11 +129,65 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			// std::cout << "Now set" << std::endl;
 		}
 		// Rendering
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
+		{
+			if ((*b)->name == "start")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(start->rect));
+					SDL_RenderCopyF(renderer, start->text, nullptr, &(start->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(start->rect));
+					SDL_RenderCopyF(renderer, start->hovertext, nullptr, &(start->rect));
+				}
+			}
+			else if ((*b)->name == "settings")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(settings->rect));
+					SDL_RenderCopyF(renderer, settings->text, nullptr, &(settings->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(settings->rect));
+					SDL_RenderCopyF(renderer, settings->hovertext, nullptr, &(settings->rect));
+				}
+			}
+			else if ((*b)->name == "quit")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(mquit->rect));
+					SDL_RenderCopyF(renderer, mquit->text, nullptr, &(mquit->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(mquit->rect));
+					SDL_RenderCopyF(renderer, mquit->hovertext, nullptr, &(mquit->rect));
+				}
+			}
+
+			b++;
+		}
+		/* SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRectF(renderer, &(start->rect));
-		SDL_RenderCopyF(renderer, start->text, NULL, &(start->rect));
-		SDL_RenderFillRectF(renderer, &(settings->rect));
-		SDL_RenderFillRectF(renderer, &(mquit->rect));
+		// SDL_RenderCopy(renderer, start->text, NULL, &(start->trect));
+		SDL_RenderCopyF(renderer, start->text, nullptr, &(start->rect)); */
+		/* SDL_RenderFillRectF(renderer, &(settings->rect));
+		SDL_RenderCopyF(renderer, settings->text, NULL, &(settings->rect)); */
+
+		/* SDL_RenderFillRectF(renderer, &(mquit->rect));
+		SDL_RenderCopyF(renderer, mquit->text, NULL, &(mquit->rect)); */
 	}
 
 	// position buttons
@@ -132,22 +216,55 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In start" << std::endl;
 
 					(*b)->rect = newplayerRect;
+					// Create text
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				else if ((*b)->name == "Select Player")
 				{
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = selectplayerRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				else if ((*b)->name == "High Score")
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = highscoreRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				else if ((*b)->name == "Back")
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = backRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				++b;
 			}
@@ -155,11 +272,83 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			// std::cout << "Now set" << std::endl;
 		}
 		// Rendering
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
+		{
+			if ((*b)->name == "New Player")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(newPlayer->rect));
+					SDL_RenderCopyF(renderer, newPlayer->text, nullptr, &(newPlayer->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(newPlayer->rect));
+					SDL_RenderCopyF(renderer, newPlayer->hovertext, nullptr, &(newPlayer->rect));
+				}
+			}
+			else if ((*b)->name == "Select Player")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(selectPlayer->rect));
+					SDL_RenderCopyF(renderer, selectPlayer->text, nullptr, &(selectPlayer->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(selectPlayer->rect));
+					SDL_RenderCopyF(renderer, selectPlayer->hovertext, nullptr, &(selectPlayer->rect));
+				}
+			}
+			else if ((*b)->name == "High Score")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(highScore->rect));
+					SDL_RenderCopyF(renderer, highScore->text, nullptr, &(highScore->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(highScore->rect));
+					SDL_RenderCopyF(renderer, highScore->hovertext, nullptr, &(highScore->rect));
+				}
+			}
+			else if ((*b)->name == "Back")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(back->rect));
+					SDL_RenderCopyF(renderer, back->text, nullptr, &(back->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(back->rect));
+					SDL_RenderCopyF(renderer, back->hovertext, nullptr, &(back->rect));
+				}
+			}
+
+			b++;
+		}
+		/* SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRectF(renderer, &(newPlayer->rect));
-		SDL_RenderFillRectF(renderer, &(selectPlayer->rect));
-		SDL_RenderFillRectF(renderer, &(highScore->rect));
-		SDL_RenderFillRectF(renderer, &(back->rect));
+		SDL_RenderCopyF(renderer, newPlayer->text, nullptr, &(newPlayer->rect)); */
+
+		/* SDL_RenderFillRectF(renderer, &(selectPlayer->rect));
+		SDL_RenderCopyF(renderer, selectPlayer->text, nullptr, &(selectPlayer->rect)); */
+
+		/* SDL_RenderFillRectF(renderer, &(highScore->rect));
+		SDL_RenderCopyF(renderer, highScore->text, nullptr, &(highScore->rect)); */
+
+		/* SDL_RenderFillRectF(renderer, &(back->rect));
+		SDL_RenderCopyF(renderer, back->text, nullptr, &(back->rect)); */
 	}
 	else if ((*activeMenu).name == Play.name)
 	{
@@ -183,17 +372,40 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In start" << std::endl;
 
 					(*b)->rect = playRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				else if ((*b)->name == "Settings")
 				{
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = settingsRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				else if ((*b)->name == "Back")
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = backRect;
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {0, 0, 0});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
 				}
 				++b;
 			}
@@ -201,10 +413,66 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			// std::cout << "Now set" << std::endl;
 		}
 		// Rendering
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+
+		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
+		{
+			if ((*b)->name == "Play")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(play->rect));
+					SDL_RenderCopyF(renderer, play->text, nullptr, &(play->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(play->rect));
+					SDL_RenderCopyF(renderer, play->hovertext, nullptr, &(play->rect));
+				}
+			}
+			else if ((*b)->name == "Settings")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(msettings->rect));
+					SDL_RenderCopyF(renderer, msettings->text, nullptr, &(msettings->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(msettings->rect));
+					SDL_RenderCopyF(renderer, msettings->hovertext, nullptr, &(msettings->rect));
+				}
+			}
+			else if ((*b)->name == "Back")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(pback->rect));
+					SDL_RenderCopyF(renderer, pback->text, nullptr, &(pback->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					SDL_RenderFillRectF(renderer, &(pback->rect));
+					SDL_RenderCopyF(renderer, pback->hovertext, nullptr, &(pback->rect));
+				}
+			}
+
+			b++;
+		}
+		/* SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRectF(renderer, &(play->rect));
-		SDL_RenderFillRectF(renderer, &(msettings->rect));
-		SDL_RenderFillRectF(renderer, &(pback->rect));
+		SDL_RenderCopyF(renderer, play->text, nullptr, &(play->rect)); */
+
+		/* SDL_RenderFillRectF(renderer, &(msettings->rect));
+		SDL_RenderCopyF(renderer, msettings->text, nullptr, &(msettings->rect)); */
+
+		/* SDL_RenderFillRectF(renderer, &(pback->rect));
+		SDL_RenderCopyF(renderer, pback->text, nullptr, &(pback->rect)); */
 	}
 }
 
@@ -255,12 +523,15 @@ void HomeScreen::inButton(bool isClicked)
 	{
 		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 		{
+			(*b)->isActive = false;
 			// toggle isactive to false
 			if (mouse_in_play(mouse_x, mouse_y, (*b)->rect))
 			{
 				// toggle isactive to true
 				// std::cout << "In button: " << (*b)->name << std::endl;
 				// if isclicked is true
+				(*b)->isActive = true;
+
 				if (isClicked)
 				{
 					std::cout << (*b)->name << " -- Clicked" << std::endl;
@@ -273,11 +544,14 @@ void HomeScreen::inButton(bool isClicked)
 					}
 					else if ((*b)->name == "settings")
 					{
+						std::cout << "To settings" << std::endl;
 						// std::cout << "In settings" << std::endl;
 					}
 					else if ((*b)->name == "quit")
 					{
 						// std::cout << "In quit" << std::endl;
+						ismounted = false;
+						quit = true;
 					}
 				}
 				// check button name and trigger next menu accordingly
@@ -289,9 +563,13 @@ void HomeScreen::inButton(bool isClicked)
 	{
 		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 		{
+			(*b)->isActive = false;
+
 			if (mouse_in_play(mouse_x, mouse_y, (*b)->rect))
 			{
 				// std::cout << "In button: " << (*b)->name << std::endl;
+				(*b)->isActive = true;
+
 				if (isClicked)
 				{
 					std::cout << (*b)->name << " -- Clicked" << std::endl;
@@ -323,12 +601,28 @@ void HomeScreen::inButton(bool isClicked)
 	{
 		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 		{
+			(*b)->isActive = false;
+
 			if (mouse_in_play(mouse_x, mouse_y, (*b)->rect))
 			{
+				(*b)->isActive = true;
+
 				std::cout << "In button: " << (*b)->name << std::endl;
 				if (isClicked)
 				{
 					std::cout << (*b)->name << " -- Clicked" << std::endl;
+					if ((*b)->name == "Play")
+					{
+						// std::cout << "In start" << std::endl;
+					}
+					else if ((*b)->name == "Settings")
+					{
+						// std::cout << "In settings" << std::endl;
+					}
+					else if ((*b)->name == "Back")
+					{
+						// std::cout << "In quit" << std::endl;
+					}
 				}
 			}
 			++b;

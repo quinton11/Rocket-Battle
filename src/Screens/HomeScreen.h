@@ -3,7 +3,7 @@
 #include "..\GameManager\TextureManager.h"
 #include <string>
 #include "list"
-#include"SDL_ttf.h"
+#include "SDL_ttf.h"
 
 struct Button
 {
@@ -12,6 +12,7 @@ struct Button
 	bool isSelected;
 	SDL_FRect rect;
 	SDL_Texture *text;
+	SDL_Texture *hovertext;
 };
 
 struct Menu
@@ -67,7 +68,7 @@ public:
 	void setismounted(bool);
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
-	HomeScreen(SDL_Renderer *renderer,TTF_Font *font);
+	HomeScreen(SDL_Renderer *renderer, TTF_Font *font);
 	HomeScreen();
 	~HomeScreen();
 
