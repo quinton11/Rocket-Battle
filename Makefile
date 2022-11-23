@@ -5,7 +5,7 @@ OBJ_FILES := $(patsubst src/%,lib/%,$(CPP_FILES:.cpp=.o))
 LIBS:=-L Dependencies\SDL2\lib\x64 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 TARGET:=bin/run
 CC_FLAGS = -c -I$(INC_DIR)
-
+#under target $(LIBS) -lSDL2_ttf
 
 $(TARGET): $(OBJ_FILES)
 	mkdir -p $(dir $@)

@@ -4,7 +4,7 @@
 #include <string>
 #include "list"
 #include "SDL_ttf.h"
-#include "SubScreens.h"
+//#include "SubScreens.h"
 
 struct Button
 {
@@ -58,7 +58,7 @@ private:
 	SDL_FRect play_rect = {250, 350, 70, 70};
 	int mouse_x, mouse_y = 0;
 	TTF_Font *selffont;
-	SubScreen *subScreen; //holds subscreen
+	//SubScreen *subScreen; //holds subscreen
 
 public:
 	void render(SDL_Renderer *renderer, int screenW, int screenH);
@@ -71,6 +71,8 @@ public:
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
 	HomeScreen(SDL_Renderer *renderer, TTF_Font *font);
+	//HomeScreen(SDL_Renderer *renderer);
+
 	HomeScreen();
 	~HomeScreen();
 

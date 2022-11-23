@@ -4,30 +4,31 @@
 // SDL_Texture* HomeScreen::screentexture = textm.loadTexture("textures/universe.png", renderer);
 void HomeScreen::render(SDL_Renderer *renderer, int screenW, int screenH)
 {
+	SDL_RenderClear(renderer);
 
 	SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
 	while (ismounted)
 	{
 		// Check events
-		if (subScreen->getIsMounted())
-		{
-			//
-			subScreen->render(renderer, ismounted, quit);
-		}
-		else
-		{
-			HomeScreen::eventchecker();
-			// Render Image to window
-			SDL_RenderCopy(renderer, screentexture, NULL, NULL);
-			// SDL_RenderCopy(renderer, play, NULL, &play_rect);
-			/*
-			Have a pointer to current mounted sub-screen
-			if no mounted sub screen, pointer to sub screen object would have
-			a false ismounted flag, if false then renderMenu else render mounted sub screen
-			 */
-			renderMenu(renderer, screenW, screenH);
-			SDL_RenderPresent(renderer);
-		}
+		// if (subScreen->getIsMounted())
+		//{
+		//
+		//	subScreen->render(renderer, ismounted, quit, screenW, screenH);
+		//}
+		// else
+		//{
+		HomeScreen::eventchecker();
+		// Render Image to window
+		SDL_RenderCopy(renderer, screentexture, NULL, NULL);
+		// SDL_RenderCopy(renderer, play, NULL, &play_rect);
+		/*
+		Have a pointer to current mounted sub-screen
+		if no mounted sub screen, pointer to sub screen object would have
+		a false ismounted flag, if false then renderMenu else render mounted sub screen
+		 */
+		renderMenu(renderer, screenW, screenH);
+		SDL_RenderPresent(renderer);
+		//}
 	}
 }
 
@@ -39,7 +40,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 	float my = mh;
 	SDL_FRect menuContainer = {mx, my, mw, mh};
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-	// SDL_RenderFillRectF(renderer, &menuContainer);
+	//SDL_RenderFillRectF(renderer, &menuContainer);
 
 	SDL_FRect startRect;
 	SDL_FRect settingsRect;
@@ -211,7 +212,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			{
 				if ((*b)->name == "New Player")
 				{
-					// std::cout << "In start" << std::endl;
+					// std::cout << "In start" a<< std::endl;
 
 					(*b)->rect = newplayerRect;
 					// Create text
@@ -545,8 +546,9 @@ void HomeScreen::inButton(bool isClicked)
 					else if ((*b)->name == "settings")
 					{
 						std::cout << "To settings" << std::endl;
-						subScreen->setName("Settings");
-						subScreen->setIsMounted(true);
+						// subScreen->setName("Settings");
+						// subScreen->setIsMounted(true);
+						break;
 						// std::cout << "In settings" << std::endl;
 					}
 					else if ((*b)->name == "quit")
@@ -578,20 +580,23 @@ void HomeScreen::inButton(bool isClicked)
 					if ((*b)->name == "New Player")
 					{
 						// std::cout << "In start" << std::endl;
-						subScreen->setName("New Player");
-						subScreen->setIsMounted(true);
+						// subScreen->setName("New Player");
+						// subScreen->setIsMounted(true);
+						break;
 					}
 					else if ((*b)->name == "Select Player")
 					{
 						// std::cout << "In settings" << std::endl;
-						subScreen->setName("Select Player");
-						subScreen->setIsMounted(true);
+						// subScreen->setName("Select Player");
+						// subScreen->setIsMounted(true);
+						break;
 					}
 					else if ((*b)->name == "High Score")
 					{
 						// std::cout << "In quit" << std::endl;
-						subScreen->setName("High Score");
-						subScreen->setIsMounted(true);
+						// subScreen->setName("High Score");
+						// subScreen->setIsMounted(true);
+						break;
 					}
 					else if ((*b)->name == "Back")
 					{
@@ -626,8 +631,9 @@ void HomeScreen::inButton(bool isClicked)
 					else if ((*b)->name == "Settings")
 					{
 						// std::cout << "In settings" << std::endl;
-						subScreen->setName("Settings");
-						subScreen->setIsMounted(true);
+						// subScreen->setName("Settings");
+						// subScreen->setIsMounted(true);
+						break;
 					}
 					else if ((*b)->name == "Back")
 					{
@@ -666,6 +672,7 @@ HomeScreen::HomeScreen(SDL_Renderer *renderer, TTF_Font *font)
 {
 	screentexture = textm.loadTexture("textures/amongus2.png", renderer);
 	selffont = font;
+	//*subScreen = SubScreen(selffont);
 	activeMenu = &mainM;
 }
 

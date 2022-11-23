@@ -8,6 +8,7 @@
 #include "..\Entities\Enemy.h"
 #include "..\Entities\BulletManager.h"
 #include "..\Entities\EnemyManager.h"
+#include "SDL_ttf.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -69,6 +70,8 @@ void GameManager::Run()
 	bm->setEnemyList(em.enemyships);
 
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), font);
+	//HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
+
 	KeyboardHandler *kb_handler = KeyboardHandler::instance();
 
 	// TimeSetting
@@ -81,7 +84,7 @@ void GameManager::Run()
 	{
 
 		// Deltatime
-		// std::cout<<"Started";
+		//std::cout<<"Started";
 		dt = tset.getDeltaTime();
 
 		if (homescreen.getismounted())
