@@ -33,5 +33,5 @@ private:
     void renderSelectPlayer(SDL_Renderer *r, int screenW, int screenH);
     void renderHighScores(SDL_Renderer *r, int screenW, int screenH);
     void renderSettings(SDL_Renderer *r, int screenW, int screenH);
-    SDL_Texture *createText(SDL_Renderer *r, std::string text, SDL_Color color);
+    //SDL_Texture *createText(SDL_Renderer *r, std::string text, SDL_Color color);
 }; */

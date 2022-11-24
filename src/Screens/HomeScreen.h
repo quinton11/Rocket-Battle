@@ -24,6 +24,29 @@ struct Menu
 	bool set;
 };
 
+struct MinScreen
+{
+	std::string name;
+	int mx;
+	int my;
+	bool isMtd = false; // is mounted
+	TTF_Font *font;
+	SDL_Texture *backtext;
+	bool backTextSet = false;
+	void setName(std::string n);
+	void setfont(TTF_Font *f);
+	void eventChecker(bool &im, bool &quit);
+	void render(SDL_Renderer *r, bool &im, bool &quit, int sW, int sH);
+
+private:
+	void renderNewPlayer(SDL_Renderer *r, int sW, int sH);
+	void renderSelectPlayer(SDL_Renderer *r, int sW, int sH);
+	void renderHighScores(SDL_Renderer *r, int sW, int sH);
+	void renderSettings(SDL_Renderer *r, int sW, int sH);
+    
+
+};
+
 class HomeScreen : public Screen
 {
 
@@ -58,7 +81,8 @@ private:
 	SDL_FRect play_rect = {250, 350, 70, 70};
 	int mouse_x, mouse_y = 0;
 	TTF_Font *selffont;
-	//SubScreen *subScreen; //holds subscreen
+	//MinScreen *mS;
+	// SubScreen *subScreen; //holds subscreen
 
 public:
 	void render(SDL_Renderer *renderer, int screenW, int screenH);
@@ -71,7 +95,7 @@ public:
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
 	HomeScreen(SDL_Renderer *renderer, TTF_Font *font);
-	//HomeScreen(SDL_Renderer *renderer);
+	// HomeScreen(SDL_Renderer *renderer);
 
 	HomeScreen();
 	~HomeScreen();

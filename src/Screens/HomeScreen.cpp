@@ -40,7 +40,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 	float my = mh;
 	SDL_FRect menuContainer = {mx, my, mw, mh};
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-	//SDL_RenderFillRectF(renderer, &menuContainer);
+	// SDL_RenderFillRectF(renderer, &menuContainer);
 
 	SDL_FRect startRect;
 	SDL_FRect settingsRect;
@@ -673,6 +673,8 @@ HomeScreen::HomeScreen(SDL_Renderer *renderer, TTF_Font *font)
 	screentexture = textm.loadTexture("textures/amongus2.png", renderer);
 	selffont = font;
 	//*subScreen = SubScreen(selffont);
+	//MinScreen ms = MinScreen();
+	//mS = &ms;
 	activeMenu = &mainM;
 }
 
@@ -690,3 +692,69 @@ HomeScreen::~HomeScreen()
 
 	screentexture = NULL;
 }
+
+void MinScreen::setName(std::string n) { name = n; }
+void MinScreen::setfont(TTF_Font *f) { font = f; }
+void MinScreen::eventChecker(bool &im, bool &quit) {}
+void MinScreen::render(SDL_Renderer *r, bool &im, bool &quit, int sW, int sH) {}
+void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
+{
+	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(r, NULL); // fill screen
+	if (!backTextSet)
+	{
+		SDL_Texture *texture;
+		std::string text = "Back";
+		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		SDL_Texture *backt = texture;
+		backtext = backt;
+		backTextSet = true;
+	}
+	SDL_FRect backbutton = {20, 20, 50, 30};
+	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
+}
+void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
+{
+	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(r, NULL); // fill screen
+	// a back button at the top left corner
+	// back button
+	// x=20,y=20,w=50,h=30
+	if (!backTextSet)
+	{
+		SDL_Texture *texture;
+		std::string text = "Back";
+		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		SDL_Texture *backt = texture;
+		backtext = backt;
+		backTextSet = true;
+	}
+	SDL_FRect backbutton = {20, 20, 50, 30};
+	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
+}
+void MinScreen::renderHighScores(SDL_Renderer *r, int sW, int sH)
+{
+	/* SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(r, NULL); // fill screen
+	// a back button at the top left corner
+	// back button
+	// x=20,y=20,w=50,h=30
+	if (!backTextSet)
+	{
+		SDL_Texture *texture;
+		std::string text = "Back";
+		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		SDL_Texture *backt = texture;
+		backtext = backt;
+		backTextSet = true;
+	}
+	SDL_FRect backbutton = {20, 20, 50, 30};
+	SDL_RenderCopyF(r, backtext, nullptr, &backbutton); */
+}
+void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH) {}

@@ -77,7 +77,7 @@ void SubScreen::eventChecker(bool &im, bool &quit)
     }
 }
 
-SDL_Texture *SubScreen::createText(SDL_Renderer *r, std::string text, SDL_Color color)
+ SDL_Texture *SubScreen::createText(SDL_Renderer *r, std::string text, SDL_Color color)
 {
     SDL_Texture *texture;
     SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
@@ -85,7 +85,7 @@ SDL_Texture *SubScreen::createText(SDL_Renderer *r, std::string text, SDL_Color 
     SDL_FreeSurface(surf);
 
     return texture;
-}
+} 
 
 void SubScreen::renderNewPlayer(SDL_Renderer *r, int screenW, int screenH)
 {
@@ -98,7 +98,12 @@ void SubScreen::renderNewPlayer(SDL_Renderer *r, int screenW, int screenH)
     // x=20,y=20,w=50,h=30
     if (!backtextSet)
     {
-        SDL_Texture *backt = createText(r, "Back", {255, 255, 255, 255});
+        SDL_Texture *texture;
+        std::string text = "Back";
+        SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
+        texture = SDL_CreateTextureFromSurface(r, surf);
+        SDL_FreeSurface(surf);
+        SDL_Texture *backt = texture;
         backtext = backt;
         backtextSet = true;
     }
@@ -112,7 +117,12 @@ void SubScreen::renderNewPlayer(SDL_Renderer *r, int screenW, int screenH)
     float ly = 40;
     SDL_FRect label = {lx, ly, lw, lh};
     // text for back and middle top
-    SDL_Texture *labeltext = createText(r, "Create Player", {255, 255, 255, 255});
+    SDL_Texture *texture;
+    std::string text = "Create Player";
+    SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
+    texture = SDL_CreateTextureFromSurface(r, surf);
+    SDL_FreeSurface(surf);
+    SDL_Texture *labeltext = texture;
     SDL_RenderCopyF(r, labeltext, nullptr, &label);
 
     // a text label at middle top requesting for name of player
@@ -132,7 +142,12 @@ void SubScreen::renderSelectPlayer(SDL_Renderer *r, int screenW, int screenH)
     // x=20,y=20,w=50,h=30
     if (!backtextSet)
     {
-        SDL_Texture *backt = createText(r, "Back", {255, 255, 255, 255});
+        SDL_Texture *texture;
+        std::string text = "Back";
+        SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
+        texture = SDL_CreateTextureFromSurface(r, surf);
+        SDL_FreeSurface(surf);
+        SDL_Texture *backt = texture;
         backtext = backt;
         backtextSet = true;
     }
@@ -146,7 +161,12 @@ void SubScreen::renderSelectPlayer(SDL_Renderer *r, int screenW, int screenH)
     float ly = 40;
     SDL_FRect label = {lx, ly, lw, lh};
     // text for back and middle top
-    SDL_Texture *labeltext = createText(r, "Select Player", {255, 255, 255, 255});
+    SDL_Texture *texture;
+    std::string text = "Select Player";
+    SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
+    texture = SDL_CreateTextureFromSurface(r, surf);
+    SDL_FreeSurface(surf);
+    SDL_Texture *labeltext = texture;
     SDL_RenderCopyF(r, labeltext, nullptr, &label);
 };
 void SubScreen::renderHighScores(SDL_Renderer *r, int screenW, int screenH)
@@ -163,7 +183,12 @@ void SubScreen::renderHighScores(SDL_Renderer *r, int screenW, int screenH)
     // x=20,y=20,w=50,h=30
     if (!backtextSet)
     {
-        SDL_Texture *backt = createText(r, "Back", {255, 255, 255, 255});
+        SDL_Texture *texture;
+        std::string text = "Back";
+        SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
+        texture = SDL_CreateTextureFromSurface(r, surf);
+        SDL_FreeSurface(surf);
+        SDL_Texture *backt = texture;
         backtext = backt;
         backtextSet = true;
     }
@@ -177,7 +202,12 @@ void SubScreen::renderHighScores(SDL_Renderer *r, int screenW, int screenH)
     float ly = 40;
     SDL_FRect label = {lx, ly, lw, lh};
     // text for back and middle top
-    SDL_Texture *labeltext = createText(r, "High Scores", {255, 255, 255, 255});
+    SDL_Texture *texture;
+    std::string text = "Back";
+    SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
+    texture = SDL_CreateTextureFromSurface(r, surf);
+    SDL_FreeSurface(surf);
+    SDL_Texture *labeltext = texture;
     SDL_RenderCopyF(r, labeltext, nullptr, &label);
 };
 
