@@ -4,31 +4,39 @@
 // SDL_Texture* HomeScreen::screentexture = textm.loadTexture("textures/universe.png", renderer);
 void HomeScreen::render(SDL_Renderer *renderer, int screenW, int screenH)
 {
-	SDL_RenderClear(renderer);
-
-	SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
+	// SDL_RenderClear(renderer);
+	// std::cout << "Before gamepad texture" << std::endl;
+	// SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
 	while (ismounted)
 	{
+		// std::cout << "Inside ismounted" << std::endl;
+
 		// Check events
-		// if (subScreen->getIsMounted())
-		//{
-		//
-		//	subScreen->render(renderer, ismounted, quit, screenW, screenH);
-		//}
-		// else
-		//{
-		HomeScreen::eventchecker();
-		// Render Image to window
-		SDL_RenderCopy(renderer, screentexture, NULL, NULL);
-		// SDL_RenderCopy(renderer, play, NULL, &play_rect);
-		/*
-		Have a pointer to current mounted sub-screen
-		if no mounted sub screen, pointer to sub screen object would have
-		a false ismounted flag, if false then renderMenu else render mounted sub screen
-		 */
-		renderMenu(renderer, screenW, screenH);
-		SDL_RenderPresent(renderer);
-		//}
+		if (mS.isMtd)
+		{
+			//
+			mS.render(renderer, ismounted, quit, screenW, screenH);
+		}
+		else
+		{
+			HomeScreen::eventchecker();
+			// std::cout << "After event checker" << std::endl;
+
+			// Render Image to window
+			SDL_RenderCopy(renderer, screentexture, NULL, NULL);
+			// SDL_RenderCopy(renderer, play, NULL, &play_rect);
+			/*
+			Have a pointer to current mounted sub-screen
+			if no mounted sub screen, pointer to sub screen object would have
+			a false ismounted flag, if false then renderMenu else render mounted sub screen
+			 */
+			// std::cout << "Before render menu" << std::endl;
+
+			renderMenu(renderer, screenW, screenH);
+			// std::cout << "After render menu" << std::endl;
+
+			SDL_RenderPresent(renderer);
+		}
 	}
 }
 
@@ -82,18 +90,6 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
 					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
 					SDL_FreeSurface(surfh);
-					// query texture for width and height
-					/* int tw;
-					int th;
-					SDL_QueryTexture(nullptr, nullptr, nullptr, &tw, &th);
-					int tx = ((*b)->rect.x + (*b)->rect.w / 2) - tw / 2;
-					int ty = (*b)->rect.y + 2;
-					(*b)->trect = {tx, ty, tw, th}; */
-
-					// populate text rect
-					//  read in font
-					//  use font to create texture
-					//  create start rect text texture and assign to rect
 				}
 				else if ((*b)->name == "settings")
 				{
@@ -178,15 +174,6 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 			b++;
 		}
-		/* SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRectF(renderer, &(start->rect));
-		// SDL_RenderCopy(renderer, start->text, NULL, &(start->trect));
-		SDL_RenderCopyF(renderer, start->text, nullptr, &(start->rect)); */
-		/* SDL_RenderFillRectF(renderer, &(settings->rect));
-		SDL_RenderCopyF(renderer, settings->text, NULL, &(settings->rect)); */
-
-		/* SDL_RenderFillRectF(renderer, &(mquit->rect));
-		SDL_RenderCopyF(renderer, mquit->text, NULL, &(mquit->rect)); */
 	}
 
 	// position buttons
@@ -198,7 +185,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 		float selectplayerby = newplayerby + bh + ydist;
 		float highscoreby = selectplayerby + bh + ydist;
 		float backby = highscoreby + bh + ydist;
-
+		// std::cout << "Start Menu" << std::endl;
 		if (!(*activeMenu).set)
 		{
 			// std::cout << "Not set" << std::endl;
@@ -336,18 +323,6 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 			b++;
 		}
-		/* SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRectF(renderer, &(newPlayer->rect));
-		SDL_RenderCopyF(renderer, newPlayer->text, nullptr, &(newPlayer->rect)); */
-
-		/* SDL_RenderFillRectF(renderer, &(selectPlayer->rect));
-		SDL_RenderCopyF(renderer, selectPlayer->text, nullptr, &(selectPlayer->rect)); */
-
-		/* SDL_RenderFillRectF(renderer, &(highScore->rect));
-		SDL_RenderCopyF(renderer, highScore->text, nullptr, &(highScore->rect)); */
-
-		/* SDL_RenderFillRectF(renderer, &(back->rect));
-		SDL_RenderCopyF(renderer, back->text, nullptr, &(back->rect)); */
 	}
 	else if ((*activeMenu).name == Play.name)
 	{
@@ -463,15 +438,6 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 			b++;
 		}
-		/* SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRectF(renderer, &(play->rect));
-		SDL_RenderCopyF(renderer, play->text, nullptr, &(play->rect)); */
-
-		/* SDL_RenderFillRectF(renderer, &(msettings->rect));
-		SDL_RenderCopyF(renderer, msettings->text, nullptr, &(msettings->rect)); */
-
-		/* SDL_RenderFillRectF(renderer, &(pback->rect));
-		SDL_RenderCopyF(renderer, pback->text, nullptr, &(pback->rect)); */
 	}
 }
 
@@ -491,10 +457,6 @@ void HomeScreen::eventchecker()
 			mouse_x = events.motion.x;
 			mouse_y = events.motion.y;
 			inButton(false);
-			// if there is a mouse motion we check in the active menus buttons for which
-			// button the mouse's coordinates is in,then we set the isactive flag which triggers
-			// a color change
-			// so using the mouse in play function we can check which button the mouse is in
 
 		case SDL_MOUSEBUTTONDOWN:
 			// std::cout << "Mouse clicker" << std::endl;
@@ -548,6 +510,8 @@ void HomeScreen::inButton(bool isClicked)
 						std::cout << "To settings" << std::endl;
 						// subScreen->setName("Settings");
 						// subScreen->setIsMounted(true);
+						mS.setName("Settings");
+						mS.isMtd = true;
 						break;
 						// std::cout << "In settings" << std::endl;
 					}
@@ -582,6 +546,8 @@ void HomeScreen::inButton(bool isClicked)
 						// std::cout << "In start" << std::endl;
 						// subScreen->setName("New Player");
 						// subScreen->setIsMounted(true);
+						mS.setName("New Player");
+						mS.isMtd = true;
 						break;
 					}
 					else if ((*b)->name == "Select Player")
@@ -589,13 +555,19 @@ void HomeScreen::inButton(bool isClicked)
 						// std::cout << "In settings" << std::endl;
 						// subScreen->setName("Select Player");
 						// subScreen->setIsMounted(true);
+						mS.setName("Select Player");
+						mS.isMtd = true;
 						break;
 					}
 					else if ((*b)->name == "High Score")
 					{
 						// std::cout << "In quit" << std::endl;
-						// subScreen->setName("High Score");
-						// subScreen->setIsMounted(true);
+						std::cout << "Before mS setname" << std::endl;
+						mS.name = "High Score";
+						std::cout << "After mS setname" << std::endl;
+
+						mS.isMtd = true;
+
 						break;
 					}
 					else if ((*b)->name == "Back")
@@ -631,8 +603,8 @@ void HomeScreen::inButton(bool isClicked)
 					else if ((*b)->name == "Settings")
 					{
 						// std::cout << "In settings" << std::endl;
-						// subScreen->setName("Settings");
-						// subScreen->setIsMounted(true);
+						mS.setName("Settings");
+						mS.isMtd = true;
 						break;
 					}
 					else if ((*b)->name == "Back")
@@ -671,11 +643,17 @@ void HomeScreen::setismounted(bool is)
 HomeScreen::HomeScreen(SDL_Renderer *renderer, TTF_Font *font)
 {
 	screentexture = textm.loadTexture("textures/amongus2.png", renderer);
+	SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
+
 	selffont = font;
-	//*subScreen = SubScreen(selffont);
-	//MinScreen ms = MinScreen();
-	//mS = &ms;
+	std::cout << "Inside HomeScreen" << std::endl;
+	//*subScreen = SubScreen(font);
+	std::cout << "After subscreen init" << std::endl;
+	MinScreen ms = MinScreen();
+	mS = ms;
+	mS.setfont(font);
 	activeMenu = &mainM;
+	std::cout << "After active menu" << std::endl;
 }
 
 HomeScreen::HomeScreen()
@@ -695,8 +673,55 @@ HomeScreen::~HomeScreen()
 
 void MinScreen::setName(std::string n) { name = n; }
 void MinScreen::setfont(TTF_Font *f) { font = f; }
-void MinScreen::eventChecker(bool &im, bool &quit) {}
-void MinScreen::render(SDL_Renderer *r, bool &im, bool &quit, int sW, int sH) {}
+void MinScreen::eventChecker(bool &im, bool &quit)
+{
+	while (SDL_PollEvent(&events))
+	{
+		switch (events.type)
+		{
+		case SDL_QUIT:
+			std::cout << "SDL QUIT event" << std::endl;
+			im = false;
+			quit = false;
+
+		case SDL_MOUSEMOTION:
+			mx = events.motion.x;
+			my = events.motion.y;
+
+		case SDL_MOUSEBUTTONDOWN:
+			if (events.button.button == SDL_BUTTON_LEFT)
+			{
+				std::cout << "Left Click in Sub Screen: " << name << std::endl;
+			}
+		}
+	}
+}
+void MinScreen::render(SDL_Renderer *r, bool &im, bool &quit, int sW, int sH)
+{
+	// event checker
+	eventChecker(im, quit);
+	//  render necessaries based on name
+	if (name == "New Player")
+	{
+		// render new player screen
+		renderNewPlayer(r, sW, sH);
+	}
+	else if (name == "Select Player")
+	{
+		// render select player screen
+		renderSelectPlayer(r, sW, sH);
+	}
+	else if (name == "High Score")
+	{
+		// render High Score screen
+		renderHS(r, sW, sH);
+	}
+	else if (name == "Settings")
+	{
+		renderSettings(r, sW, sH);
+	}
+	SDL_RenderPresent(r);
+}
 void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 {
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -735,10 +760,12 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 	}
 	SDL_FRect backbutton = {20, 20, 50, 30};
 	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
+	std::cout << "Render" << std::endl;
 }
-void MinScreen::renderHighScores(SDL_Renderer *r, int sW, int sH)
+void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 {
-	/* SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	std::cout << "Render High Scores" << std::endl;
+	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
 	// a back button at the top left corner
 	// back button
@@ -755,6 +782,6 @@ void MinScreen::renderHighScores(SDL_Renderer *r, int sW, int sH)
 		backTextSet = true;
 	}
 	SDL_FRect backbutton = {20, 20, 50, 30};
-	SDL_RenderCopyF(r, backtext, nullptr, &backbutton); */
+	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
 }
 void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH) {}

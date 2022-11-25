@@ -2,8 +2,8 @@
 #include "SDL_image.h"
 #include "iostream"
 
-
-SDL_Texture* TextureManager::loadTexture(std::string file, SDL_Renderer* renderer) {
+SDL_Texture *TextureManager::loadTexture(std::string file, SDL_Renderer *renderer)
+{
 	/*SDL_RWops* rwop = SDL_RWFromFile(file, "rb");
 	SDL_Surface* img_surface = IMG_LoadPNG_RW(rwop);
 
@@ -16,25 +16,33 @@ SDL_Texture* TextureManager::loadTexture(std::string file, SDL_Renderer* rendere
 	SDL_FreeSurface(img_surface);
 
 	return texture;*/
-	SDL_Texture* texture = NULL;
-	SDL_Surface* img_surface = IMG_Load(file.c_str());
+	// SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
+	std::cout << "Before loading texture" << std::endl;
+	SDL_Texture *texture = nullptr;
+	std::cout << "After null text init" << std::endl;
+
+	SDL_Surface *img_surface = IMG_Load(file.c_str());
+	std::cout << "After loading texture" << std::endl;
 
 	if (img_surface == NULL)
 		std::cout << "Unable to load image " << file.c_str() << " SDL Image ERROR: " << IMG_GetError();
-	else {
+	else
+	{
 		texture = SDL_CreateTextureFromSurface(renderer, img_surface);
 		SDL_FreeSurface(img_surface);
 	}
 	return texture;
 }
 
-TextureManager::TextureManager(){
+TextureManager::TextureManager()
+{
 	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-	if (!(IMG_Init(flags) & flags)) {
+	if (!(IMG_Init(flags) & flags))
+	{
 		std::cout << "SDL Image could not be initialized! SDL Image Error: " << IMG_GetError();
 	};
 }
 
-TextureManager::~TextureManager() {
-	
+TextureManager::~TextureManager()
+{
 }

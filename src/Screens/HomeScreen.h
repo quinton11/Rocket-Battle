@@ -4,7 +4,7 @@
 #include <string>
 #include "list"
 #include "SDL_ttf.h"
-//#include "SubScreens.h"
+#include "SubScreens.h"
 
 struct Button
 {
@@ -32,6 +32,7 @@ struct MinScreen
 	bool isMtd = false; // is mounted
 	TTF_Font *font;
 	SDL_Texture *backtext;
+	SDL_Event events;
 	bool backTextSet = false;
 	void setName(std::string n);
 	void setfont(TTF_Font *f);
@@ -41,10 +42,8 @@ struct MinScreen
 private:
 	void renderNewPlayer(SDL_Renderer *r, int sW, int sH);
 	void renderSelectPlayer(SDL_Renderer *r, int sW, int sH);
-	void renderHighScores(SDL_Renderer *r, int sW, int sH);
+	void renderHS(SDL_Renderer *r, int sW, int sH);
 	void renderSettings(SDL_Renderer *r, int sW, int sH);
-    
-
 };
 
 class HomeScreen : public Screen
@@ -77,12 +76,13 @@ private:
 	Menu *activeMenu;
 	bool quit = false;
 	SDL_Texture *screentexture = nullptr;
+	SDL_Texture *playbutton = nullptr;
 	SDL_Event events;
 	SDL_FRect play_rect = {250, 350, 70, 70};
 	int mouse_x, mouse_y = 0;
 	TTF_Font *selffont;
-	//MinScreen *mS;
-	// SubScreen *subScreen; //holds subscreen
+	MinScreen mS;
+	SubScreen *subScreen; // holds subscreen
 
 public:
 	void render(SDL_Renderer *renderer, int screenW, int screenH);

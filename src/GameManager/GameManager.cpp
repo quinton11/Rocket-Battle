@@ -70,7 +70,7 @@ void GameManager::Run()
 	bm->setEnemyList(em.enemyships);
 
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), font);
-	//HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
+	// HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
 
 	KeyboardHandler *kb_handler = KeyboardHandler::instance();
 
@@ -84,12 +84,15 @@ void GameManager::Run()
 	{
 
 		// Deltatime
-		//std::cout<<"Started";
+		std::cout << "Started Loop" << std::endl;
 		dt = tset.getDeltaTime();
 
 		if (homescreen.getismounted())
 		{
+			std::cout << "In home screen render" << std::endl;
+
 			homescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
+			std::cout << "After home screen render" << std::endl;
 		}
 
 		else if (!homescreen.getismounted() && homescreen.getisquit())

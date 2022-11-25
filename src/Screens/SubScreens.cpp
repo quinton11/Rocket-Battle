@@ -1,9 +1,12 @@
-/* #include "SubScreens.h"
+#include "SubScreens.h"
 
 SubScreen::SubScreen() {}
 SubScreen::~SubScreen() {}
 SubScreen::SubScreen(TTF_Font *font)
-    : selffont(font) {}
+{
+    selffont = font;
+    std::cout << "In SubScreen" << std::endl;
+}
 
 void SubScreen::render(SDL_Renderer *r, bool &im, bool &quit, int screenW, int screenH)
 {
@@ -77,7 +80,7 @@ void SubScreen::eventChecker(bool &im, bool &quit)
     }
 }
 
- SDL_Texture *SubScreen::createText(SDL_Renderer *r, std::string text, SDL_Color color)
+SDL_Texture *SubScreen::createText(SDL_Renderer *r, std::string text, SDL_Color color)
 {
     SDL_Texture *texture;
     SDL_Surface *surf = TTF_RenderText_Blended(selffont, text.c_str(), {255, 255, 255});
@@ -85,7 +88,7 @@ void SubScreen::eventChecker(bool &im, bool &quit)
     SDL_FreeSurface(surf);
 
     return texture;
-} 
+}
 
 void SubScreen::renderNewPlayer(SDL_Renderer *r, int screenW, int screenH)
 {
@@ -219,4 +222,3 @@ void SubScreen::renderSettings(SDL_Renderer *r, int screenW, int screenH)
     // a text label at top of screen
     // a slider to select volume level
 }
- */
