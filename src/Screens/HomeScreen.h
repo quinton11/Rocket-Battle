@@ -30,20 +30,26 @@ struct MinScreen
 	int mx;
 	int my;
 	bool isMtd = false; // is mounted
+	bool isActive = false;
 	TTF_Font *font;
 	SDL_Texture *backtext;
+	SDL_Texture *backtextH;
 	SDL_Event events;
+	SDL_FRect backButton;
+	SDL_FRect createPlayer;
 	bool backTextSet = false;
 	void setName(std::string n);
 	void setfont(TTF_Font *f);
 	void eventChecker(bool &im, bool &quit);
-	void render(SDL_Renderer *r, bool &im, bool &quit, int sW, int sH);
+	void render(SDL_Renderer *r, int sW, int sH);
+	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
 private:
 	void renderNewPlayer(SDL_Renderer *r, int sW, int sH);
 	void renderSelectPlayer(SDL_Renderer *r, int sW, int sH);
 	void renderHS(SDL_Renderer *r, int sW, int sH);
 	void renderSettings(SDL_Renderer *r, int sW, int sH);
+	void inButton(bool isClicked);
 };
 
 class HomeScreen : public Screen

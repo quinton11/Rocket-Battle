@@ -84,7 +84,7 @@ void GameManager::Run()
 	{
 
 		// Deltatime
-		std::cout << "Started Loop" << std::endl;
+		//std::cout << "Started Loop" << std::endl;
 		dt = tset.getDeltaTime();
 
 		if (homescreen.getismounted())
@@ -94,9 +94,11 @@ void GameManager::Run()
 			homescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
 			std::cout << "After home screen render" << std::endl;
 		}
+		//else if(homescreen.getisquit()){}
 
 		else if (!homescreen.getismounted() && homescreen.getisquit())
 		{
+			std::cout << "Unmounted and Quit" << std::endl;
 			isDone = true;
 		}
 

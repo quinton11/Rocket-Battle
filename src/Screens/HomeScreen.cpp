@@ -15,7 +15,8 @@ void HomeScreen::render(SDL_Renderer *renderer, int screenW, int screenH)
 		if (mS.isMtd)
 		{
 			//
-			mS.render(renderer, ismounted, quit, screenW, screenH);
+			mS.eventChecker(ismounted, quit);
+			mS.render(renderer, screenW, screenH);
 		}
 		else
 		{
@@ -671,6 +672,12 @@ HomeScreen::~HomeScreen()
 	screentexture = NULL;
 }
 
+bool MinScreen::mouse_in_play(int &x, int &y, SDL_FRect &rect)
+{
+	return (x >= rect.x) && (y >= rect.y) &&
+		   (x < rect.x + rect.w) && (y < rect.y + rect.h);
+}
+
 void MinScreen::setName(std::string n) { name = n; }
 void MinScreen::setfont(TTF_Font *f) { font = f; }
 void MinScreen::eventChecker(bool &im, bool &quit)
@@ -682,24 +689,52 @@ void MinScreen::eventChecker(bool &im, bool &quit)
 		case SDL_QUIT:
 			std::cout << "SDL QUIT event" << std::endl;
 			im = false;
-			quit = false;
+			quit = true;
 
 		case SDL_MOUSEMOTION:
 			mx = events.motion.x;
 			my = events.motion.y;
+			inButton(false);
 
 		case SDL_MOUSEBUTTONDOWN:
 			if (events.button.button == SDL_BUTTON_LEFT)
 			{
 				std::cout << "Left Click in Sub Screen: " << name << std::endl;
+				// mouse_in_play(true);
+				inButton(true);
+				// call inbutton function
+				// Per the name of the menu, it checks if a button has been clicked
 			}
 		}
 	}
 }
-void MinScreen::render(SDL_Renderer *r, bool &im, bool &quit, int sW, int sH)
+
+void MinScreen::inButton(bool isClicked)
+{
+	// check if mouse is in button
+	// If mouse is in back button
+	isActive = false;
+	if (mouse_in_play(mx, my, backButton))
+	{
+		isActive = true;
+		// hover
+		if (isClicked)
+		{
+			std::cout << "Back Button clicked" << std::endl;
+			isMtd = false;
+			isActive = false;
+		}
+	}
+	// need to have locations of each button
+	// common button is the back button
+	// then we have the create player button
+	// then select player buttons where user is shown a list of players and highscore
+	// also implement highlight on hover
+}
+void MinScreen::render(SDL_Renderer *r, int sW, int sH)
 {
 	// event checker
-	eventChecker(im, quit);
+	// eventChecker(im, quit);
 	//  render necessaries based on name
 	if (name == "New Player")
 	{
@@ -726,6 +761,8 @@ void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 {
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
+	SDL_FRect backbutton = {20, 20, 50, 30};
+
 	if (!backTextSet)
 	{
 		SDL_Texture *texture;
@@ -734,11 +771,24 @@ void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 		texture = SDL_CreateTextureFromSurface(r, surf);
 		SDL_FreeSurface(surf);
 		SDL_Texture *backt = texture;
+
+		// hover
+		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
 		backtext = backt;
+		backtextH = texture;
 		backTextSet = true;
+		backButton = backbutton;
 	}
-	SDL_FRect backbutton = {20, 20, 50, 30};
-	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
+	if (isActive)
+	{
+		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
+	}
+	else
+	{
+		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
+	}
 }
 void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 {
@@ -747,6 +797,8 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 	// a back button at the top left corner
 	// back button
 	// x=20,y=20,w=50,h=30
+	SDL_FRect backbutton = {20, 20, 50, 30};
+
 	if (!backTextSet)
 	{
 		SDL_Texture *texture;
@@ -754,22 +806,74 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
 		texture = SDL_CreateTextureFromSurface(r, surf);
 		SDL_FreeSurface(surf);
+
+		// hover
 		SDL_Texture *backt = texture;
+		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
 		backtext = backt;
+		backtextH = texture;
 		backTextSet = true;
+		backButton = backbutton;
 	}
-	SDL_FRect backbutton = {20, 20, 50, 30};
-	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
-	std::cout << "Render" << std::endl;
+	if (isActive)
+	{
+		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
+	}
+	else
+	{
+		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
+	}
+	// std::cout << "Render" << std::endl;
 }
 void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 {
-	std::cout << "Render High Scores" << std::endl;
+	// std::cout << "Render High Scores" << std::endl;
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
 	// a back button at the top left corner
 	// back button
 	// x=20,y=20,w=50,h=30
+	SDL_FRect backbutton = {20, 20, 50, 30};
+
+	if (!backTextSet)
+	{
+		SDL_Texture *texture;
+		std::string text = "Back";
+		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		SDL_Texture *backt = texture;
+
+		// hover
+		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		backtext = backt;
+		backtextH = texture;
+		backTextSet = true;
+		backButton = backbutton;
+	}
+	if (isActive)
+	{
+		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
+	}
+	else
+	{
+		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
+	}
+}
+void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
+{
+	// std::cout << "Render Settings" << std::endl;
+	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRect(r, NULL); // fill screen
+	// a back button at the top left corner
+	// back button
+	// x=20,y=20,w=50,h=30
+	SDL_FRect backbutton = {20, 20, 50, 30};
+
 	if (!backTextSet)
 	{
 		SDL_Texture *texture;
@@ -780,8 +884,14 @@ void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 		SDL_Texture *backt = texture;
 		backtext = backt;
 		backTextSet = true;
+		backButton = backButton;
 	}
-	SDL_FRect backbutton = {20, 20, 50, 30};
-	SDL_RenderCopyF(r, backtext, nullptr, &backbutton);
+	if (isActive)
+	{
+		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
+	}
+	else
+	{
+		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
+	}
 }
-void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH) {}
