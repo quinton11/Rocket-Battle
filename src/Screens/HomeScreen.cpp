@@ -521,6 +521,7 @@ void HomeScreen::inButton(bool isClicked)
 						// std::cout << "In quit" << std::endl;
 						ismounted = false;
 						quit = true;
+						break;
 					}
 				}
 				// check button name and trigger next menu accordingly
@@ -549,6 +550,7 @@ void HomeScreen::inButton(bool isClicked)
 						// subScreen->setIsMounted(true);
 						mS.setName("New Player");
 						mS.isMtd = true;
+						// SDL_StartTextInput();
 						break;
 					}
 					else if ((*b)->name == "Select Player")
@@ -647,14 +649,14 @@ HomeScreen::HomeScreen(SDL_Renderer *renderer, TTF_Font *font)
 	SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
 
 	selffont = font;
-	std::cout << "Inside HomeScreen" << std::endl;
+	// std::cout << "Inside HomeScreen" << std::endl;
 	//*subScreen = SubScreen(font);
-	std::cout << "After subscreen init" << std::endl;
+	// std::cout << "After subscreen init" << std::endl;
 	MinScreen ms = MinScreen();
 	mS = ms;
 	mS.setfont(font);
 	activeMenu = &mainM;
-	std::cout << "After active menu" << std::endl;
+	// std::cout << "After active menu" << std::endl;
 }
 
 HomeScreen::HomeScreen()
@@ -682,6 +684,7 @@ void MinScreen::setName(std::string n) { name = n; }
 void MinScreen::setfont(TTF_Font *f) { font = f; }
 void MinScreen::eventChecker(bool &im, bool &quit)
 {
+	int leng;
 	while (SDL_PollEvent(&events))
 	{
 		switch (events.type)
@@ -690,21 +693,57 @@ void MinScreen::eventChecker(bool &im, bool &quit)
 			std::cout << "SDL QUIT event" << std::endl;
 			im = false;
 			quit = true;
+			break;
 
 		case SDL_MOUSEMOTION:
 			mx = events.motion.x;
 			my = events.motion.y;
 			inButton(false);
+			break;
 
 		case SDL_MOUSEBUTTONDOWN:
 			if (events.button.button == SDL_BUTTON_LEFT)
 			{
-				std::cout << "Left Click in Sub Screen: " << name << std::endl;
-				// mouse_in_play(true);
 				inButton(true);
-				// call inbutton function
-				// Per the name of the menu, it checks if a button has been clicked
 			}
+			break;
+
+		case SDL_TEXTINPUT:
+			if (name == "New Player")
+			{
+				// add to text input
+				textInput += events.text.text;
+				// std::cout << textInput << std::endl;
+			}
+			break;
+		case SDL_KEYDOWN:
+			if (name == "New Player")
+			{
+				switch (events.key.keysym.sym)
+				{
+				case SDLK_SPACE:
+					// std::cout << "Space Bar hit" << std::endl;
+					break;
+
+				case SDLK_BACKSPACE:
+					std::cout << "Back Space hit" << std::endl;
+					leng = textInput.size();
+					////std::cout << leng << std::endl;
+
+					if (leng > 0)
+					{
+						textInput.pop_back();
+					}
+					break;
+
+				case SDLK_RETURN:
+					std::cout << "Enter hit" << std::endl;
+					std::cout << textInput << std::endl;
+					// create new player and move to play screen
+					break;
+				}
+			}
+			break;
 		}
 	}
 }
@@ -720,7 +759,7 @@ void MinScreen::inButton(bool isClicked)
 		// hover
 		if (isClicked)
 		{
-			std::cout << "Back Button clicked" << std::endl;
+			// std::cout << "Back Button clicked" << std::endl;
 			isMtd = false;
 			isActive = false;
 		}
@@ -733,8 +772,6 @@ void MinScreen::inButton(bool isClicked)
 }
 void MinScreen::render(SDL_Renderer *r, int sW, int sH)
 {
-	// event checker
-	// eventChecker(im, quit);
 	//  render necessaries based on name
 	if (name == "New Player")
 	{
@@ -757,30 +794,84 @@ void MinScreen::render(SDL_Renderer *r, int sW, int sH)
 	}
 	SDL_RenderPresent(r);
 }
+
+void MinScreen::setBackText(SDL_Renderer *r)
+{
+	SDL_FRect backbutton = {20, 20, 50, 30};
+
+	if (!backTextSet)
+	{
+		SDL_Texture *texture;
+		std::string text = "Back";
+		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		SDL_Texture *backt = texture;
+
+		// hover
+		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
+		texture = SDL_CreateTextureFromSurface(r, surf);
+		SDL_FreeSurface(surf);
+		backtext = backt;
+		backtextH = texture;
+		backTextSet = true;
+		backButton = backbutton;
+	}
+}
+
+void MinScreen::renderTitle(SDL_Renderer *r, int sW, int sH)
+{
+	SDL_Surface *temps;
+	SDL_FRect paget;
+
+	temps = TTF_RenderText_Blended(font, name.c_str(), {255, 255, 255});
+	if (temps)
+	{
+		titleImage = SDL_CreateTextureFromSurface(r, temps);
+		paget.w = temps->w;
+		paget.h = temps->h;
+		paget.x = (float)(sW / 2) - paget.w / 2;
+		paget.y = 40;
+		SDL_FreeSurface(temps);
+		temps = NULL;
+	}
+	SDL_RenderCopyF(r, titleImage, nullptr, &paget);
+}
+
+void MinScreen::renderInputBox(SDL_Renderer *r, int sW, int sH)
+{
+	SDL_FRect container;
+	SDL_Surface *temps;
+	SDL_FRect tinp;
+	container.w = (float)(sW)-100;
+	container.h = 50;
+	container.x = (float)(sW / 2) - container.w / 2;
+	container.y = 200;
+
+	temps = TTF_RenderText_Blended(font, textInput.c_str(), {0, 0, 0});
+	if (temps)
+	{
+		textImage = SDL_CreateTextureFromSurface(r, temps);
+		tinp.w = temps->w;
+		tinp.h = temps->h;
+		tinp.x = (float)(sW / 2) - tinp.w / 2;
+		tinp.y = 200;
+		SDL_FreeSurface(temps);
+		temps = NULL;
+	}
+
+	SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
+	SDL_RenderFillRectF(r, &container);
+	SDL_RenderCopyF(r, textImage, nullptr, &tinp);
+}
 void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 {
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
 	SDL_FRect backbutton = {20, 20, 50, 30};
 
-	if (!backTextSet)
-	{
-		SDL_Texture *texture;
-		std::string text = "Back";
-		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
-		SDL_Texture *backt = texture;
+	setBackText(r);
 
-		// hover
-		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
-		backtext = backt;
-		backtextH = texture;
-		backTextSet = true;
-		backButton = backbutton;
-	}
 	if (isActive)
 	{
 		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
@@ -789,34 +880,17 @@ void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 	{
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
+	// render page title at middle top
+	renderTitle(r, sW, sH);
+	renderInputBox(r, sW, sH);
 }
 void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 {
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
-	// a back button at the top left corner
-	// back button
-	// x=20,y=20,w=50,h=30
-	SDL_FRect backbutton = {20, 20, 50, 30};
 
-	if (!backTextSet)
-	{
-		SDL_Texture *texture;
-		std::string text = "Back";
-		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
+	setBackText(r);
 
-		// hover
-		SDL_Texture *backt = texture;
-		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
-		backtext = backt;
-		backtextH = texture;
-		backTextSet = true;
-		backButton = backbutton;
-	}
 	if (isActive)
 	{
 		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
@@ -825,36 +899,15 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 	{
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
-	// std::cout << "Render" << std::endl;
+	renderTitle(r, sW, sH);
 }
 void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 {
-	// std::cout << "Render High Scores" << std::endl;
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
-	// a back button at the top left corner
-	// back button
-	// x=20,y=20,w=50,h=30
-	SDL_FRect backbutton = {20, 20, 50, 30};
 
-	if (!backTextSet)
-	{
-		SDL_Texture *texture;
-		std::string text = "Back";
-		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
-		SDL_Texture *backt = texture;
+	setBackText(r);
 
-		// hover
-		surf = TTF_RenderText_Blended(font, text.c_str(), {255, 0, 0});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
-		backtext = backt;
-		backtextH = texture;
-		backTextSet = true;
-		backButton = backbutton;
-	}
 	if (isActive)
 	{
 		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
@@ -863,29 +916,16 @@ void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 	{
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
+	renderTitle(r, sW, sH);
 }
 void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
 {
 	// std::cout << "Render Settings" << std::endl;
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
-	// a back button at the top left corner
-	// back button
-	// x=20,y=20,w=50,h=30
-	SDL_FRect backbutton = {20, 20, 50, 30};
 
-	if (!backTextSet)
-	{
-		SDL_Texture *texture;
-		std::string text = "Back";
-		SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), {255, 255, 255});
-		texture = SDL_CreateTextureFromSurface(r, surf);
-		SDL_FreeSurface(surf);
-		SDL_Texture *backt = texture;
-		backtext = backt;
-		backTextSet = true;
-		backButton = backButton;
-	}
+	setBackText(r);
+
 	if (isActive)
 	{
 		SDL_RenderCopyF(r, backtextH, nullptr, &backButton);
@@ -894,4 +934,5 @@ void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
 	{
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
+	renderTitle(r, sW, sH);
 }

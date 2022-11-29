@@ -89,10 +89,10 @@ void GameManager::Run()
 
 		if (homescreen.getismounted())
 		{
-			std::cout << "In home screen render" << std::endl;
+			//std::cout << "In home screen render" << std::endl;
 
 			homescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
-			std::cout << "After home screen render" << std::endl;
+			//std::cout << "After home screen render" << std::endl;
 		}
 		//else if(homescreen.getisquit()){}
 

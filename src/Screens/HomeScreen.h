@@ -34,6 +34,9 @@ struct MinScreen
 	TTF_Font *font;
 	SDL_Texture *backtext;
 	SDL_Texture *backtextH;
+	SDL_Texture *titleImage;
+	SDL_Texture *textImage;
+	std::string textInput;
 	SDL_Event events;
 	SDL_FRect backButton;
 	SDL_FRect createPlayer;
@@ -42,6 +45,9 @@ struct MinScreen
 	void setfont(TTF_Font *f);
 	void eventChecker(bool &im, bool &quit);
 	void render(SDL_Renderer *r, int sW, int sH);
+	void renderTitle(SDL_Renderer *r, int sW, int sH);
+	void setBackText(SDL_Renderer *r);
+	void renderInputBox(SDL_Renderer *r, int sW, int sH);
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
 private:

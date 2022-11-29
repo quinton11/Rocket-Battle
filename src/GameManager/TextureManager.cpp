@@ -17,12 +17,12 @@ SDL_Texture *TextureManager::loadTexture(std::string file, SDL_Renderer *rendere
 
 	return texture;*/
 	// SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
-	std::cout << "Before loading texture" << std::endl;
+	//std::cout << "Before loading texture" << std::endl;
 	SDL_Texture *texture = nullptr;
-	std::cout << "After null text init" << std::endl;
+	//std::cout << "After null text init" << std::endl;
 
 	SDL_Surface *img_surface = IMG_Load(file.c_str());
-	std::cout << "After loading texture" << std::endl;
+	//std::cout << "After loading texture" << std::endl;
 
 	if (img_surface == NULL)
 		std::cout << "Unable to load image " << file.c_str() << " SDL Image ERROR: " << IMG_GetError();
