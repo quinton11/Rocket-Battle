@@ -9,11 +9,6 @@ void GameGraphics::render(SDL_Texture *texture)
 	// Render screen background
 	SDL_SetRenderDrawColor(renderer, 26, 26, 26, 255);
 	SDL_RenderClear(renderer);
-
-	// SDL_RenderCopy(renderer, texture, NULL, NULL);
-	// SDL_RenderClear(renderer);
-	// SDL_RenderPresent(renderer);
-	// SDL_RenderPresent(renderer);
 }
 
 bool GameGraphics::Init()

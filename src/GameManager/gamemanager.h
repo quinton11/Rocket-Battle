@@ -1,18 +1,19 @@
 #pragma once
 #include "GGraphics.h"
+#include "FileManager.h"
 
-class GameManager {
-
+class GameManager
+{
 
 private:
-	static GameManager* gmInstance;
-	GameGraphics* nGraphics;
+	static GameManager *gmInstance;
+	GameGraphics *nGraphics;
 
 	bool isDone;
 	SDL_Event nevents;
 
 public:
-	static GameManager* instance();
+	static GameManager *instance();
 	static void release();
 
 	void Run();
@@ -20,5 +21,4 @@ public:
 private:
 	GameManager();
 	~GameManager();
-
 };

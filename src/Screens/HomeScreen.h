@@ -4,7 +4,7 @@
 #include <string>
 #include "list"
 #include "SDL_ttf.h"
-#include "SubScreens.h"
+
 
 struct Button
 {
@@ -94,7 +94,6 @@ private:
 	int mouse_x, mouse_y = 0;
 	TTF_Font *selffont;
 	MinScreen mS;
-	SubScreen *subScreen; // holds subscreen
 
 public:
 	void render(SDL_Renderer *renderer, int screenW, int screenH);

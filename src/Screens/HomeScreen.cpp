@@ -936,3 +936,14 @@ void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
 	}
 	renderTitle(r, sW, sH);
 }
+
+/*
+	Add player records which is saved in a file database
+	Database is secure and hidden to prevent altering
+	When game is started, player can select player from list of registered players
+	or player can create a new player
+	When new player is created, player then moves to game screen with theplayer
+	created as the current player in use. High SCore is accumulated as game goes on
+	When player stops game or dies or quits, game score is cross checked with player High
+	Score. If game score is greater, that becomes the player's high score and is saved.
+ */

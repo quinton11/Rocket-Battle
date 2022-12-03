@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/*/**",
+                "${workspaceFolder}/Dependencies/SDL2/include",
                 "${workspaceFolder}/Dependencies/SDL2/include"
             ],
             "defines": [
@@ -14,7 +15,7 @@
             ],
             "windowsSdkVersion": "10.0.19041.0",
             "compilerPath": "C:/Program Files/mingw64/bin/g++.exe",
-            "cStandard": "c17",
+            "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-x64",
             "configurationProvider": "ms-vscode.makefile-tools"

@@ -84,17 +84,17 @@ void GameManager::Run()
 	{
 
 		// Deltatime
-		//std::cout << "Started Loop" << std::endl;
+		// std::cout << "Started Loop" << std::endl;
 		dt = tset.getDeltaTime();
 
 		if (homescreen.getismounted())
 		{
-			//std::cout << "In home screen render" << std::endl;
+			// std::cout << "In home screen render" << std::endl;
 
 			homescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
-			//std::cout << "After home screen render" << std::endl;
+			// std::cout << "After home screen render" << std::endl;
 		}
-		//else if(homescreen.getisquit()){}
+		// else if(homescreen.getisquit()){}
 
 		else if (!homescreen.getismounted() && homescreen.getisquit())
 		{
@@ -148,6 +148,7 @@ GameManager::GameManager()
 	isDone = false;
 
 	nGraphics = GameGraphics::getInstance();
+	FileManager::createInstance();
 
 	if (!GameGraphics::getInitialized())
 		isDone = true;
