@@ -15,8 +15,8 @@ private:
     static std::fstream scorefile;
     static std::vector<std::string> players;
     static FileManager *fInstance;
-    bool nameExists(std::string name);
-    bool replace(std::string n, int s);
+    static bool nameExists(std::string name);
+    static bool replace(std::string n, int s);
     std::string stringify(std::string n, int s);
     FileManager();
     ~FileManager();
@@ -29,6 +29,6 @@ public:
     static void createInstance();
     static void release();
     static bool readHS();
-    static bool writeHS(std::string player, int score);
+    static bool writeHS();
     static bool writeHSM(std::string player, int score);
 };

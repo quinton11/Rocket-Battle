@@ -188,7 +188,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			return;
 		}
 		// std::cout << "Start menu is active" << std::endl;
-		float newplayerby = my + initdist;
+		float startbuttonby = my + initdist;
+		float newplayerby = startbuttonby + bh + ydist;
 		float selectplayerby = newplayerby + bh + ydist;
 		float highscoreby = selectplayerby + bh + ydist;
 		float backby = highscoreby + bh + ydist;
@@ -197,6 +198,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 		{
 			// std::cout << "Not set" << std::endl;
 			//  start,settings,quit
+			SDL_FRect startbuttonRect = {bx, startbuttonby, bw, bh};
 			SDL_FRect newplayerRect = {bx, newplayerby, bw, bh};
 			SDL_FRect selectplayerRect = {bx, selectplayerby, bw, bh};
 			SDL_FRect highscoreRect = {bx, highscoreby, bw, bh};
@@ -204,7 +206,22 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			//(*activeMenu).buttons[0].
 			for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 			{
-				if ((*b)->name == "New Player")
+				if ((*b)->name == "Start-Button")
+				{
+					// std::cout << "In start" a<< std::endl;
+
+					(*b)->rect = startbuttonRect;
+					// Create text
+					SDL_Surface *surf = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 255, 255});
+					(*b)->text = SDL_CreateTextureFromSurface(renderer, surf);
+					SDL_FreeSurface(surf);
+
+					// hover
+					SDL_Surface *surfh = TTF_RenderText_Blended(selffont, ((*b)->name).c_str(), {255, 0, 0});
+					(*b)->hovertext = SDL_CreateTextureFromSurface(renderer, surfh);
+					SDL_FreeSurface(surfh);
+				}
+				else if ((*b)->name == "New Player")
 				{
 					// std::cout << "In start" a<< std::endl;
 
@@ -267,7 +284,22 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 		// Rendering
 		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 		{
-			if ((*b)->name == "New Player")
+			if ((*b)->name == "Start-Button")
+			{
+				if (!(*b)->isActive)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					// SDL_RenderFillRectF(renderer, &(newPlayer->rect));
+					SDL_RenderCopyF(renderer, startButton->text, nullptr, &(startButton->rect));
+				}
+				else
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+					// SDL_RenderFillRectF(renderer, &(newPlayer->rect));
+					SDL_RenderCopyF(renderer, startButton->hovertext, nullptr, &(startButton->rect));
+				}
+			}
+			else if ((*b)->name == "New Player")
 			{
 				if (!(*b)->isActive)
 				{
@@ -542,7 +574,14 @@ void HomeScreen::inButton(bool isClicked)
 				if (isClicked)
 				{
 					std::cout << (*b)->name << " -- Clicked" << std::endl;
-					if ((*b)->name == "New Player")
+					if ((*b)->name == "Start-Button")
+					{
+
+						activeMenu = &Play;
+						std::cout << "To play screen" << std::endl;
+						break;
+					}
+					else if ((*b)->name == "New Player")
 					{
 						// std::cout << "In start" << std::endl;
 						// subScreen->setName("New Player");
@@ -614,6 +653,8 @@ void HomeScreen::inButton(bool isClicked)
 					else if ((*b)->name == "Back")
 					{
 						// std::cout << "In quit" << std::endl;
+						activeMenu = &Start;
+						break;
 					}
 				}
 			}
@@ -644,15 +685,42 @@ void HomeScreen::setismounted(bool is)
 	ismounted = is;
 }
 
+void HomeScreen::release()
+{
+	// main menu
+	delete start;
+	delete settings;
+	delete mquit;
+	start = nullptr;
+	settings = nullptr;
+	mquit = nullptr;
+
+	// start menu
+	delete startButton;
+	delete newPlayer;
+	delete selectPlayer;
+	delete highScore;
+	delete back;
+	startButton = nullptr;
+	newPlayer = nullptr;
+	selectPlayer = nullptr;
+	highScore = nullptr;
+	back = nullptr;
+	// play menu
+	delete play;
+	delete msettings;
+	delete pback;
+	play = nullptr;
+	msettings = nullptr;
+	pback = nullptr;
+}
+
 HomeScreen::HomeScreen(SDL_Renderer *renderer, TTF_Font *font)
 {
 	screentexture = textm.loadTexture("textures/amongus2.png", renderer);
 	SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
 
 	selffont = font;
-	// std::cout << "Inside HomeScreen" << std::endl;
-	//*subScreen = SubScreen(font);
-	// std::cout << "After subscreen init" << std::endl;
 	MinScreen ms = MinScreen();
 	mS = ms;
 	mS.setfont(font);
@@ -806,7 +874,7 @@ void MinScreen::addPlayer()
 	// clear text
 	if (textInput != "")
 	{
-		FileManager::playerScores.insert(std::pair<std::string, int>(textInput, 0));
+		FileManager::writeHSM(textInput, 0);
 		FileManager::currentPlayer = textInput;
 		FileManager::currentScore = 0;
 		textInput = "";
@@ -931,6 +999,8 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
 	renderTitle(r, sW, sH);
+	// render list of players
+	//list of players to create buttons
 
 	// if size of playerScores is 0, render no player
 	// else render all players

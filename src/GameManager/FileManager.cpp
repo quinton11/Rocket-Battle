@@ -94,29 +94,51 @@ bool FileManager::readHS()
 }
 
 // Take player name and high score and change to new highscore
-bool FileManager::writeHS(std::string player, int score)
+bool FileManager::writeHS()
 {
-    // Every new line is a different entry
-    // every new line has a name followed by a tab then the scores
-    // to write to file we append the player with the score separated by the
-    // tab as a new line to the file
-    // To write to file we check if the name already exists in file and append if not
-    // If name exists, we replace the highscore with the score submitted
+    // open the file in write mode
+    std::ofstream outfile(fileName);
+    std::stringstream temp;
 
-    // open file for both modes
-    // read file and update player's vector
-    // check if name is in vector
-    // if yes replace with score
+    std::map<std::string, int>::iterator it;
+    // stringify each entry and push to stream
+
+    for (it = playerScores.begin(); it != playerScores.end(); it++)
+    {
+        temp << it->first << "\t" << it->second << std::endl;
+    }
+    // write stream to file
+    outfile << temp.str();
 }
 
 bool FileManager::writeHSM(std::string player, int score)
 {
     // write to map,and call writeHS to write to file
+    bool exists = nameExists(player);
+    if (!exists)
+    {
+        // new player
+        playerScores.insert(std::pair<std::string, int>(player, score));
+        return true;
+    }
+    // player exists
+    // hence we update the scores
+    playerScores[player] = score;
+    return false;
 }
 
 bool FileManager::nameExists(std::string name)
 {
     std::cout << fileName << std::endl;
+    std::map<std::string, int>::iterator it;
+    for (it = playerScores.begin(); it != playerScores.end(); it++)
+    {
+        if (it->first == fileName)
+        {
+            return true;
+        }
+    }
+    return false;
     // checks if player name is in list of players
 }
 
@@ -136,7 +158,6 @@ std::string FileManager::stringify(std::string n, int s)
     std::string entry = n + "\t" + score;
     return entry;
 }
-
 
 // we read playerScores map and display players in select player menu
 // do same for highscore menu

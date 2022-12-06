@@ -75,11 +75,12 @@ public:
 	Menu mainM = {"Main-Menu", {start, settings, mquit}, true, false};
 
 	// Start menu
+	Button *startButton = new Button{"Start-Button", false, false};
 	Button *newPlayer = new Button{"New Player", false, false};
 	Button *selectPlayer = new Button{"Select Player", false, false};
 	Button *highScore = new Button{"High Score", false, false};
 	Button *back = new Button{"Back", false, false};
-	Menu Start = {"Start-Menu", {newPlayer, selectPlayer, highScore, back}, false, false};
+	Menu Start = {"Start-Menu", {startButton, newPlayer, selectPlayer, highScore, back}, false, false};
 
 	// Play Menu
 	Button *play = new Button{"Play", false, false};
@@ -108,6 +109,7 @@ public:
 	bool getismounted();
 	bool getisquit();
 	void setismounted(bool);
+	void release();
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 
 	HomeScreen(SDL_Renderer *renderer, TTF_Font *font);

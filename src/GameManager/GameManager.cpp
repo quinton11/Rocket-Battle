@@ -99,6 +99,7 @@ void GameManager::Run()
 		else if (!homescreen.getismounted() && homescreen.getisquit())
 		{
 			std::cout << "Unmounted and Quit" << std::endl;
+			FileManager::writeHS();
 			isDone = true;
 		}
 
@@ -149,7 +150,7 @@ GameManager::GameManager()
 
 	nGraphics = GameGraphics::getInstance();
 	FileManager::createInstance();
-	//FileManager::readHS();
+	// FileManager::readHS();
 
 	if (!GameGraphics::getInitialized())
 		isDone = true;
