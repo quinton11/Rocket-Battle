@@ -1,10 +1,10 @@
 #pragma once
 #include "Screen.h"
 #include "..\GameManager\TextureManager.h"
+#include "..\GameManager\FileManager.h"
 #include <string>
 #include "list"
 #include "SDL_ttf.h"
-
 
 struct Button
 {
@@ -31,6 +31,7 @@ struct MinScreen
 	int my;
 	bool isMtd = false; // is mounted
 	bool isActive = false;
+	std::list<std::string> players;
 	TTF_Font *font;
 	SDL_Texture *backtext;
 	SDL_Texture *backtextH;
@@ -41,6 +42,7 @@ struct MinScreen
 	SDL_FRect backButton;
 	SDL_FRect createPlayer;
 	bool backTextSet = false;
+	bool playerSelected = false;
 	void setName(std::string n);
 	void setfont(TTF_Font *f);
 	void eventChecker(bool &im, bool &quit);
@@ -49,6 +51,9 @@ struct MinScreen
 	void setBackText(SDL_Renderer *r);
 	void renderInputBox(SDL_Renderer *r, int sW, int sH);
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
+	void matchPlayers();
+	void addPlayer();
+	void movetoplay();
 
 private:
 	void renderNewPlayer(SDL_Renderer *r, int sW, int sH);

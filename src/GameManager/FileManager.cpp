@@ -48,6 +48,17 @@ void FileManager::createInstance()
     {
         fInstance = new FileManager();
     }
+    bool done = readHS();
+    if (done)
+    {
+        std::cout << "Entries" << std::endl;
+    }
+    else
+    {
+        std::cout << "No Entries" << std::endl;
+    }
+    int s = playerScores.size();
+    std::cout << "Entries: " << s << std::endl;
 }
 
 // Read all players and highscores to be displayed in highscore screen
@@ -125,6 +136,7 @@ std::string FileManager::stringify(std::string n, int s)
     std::string entry = n + "\t" + score;
     return entry;
 }
+
 
 // we read playerScores map and display players in select player menu
 // do same for highscore menu

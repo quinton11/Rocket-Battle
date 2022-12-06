@@ -181,6 +181,12 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 	// render buttons
 	else if ((*activeMenu).name == Start.name)
 	{
+		if (mS.playerSelected)
+		{
+			activeMenu = &Play;
+			mS.playerSelected = false;
+			return;
+		}
 		// std::cout << "Start menu is active" << std::endl;
 		float newplayerby = my + initdist;
 		float selectplayerby = newplayerby + bh + ydist;
@@ -465,14 +471,6 @@ void HomeScreen::eventchecker()
 			if (events.button.button == SDL_BUTTON_LEFT)
 			{
 				inButton(true);
-				// if mouse left button is clicked.
-				// check for active menu
-				// if active menu is main menu then we check which button in its buttons was the mouse in
-				// then we trigger the buttons selected flag and change the menus active state to the
-				// subsequent one.
-				// Ex if start was clicked, we toggle the main menu to false and start to true
-				// std::cout << "Start game clicked" << std::endl;
-				// ismounted = false;
 			}
 		}
 	}
@@ -531,6 +529,7 @@ void HomeScreen::inButton(bool isClicked)
 	}
 	else if ((*activeMenu).name == Start.name)
 	{
+
 		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 		{
 			(*b)->isActive = false;
@@ -560,6 +559,7 @@ void HomeScreen::inButton(bool isClicked)
 						// subScreen->setIsMounted(true);
 						mS.setName("Select Player");
 						mS.isMtd = true;
+						mS.matchPlayers();
 						break;
 					}
 					else if ((*b)->name == "High Score")
@@ -595,13 +595,14 @@ void HomeScreen::inButton(bool isClicked)
 			{
 				(*b)->isActive = true;
 
-				std::cout << "In button: " << (*b)->name << std::endl;
 				if (isClicked)
 				{
 					std::cout << (*b)->name << " -- Clicked" << std::endl;
 					if ((*b)->name == "Play")
 					{
 						// std::cout << "In start" << std::endl;
+						ismounted = false;
+						break;
 					}
 					else if ((*b)->name == "Settings")
 					{
@@ -739,7 +740,10 @@ void MinScreen::eventChecker(bool &im, bool &quit)
 				case SDLK_RETURN:
 					std::cout << "Enter hit" << std::endl;
 					std::cout << textInput << std::endl;
-					// create new player and move to play screen
+					addPlayer();
+					movetoplay();
+					// textInput = "";
+					//  create new player and move to play screen
 					break;
 				}
 			}
@@ -793,6 +797,30 @@ void MinScreen::render(SDL_Renderer *r, int sW, int sH)
 		renderSettings(r, sW, sH);
 	}
 	SDL_RenderPresent(r);
+}
+
+void MinScreen::addPlayer()
+{
+	// check if textname is not empty
+	// if so then add it to the map of players
+	// clear text
+	if (textInput != "")
+	{
+		FileManager::playerScores.insert(std::pair<std::string, int>(textInput, 0));
+		FileManager::currentPlayer = textInput;
+		FileManager::currentScore = 0;
+		textInput = "";
+		playerSelected = true;
+		return;
+	}
+
+	// if empty return and do nothing
+	return;
+}
+
+void MinScreen::movetoplay()
+{
+	isMtd = false;
 }
 
 void MinScreen::setBackText(SDL_Renderer *r)
@@ -866,6 +894,7 @@ void MinScreen::renderInputBox(SDL_Renderer *r, int sW, int sH)
 }
 void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 {
+
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
 	SDL_FRect backbutton = {20, 20, 50, 30};
@@ -883,6 +912,8 @@ void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 	// render page title at middle top
 	renderTitle(r, sW, sH);
 	renderInputBox(r, sW, sH);
+	// after inputting,push name with highscore of 0 to the playerScores map when user has
+	// created player
 }
 void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 {
@@ -900,6 +931,9 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
 	renderTitle(r, sW, sH);
+
+	// if size of playerScores is 0, render no player
+	// else render all players
 }
 void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 {
@@ -917,6 +951,8 @@ void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
 	renderTitle(r, sW, sH);
+	// if size of playerScores map is 0 render none
+	// else render players and their scores
 }
 void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
 {
@@ -935,6 +971,27 @@ void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
 	renderTitle(r, sW, sH);
+}
+
+// Updates players list with FileManager::playerScores map
+void MinScreen::matchPlayers()
+{
+	int sizeps = FileManager::playerScores.size();
+	int sizep = players.size();
+	std::string nm;
+	if (sizeps == 0)
+	{
+		std::cout << "Zero players" << std::endl;
+	}
+	if (sizeps != sizep)
+	{
+		std::map<std::string, int>::iterator it;
+		for (it = FileManager::playerScores.begin(); it != FileManager::playerScores.end(); it++)
+		{
+			nm = it->first;
+			players.push_back(nm);
+		}
+	}
 }
 
 /*

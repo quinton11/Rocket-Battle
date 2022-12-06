@@ -63,7 +63,7 @@ void GameManager::Run()
 	Add bullet shooting mechanism for rocket when 'b' is pressed. Bullets should be small and indefinite for now
 	*/
 	BulletManager *bm = BulletManager::getBMInstance();
-	EnemyManager em = EnemyManager(e_text, sb_text, wv_text);
+	EnemyManager em = EnemyManager(texture, sb_text, wv_text);
 
 	// Enemy attributes
 	bm->setTextures(laser_text, sniper_text, kb_text);
@@ -149,6 +149,7 @@ GameManager::GameManager()
 
 	nGraphics = GameGraphics::getInstance();
 	FileManager::createInstance();
+	//FileManager::readHS();
 
 	if (!GameGraphics::getInitialized())
 		isDone = true;

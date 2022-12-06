@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include "sys/stat.h"
@@ -10,8 +11,7 @@ class FileManager
 {
 private:
     static std::string fileName;
-    static std::string currentPlayer;
-    static int currentScore;
+
     static std::fstream scorefile;
     static std::vector<std::string> players;
     static FileManager *fInstance;
@@ -22,6 +22,8 @@ private:
     ~FileManager();
 
 public:
+    static std::string currentPlayer;
+    static int currentScore;
     static std::map<std::string, int> playerScores;
     static FileManager *getInstance();
     static void createInstance();

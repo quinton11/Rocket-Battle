@@ -280,8 +280,8 @@ Enemy::Enemy(int x, int y, CustomEnums::EnemyT t)
 {
     rect.x = x;
     rect.y = y;
-    rect.w = 45;
-    rect.h = 60;
+    rect.w = 60;
+    rect.h = 45;
     type = t;
 }
 
