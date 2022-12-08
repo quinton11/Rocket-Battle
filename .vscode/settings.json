@@ -52,6 +52,7 @@
         "fstream": "cpp",
         "optional": "cpp",
         "sstream": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "deque": "cpp"
     }
 }

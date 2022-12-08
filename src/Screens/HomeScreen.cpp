@@ -835,7 +835,27 @@ void MinScreen::inButton(bool isClicked)
 			isMtd = false;
 			isActive = false;
 		}
+		return;
 	}
+	if (name == "Select Player")
+	{
+		std::list<Button>::iterator it;
+		for (it = playerButtons.begin(); it != playerButtons.end(); it++)
+		{
+			it->isActive = false;
+			if (mouse_in_play(mx, my, it->dest))
+			{
+				it->isActive = true;
+				if (isClicked)
+				{
+					// it->isSelected = true;
+					setSelectedPButton(*it);
+					std::cout << it->name << " is selected" << std::endl;
+				}
+			}
+		}
+	}
+
 	// need to have locations of each button
 	// common button is the back button
 	// then we have the create player button
@@ -879,6 +899,7 @@ void MinScreen::addPlayer()
 		FileManager::currentScore = 0;
 		textInput = "";
 		playerSelected = true;
+		matchPlayers(); // update list of players
 		return;
 	}
 
@@ -985,6 +1006,7 @@ void MinScreen::renderNewPlayer(SDL_Renderer *r, int sW, int sH)
 }
 void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 {
+	matchPlayerButtons(r);
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(r, NULL); // fill screen
 
@@ -999,12 +1021,14 @@ void MinScreen::renderSelectPlayer(SDL_Renderer *r, int sW, int sH)
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
 	renderTitle(r, sW, sH);
+	renderPlayersScroll(r, 0.0f, sW, sH);
 	// render list of players
-	//list of players to create buttons
+	// list of players to create buttons
 
 	// if size of playerScores is 0, render no player
 	// else render all players
 }
+
 void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 {
 	SDL_SetRenderDrawColor(r, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -1021,7 +1045,9 @@ void MinScreen::renderHS(SDL_Renderer *r, int sW, int sH)
 		SDL_RenderCopyF(r, backtext, nullptr, &backButton);
 	}
 	renderTitle(r, sW, sH);
+	matchPlayerScoreDisplay(r, sW, sH);
 	// if size of playerScores map is 0 render none
+	// loop through player buttons to render
 	// else render players and their scores
 }
 void MinScreen::renderSettings(SDL_Renderer *r, int sW, int sH)
@@ -1056,12 +1082,183 @@ void MinScreen::matchPlayers()
 	if (sizeps != sizep)
 	{
 		std::map<std::string, int>::iterator it;
+		players.clear(); // clear list
+
 		for (it = FileManager::playerScores.begin(); it != FileManager::playerScores.end(); it++)
 		{
 			nm = it->first;
 			players.push_back(nm);
 		}
+		/* int s = players.size();
+		std::cout << "Number of players: " << s << std::endl; */
 	}
+}
+
+void MinScreen::renderPlayersScroll(SDL_Renderer *r, float offset, int sW, int sH)
+{
+	SDL_FRect midCon;
+	SDL_FRect dest;
+	/*
+	x is the middle of screen minus half of container width
+	y is displacement between title and container plus title y+title height
+	width is varied
+	 */
+	midCon.w = 300;
+	midCon.h = 400;
+	midCon.x = (sW / 2) - (midCon.w / 2);
+	midCon.y = 130;
+
+	SDL_SetRenderDrawColor(r, 255, 255, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRectF(r, &midCon);
+	// SDL_SetRenderDrawColor(r, 255, 0, 0, SDL_ALPHA_OPAQUE);
+
+	/*
+		Loop through buttons list and render each
+		buttons rect. each's width and height are set
+		then the x is set however the y changes on each iteration
+	 */
+	if (selectedB != nullptr)
+	{
+		SDL_SetRenderDrawColor(r, 20, 255, 0, SDL_ALPHA_OPAQUE);
+		SDL_RenderFillRectF(r, &(selectedB->dest));
+	}
+	float yoff = midCon.y + 20;
+	for (std::list<Button>::iterator it = playerButtons.begin(); it != playerButtons.end(); it++)
+	{
+		it->rect.w = 180;
+		it->rect.h = 20;
+		it->rect.x = (midCon.x + midCon.w / 2) - (it->rect.w / 2);
+		it->rect.y = yoff;
+		// dest.w =(it->text)
+		it->dest.x = it->rect.x;
+		it->dest.y = it->rect.y;
+
+		// SDL_RenderFillRectF(r, &(it->rect));
+
+		if (it->isActive)
+		{
+			SDL_RenderCopyF(r, it->hovertext, nullptr, &(it->dest));
+		}
+		if (!it->isActive)
+		{
+			SDL_RenderCopyF(r, it->text, nullptr, &(it->dest));
+		}
+		yoff += it->rect.h + 5;
+	}
+}
+void MinScreen::matchPlayerButtons(SDL_Renderer *r)
+{
+	int sizep = players.size();
+	int sizepb = playerButtons.size();
+	Button temp;
+	std::pair<SDL_Texture *, SDL_Texture *> tempText;
+
+	if (sizep == 0)
+	{
+		std::cout << "Empty" << std::endl;
+		// return;
+	}
+	else if (sizep != sizepb)
+	{
+		std::list<std::string>::iterator it;
+		playerButtons.clear();
+		for (it = players.begin(); it != players.end(); it++)
+		{
+			// create buttons
+			temp = Button{*it, false, false};
+			tempText = buttonText(r, *it, temp.dest);
+			temp.text = tempText.first;
+			temp.hovertext = tempText.second;
+			playerButtons.push_back(temp);
+			// add them to list of buttons
+		}
+	}
+}
+
+void MinScreen::matchPlayerScoreDisplay(SDL_Renderer *r, int sW, int sH)
+{
+
+	SDL_FRect midCon;
+	SDL_FRect dest;
+	midCon.w = 300;
+	midCon.h = 400;
+	midCon.x = (sW / 2) - (midCon.w / 2);
+	midCon.y = 130;
+
+	SDL_SetRenderDrawColor(r, 255, 255, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderFillRectF(r, &midCon);
+
+	// loop through playerscore map,create texture
+	// render rects holding players name and highscore
+	float yoff = midCon.y + 20;
+	std::map<std::string, int>::iterator it;
+	std::pair<SDL_Texture *, SDL_Texture *> p;
+	std::stringstream s;
+	for (it = FileManager::playerScores.begin(); it != FileManager::playerScores.end(); it++)
+	{
+		// x,y position of dest rect
+		// create textures
+		s << it->second; // to string
+		p = displayText(r, it->first, s.str(), dest);
+		dest.x = (midCon.x + midCon.w / 2) - (dest.w / 2);
+		dest.y = yoff;
+		// set w and height
+		// draw text on rect
+		SDL_RenderCopyF(r, p.first, nullptr, &dest);
+		// offset y
+		// delete textures
+		SDL_DestroyTexture(p.first);
+		SDL_DestroyTexture(p.second);
+
+		yoff += dest.h + 5;
+	}
+}
+
+void MinScreen::setSelectedPButton(Button &b)
+{
+	selectedB = &b;
+}
+
+std::pair<SDL_Texture *, SDL_Texture *> MinScreen::buttonText(SDL_Renderer *r, std::string nm, SDL_FRect &dest)
+{
+	SDL_Surface *surf;
+	SDL_Texture *texture;
+	SDL_Texture *hovtexture;
+	std::pair<SDL_Texture *, SDL_Texture *> res;
+
+	surf = TTF_RenderText_Blended(font, nm.c_str(), {0, 0, 0});
+	texture = SDL_CreateTextureFromSurface(r, surf);
+	dest.w = surf->w - 20;
+	dest.h = surf->h - 20;
+	SDL_FreeSurface(surf);
+
+	// hover
+	surf = TTF_RenderText_Blended(font, nm.c_str(), {255, 0, 0});
+	hovtexture = SDL_CreateTextureFromSurface(r, surf);
+	SDL_FreeSurface(surf);
+	res = std::pair<SDL_Texture *, SDL_Texture *>(texture, hovtexture);
+	return res;
+}
+
+std::pair<SDL_Texture *, SDL_Texture *> MinScreen::displayText(SDL_Renderer *r, std::string nm, std::string score, SDL_FRect &dest)
+{
+	SDL_Surface *surf;
+	SDL_Texture *ntexture;
+	SDL_Texture *stexture;
+	std::pair<SDL_Texture *, SDL_Texture *> res;
+	std::string gap = "            ";
+	surf = TTF_RenderText_Blended(font, nm.c_str(), {0, 0, 0});
+	ntexture = SDL_CreateTextureFromSurface(r, surf);
+	dest.w = surf->w - 20;
+	dest.h = surf->h - 20;
+	SDL_FreeSurface(surf);
+
+	surf = TTF_RenderText_Blended(font, score.c_str(), {255, 0, 0});
+	stexture = SDL_CreateTextureFromSurface(r, surf);
+	SDL_FreeSurface(surf);
+	res = std::pair<SDL_Texture *, SDL_Texture *>(ntexture, stexture);
+
+	return res;
 }
 
 /*

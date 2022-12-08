@@ -12,6 +12,7 @@ struct Button
 	bool isActive;
 	bool isSelected;
 	SDL_FRect rect;
+	SDL_FRect dest;
 	SDL_Texture *text;
 	SDL_Texture *hovertext;
 };
@@ -32,6 +33,8 @@ struct MinScreen
 	bool isMtd = false; // is mounted
 	bool isActive = false;
 	std::list<std::string> players;
+	std::list<Button> playerButtons;
+	Button *selectedB = nullptr;
 	TTF_Font *font;
 	SDL_Texture *backtext;
 	SDL_Texture *backtextH;
@@ -52,8 +55,14 @@ struct MinScreen
 	void renderInputBox(SDL_Renderer *r, int sW, int sH);
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
 	void matchPlayers();
+	void setSelectedPButton(Button &b);
+	void matchPlayerButtons(SDL_Renderer *r);
+	void matchPlayerScoreDisplay(SDL_Renderer *r, int sW, int sH);
 	void addPlayer();
 	void movetoplay();
+	void renderPlayersScroll(SDL_Renderer *r, float offset, int sW, int sH);
+	std::pair<SDL_Texture *, SDL_Texture *> buttonText(SDL_Renderer *r, std::string nm, SDL_FRect &dest);
+	std::pair<SDL_Texture *, SDL_Texture *> displayText(SDL_Renderer *r, std::string nm,std::string score, SDL_FRect &dest);
 
 private:
 	void renderNewPlayer(SDL_Renderer *r, int sW, int sH);
