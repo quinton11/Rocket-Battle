@@ -139,7 +139,7 @@ bool FileManager::writeHSM(std::string player, int score)
 
 bool FileManager::nameExists(std::string name)
 {
-    std::cout << fileName << std::endl;
+    //std::cout << fileName << std::endl;
     std::map<std::string, int>::iterator it;
     for (it = playerScores.begin(); it != playerScores.end(); it++)
     {

@@ -63,8 +63,8 @@ void MinScreen::eventChecker(bool &im, bool &quit)
                     break;
 
                 case SDLK_RETURN:
-                    std::cout << "Enter hit" << std::endl;
-                    std::cout << textInput << std::endl;
+                    //std::cout << "Enter hit" << std::endl;
+                    //std::cout << textInput << std::endl;
                     addPlayer();
                     movetoplay();
                     // textInput = "";

@@ -77,6 +77,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					(*b)->rect = startRect;
 					// Create text
 					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -88,6 +89,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 					(*b)->rect = settingsRect;
 					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -98,6 +100,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = quitRect;
 					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -199,6 +202,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					(*b)->rect = startbuttonRect;
 					// Create text
 					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -210,7 +214,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 					(*b)->rect = newplayerRect;
 					// Create text
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -221,7 +226,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = selectplayerRect;
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -231,7 +237,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = highscoreRect;
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -241,7 +248,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = backRect;
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -357,7 +365,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In start" << std::endl;
 
 					(*b)->rect = playRect;
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -368,7 +377,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = settingsRect;
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -378,7 +388,8 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = backRect;
-					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
+					(*b)->rect.x = (mx + mw / 2) - (*b)->rect.w / 2;
 
 					(*b)->text = textPair.first;
 					// hover
@@ -597,7 +608,8 @@ void HomeScreen::inButton(bool isClicked)
 					{
 						// std::cout << "In start" << std::endl;
 						ismounted = false;
-						std::cout << FileManager::currentPlayer << " " << FileManager::currentScore << std::endl;
+						activeMenu = &Start;
+						// std::cout << FileManager::currentPlayer << " " << FileManager::currentScore << std::endl;
 						break;
 					}
 					else if ((*b)->name == "Settings")

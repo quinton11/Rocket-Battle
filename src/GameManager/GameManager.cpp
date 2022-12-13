@@ -105,7 +105,7 @@ void GameManager::Run()
 
 		else if (!homescreen.getismounted() && homescreen.getisquit())
 		{
-			//std::cout << "Unmounted and Quit" << std::endl;
+			// std::cout << "Unmounted and Quit" << std::endl;
 			FileManager::writeHS();
 			isDone = true;
 			homescreen.release();
@@ -164,3 +164,8 @@ GameManager::GameManager()
 	if (!GameGraphics::getInitialized())
 		isDone = true;
 }
+
+/*
+	TODO:: Adjust menu buttons positioning Done
+	Add player life deduction and game over
+ */
