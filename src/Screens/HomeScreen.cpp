@@ -76,7 +76,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 					(*b)->rect = startRect;
 					// Create text
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -87,7 +87,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = settingsRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -97,7 +97,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = quitRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -198,7 +198,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 					(*b)->rect = startbuttonRect;
 					// Create text
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name, (*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -210,7 +210,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 
 					(*b)->rect = newplayerRect;
 					// Create text
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -221,7 +221,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = selectplayerRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -231,7 +231,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = highscoreRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -241,7 +241,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = backRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -357,7 +357,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In start" << std::endl;
 
 					(*b)->rect = playRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -368,7 +368,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 					// std::cout << "In settings" << std::endl;
 
 					(*b)->rect = settingsRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -378,7 +378,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 				{
 					// std::cout << "In quit" << std::endl;
 					(*b)->rect = backRect;
-					textPair = getTexturePair(renderer, (*b)->name);
+					textPair = getTextPairR(renderer, (*b)->name,(*b)->rect);
 
 					(*b)->text = textPair.first;
 					// hover
@@ -490,7 +490,7 @@ void HomeScreen::inButton(bool isClicked)
 
 				if (isClicked)
 				{
-					//std::cout << (*b)->name << " -- Clicked" << std::endl;
+					// std::cout << (*b)->name << " -- Clicked" << std::endl;
 					if ((*b)->name == "start")
 					{
 						// std::cout << "In start" << std::endl
@@ -635,6 +635,27 @@ std::pair<SDL_Texture *, SDL_Texture *> HomeScreen::getTexturePair(SDL_Renderer 
 	SDL_FreeSurface(surfh);
 
 	std::pair<SDL_Texture *, SDL_Texture *> res = std::pair<SDL_Texture *, SDL_Texture *>(texture, htexture);
+	return res;
+}
+
+std::pair<SDL_Texture *, SDL_Texture *> HomeScreen::getTextPairR(SDL_Renderer *r, std::string nm, SDL_FRect &dest)
+{
+	SDL_Surface *surf;
+	SDL_Texture *texture;
+	SDL_Texture *hovtexture;
+	std::pair<SDL_Texture *, SDL_Texture *> res;
+
+	surf = TTF_RenderText_Blended(TextureManager::font, nm.c_str(), {255, 255, 255});
+	texture = SDL_CreateTextureFromSurface(r, surf);
+	dest.w = surf->w - 20;
+	dest.h = surf->h - 20;
+	SDL_FreeSurface(surf);
+
+	// hover
+	surf = TTF_RenderText_Blended(TextureManager::font, nm.c_str(), {255, 0, 0});
+	hovtexture = SDL_CreateTextureFromSurface(r, surf);
+	SDL_FreeSurface(surf);
+	res = std::pair<SDL_Texture *, SDL_Texture *>(texture, hovtexture);
 	return res;
 }
 
