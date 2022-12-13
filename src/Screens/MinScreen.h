@@ -4,25 +4,7 @@
 #include "list"
 #include "SDL_ttf.h"
 #include "..\GameManager\FileManager.h"
-
-struct Button
-{
-	std::string name;
-	bool isActive;
-	bool isSelected;
-	SDL_FRect rect;
-	SDL_FRect dest;
-	SDL_Texture *text;
-	SDL_Texture *hovertext;
-};
-
-struct Menu
-{
-	std::string name;
-	std::list<Button *> buttons;
-	bool active;
-	bool set;
-};
+#include "..\Utils\Components.h"
 
 struct MinScreen
 {

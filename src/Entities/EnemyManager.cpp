@@ -108,18 +108,27 @@ void EnemyManager::spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH)
     enemyships.push_back(ship);
 }
 
+void EnemyManager::clearEShips()
+{
+    for (std::list<Enemy *>::iterator enemy = enemyships.begin(); enemy != enemyships.end();)
+    {
+        delete (*enemy);
+        enemyships.erase(enemy++);
+    }
+}
+
 void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rocket, double dt, int ScreenW, int ScreenH)
 {
     // Check length of enemy ship list(number of enemy ships on screen)
     int length = enemyships.size();
-    //std::cout << "Enemy Ships size" << std::endl;
+    // std::cout << "Enemy Ships size" << std::endl;
 
     if (length == 0)
     {
         // If enemy ships are zero,at the start of game
 
         InitSpawn(ScreenW, ScreenH);
-        //std::cout << "Init Spawn" << std::endl;
+        // std::cout << "Init Spawn" << std::endl;
     }
 
     // Generate random number less than 5
@@ -139,7 +148,7 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rock
         // std::cout << "Random Spawn" << std::endl;
     }
 
-    //std::cout << "In enemy loop" << std::endl;
+    // std::cout << "In enemy loop" << std::endl;
     for (std::list<Enemy *>::iterator enemy = enemyships.begin(); enemy != enemyships.end();)
     {
         // render ship with its position

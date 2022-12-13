@@ -37,6 +37,7 @@ private:
 public:
     static BulletManager *getBMInstance(); // get instance of bullet manager
     static void release();                 // Instance Released at end of game
+    void clearBullets();
     void setTextures(SDL_Texture *rtext, SDL_Texture *riftext, SDL_Texture *wvtext);
     void setEnemyList(std::list<Enemy *> &aE);
     bool checkCollision(Bullet *b);

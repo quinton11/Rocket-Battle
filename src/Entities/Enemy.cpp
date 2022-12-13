@@ -203,7 +203,7 @@ EnemyShoot Enemy::attack(Rocket rocket)
                     interval = 100;
                 }
             }
-            interval -= 1;
+            interval -= 1.0f;
             return shoot;
         }
     }

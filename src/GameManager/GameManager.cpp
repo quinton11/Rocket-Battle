@@ -9,6 +9,7 @@
 #include "..\Entities\BulletManager.h"
 #include "..\Entities\EnemyManager.h"
 #include "SDL_ttf.h"
+#include "..\Screens\PauseScreen.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -38,7 +39,9 @@ void GameManager::Run()
 	// --- TEXTURES ---
 	// Rocket object
 	Rocket rocket = Rocket();
-	TextureManager txman = TextureManager();
+	std::string fontPath = "textures/fonts/Starjedi.ttf";
+
+	TextureManager txman = TextureManager(fontPath);
 	SDL_Texture *texture = txman.loadTexture("textures/rockblue.png", nGraphics->getrenderer());
 	SDL_Texture *screen_texture = txman.loadTexture("textures/bgArtboard.png", nGraphics->getrenderer());
 
@@ -53,8 +56,8 @@ void GameManager::Run()
 	SDL_Texture *kb_text = txman.loadTexture("textures/laser64.png", nGraphics->getrenderer());
 
 	// FONTS
-	std::string fontPath = "textures/fonts/Starjedi.ttf";
-	TTF_Font *font = TTF_OpenFont(fontPath.c_str(), 25);
+	// std::string fontPath = "textures/fonts/Starjedi.ttf";
+	// TTF_Font *font = TTF_OpenFont(fontPath.c_str(), 25);
 
 	/*
 	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
@@ -69,7 +72,8 @@ void GameManager::Run()
 	bm->setTextures(laser_text, sniper_text, kb_text);
 	bm->setEnemyList(em.enemyships);
 
-	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), font);
+	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), TextureManager::font);
+	PauseScreen pausescreen = PauseScreen();
 	// HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
 
 	KeyboardHandler *kb_handler = KeyboardHandler::instance();
@@ -90,7 +94,10 @@ void GameManager::Run()
 		if (homescreen.getismounted())
 		{
 			// std::cout << "In home screen render" << std::endl;
-
+			// clear bullet and enemy manager
+			rocket.reset();
+			bm->clearBullets();
+			em.clearEShips();
 			homescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
 			// std::cout << "After home screen render" << std::endl;
 		}
@@ -98,7 +105,7 @@ void GameManager::Run()
 
 		else if (!homescreen.getismounted() && homescreen.getisquit())
 		{
-			std::cout << "Unmounted and Quit" << std::endl;
+			//std::cout << "Unmounted and Quit" << std::endl;
 			FileManager::writeHS();
 			isDone = true;
 			homescreen.release();
@@ -111,6 +118,7 @@ void GameManager::Run()
 			// keyboard input
 			kb_handler->keyboard_input(state, &rocket, dt);
 			// std::cout<<"After keyboard input"<<std::endl;
+			pausescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
 
 			// single hit keys
 			//

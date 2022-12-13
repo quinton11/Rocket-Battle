@@ -34,6 +34,7 @@ public:
     void render(SDL_Renderer *renderer,BulletManager *bm,Rocket rocket, double dt, int ScreenW, int ScreenH);
     void spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH);
     void InitSpawn(int ScreenW, int ScreenH);
+    void clearEShips();
 
     // Set each enemy ship starting position randomly within the bounds of screen
     // returns an SDL_FRect with its start position calculated randomly

@@ -13,6 +13,10 @@ class HomeScreen : public Screen
 
 public:
 	TextureManager textm;
+	static bool quit;
+	static bool ismounted;
+
+
 	// Main menu
 	Button *start = new Button{"start", false, false};
 	Button *settings = new Button{"settings", false, false};
@@ -34,10 +38,8 @@ public:
 	Menu Play = {"Play-Menu", {play, msettings, pback}, false, false};
 
 private:
-	bool ismounted = true;
 	std::list<Button> *activeButtons;
 	Menu *activeMenu;
-	bool quit = false;
 	SDL_Texture *screentexture = nullptr;
 	SDL_Texture *playbutton = nullptr;
 	SDL_Event events;

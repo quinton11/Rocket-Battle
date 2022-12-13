@@ -2,9 +2,11 @@
 #include "iostream"
 
 // SDL_Texture* HomeScreen::screentexture = textm.loadTexture("textures/universe.png", renderer);
+bool HomeScreen::ismounted = true;
+bool HomeScreen::quit = false;
 void HomeScreen::render(SDL_Renderer *renderer, int screenW, int screenH)
 {
-	// SDL_RenderClear(renderer);
+	SDL_RenderClear(renderer);
 	// std::cout << "Before gamepad texture" << std::endl;
 	// SDL_Texture *play = textm.loadTexture("textures/gamepad.png", renderer);
 	while (ismounted)
@@ -488,7 +490,7 @@ void HomeScreen::inButton(bool isClicked)
 
 				if (isClicked)
 				{
-					std::cout << (*b)->name << " -- Clicked" << std::endl;
+					//std::cout << (*b)->name << " -- Clicked" << std::endl;
 					if ((*b)->name == "start")
 					{
 						// std::cout << "In start" << std::endl

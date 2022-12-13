@@ -17,6 +17,7 @@ public:
 	static void release();
 
 	void Run();
+	void resetEntities();
 
 private:
 	GameManager();

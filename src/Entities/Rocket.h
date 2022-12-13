@@ -41,6 +41,7 @@ public:
 	void update(double dt);
 	void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
     void renderHealthBar(SDL_Renderer *renderer);
+	void reset();
 
 	void moveleft(double dt);
 	void moveright(double dt);

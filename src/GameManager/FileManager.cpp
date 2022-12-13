@@ -17,11 +17,11 @@ FileManager::FileManager()
     {
         // file does not exist, create file
         std::ofstream outfile(fileName);
-        std::cout << "HS File Created" << std::endl;
+       // std::cout << "HS File Created" << std::endl;
     }
     else
     {
-        std::cout << "HS File exists" << std::endl;
+        //std::cout << "HS File exists" << std::endl;
     }
 }
 
@@ -51,14 +51,14 @@ void FileManager::createInstance()
     bool done = readHS();
     if (done)
     {
-        std::cout << "Entries" << std::endl;
+       // std::cout << "Entries" << std::endl;
     }
     else
     {
-        std::cout << "No Entries" << std::endl;
+        //std::cout << "No Entries" << std::endl;
     }
     int s = playerScores.size();
-    std::cout << "Entries: " << s << std::endl;
+    //std::cout << "Entries: " << s << std::endl;
 }
 
 // Read all players and highscores to be displayed in highscore screen
@@ -108,6 +108,16 @@ bool FileManager::writeHS()
         temp << it->first << "\t" << it->second << std::endl;
     }
     // write stream to file
+    struct stat buffer;
+    // fileName = "scores.txt";
+    int te = stat(fileName.c_str(), &buffer);
+    bool exists = (te == 0);
+    if (!exists)
+    {
+        // file does not exist, create file
+        std::ofstream outfile(fileName);
+        //std::cout << "HS File Created" << std::endl;
+    }
     outfile << temp.str();
 }
 

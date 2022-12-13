@@ -83,6 +83,15 @@ bool BulletManager::isStalled()
 {
     return stall;
 }
+
+void BulletManager::clearBullets()
+{
+    for (std::list<Bullet *>::iterator bullet = all.begin(); bullet != all.end();)
+    {
+        delete (*bullet);
+        all.erase(bullet++);
+    }
+}
 void BulletManager::update(SDL_Renderer *r, double dt, const int wW, const int wH)
 {
     // std::unique_ptr<Bullet> b;

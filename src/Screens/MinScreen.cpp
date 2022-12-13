@@ -52,7 +52,7 @@ void MinScreen::eventChecker(bool &im, bool &quit)
                     break;
 
                 case SDLK_BACKSPACE:
-                    std::cout << "Back Space hit" << std::endl;
+                    //std::cout << "Back Space hit" << std::endl;
                     leng = textInput.size();
                     ////std::cout << leng << std::endl;
 
@@ -109,7 +109,7 @@ void MinScreen::inButton(bool isClicked)
                     setSelectedPButton(*it);
                     FileManager::currentPlayer = it->name;
                     FileManager::currentScore = FileManager::playerScores[it->name];
-                    std::cout << it->name << " is selected" << std::endl;
+                    //std::cout << it->name << " is selected" << std::endl;
                 }
             }
         }

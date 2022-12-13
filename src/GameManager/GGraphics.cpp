@@ -34,7 +34,7 @@ bool GameGraphics::Init()
 	}
 	else
 	{
-		std::cout << "SDL_ttf Init success" << std::endl;
+		//std::cout << "SDL_ttf Init success" << std::endl;
 	}
 	// renderer
 	renderer = SDL_CreateRenderer(window, -1, 0);

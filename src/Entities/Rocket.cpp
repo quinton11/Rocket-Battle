@@ -270,6 +270,12 @@ void Rocket::calc_center()
 	// centervec.setvector(cx, cy);
 }
 
+void Rocket::reset()
+{
+	rect.x = 300;
+	rect.y = 350;
+}
+
 Rocket::Rocket()
 {
 	rect.x = 300;

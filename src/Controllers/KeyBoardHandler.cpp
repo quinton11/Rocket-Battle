@@ -1,4 +1,5 @@
 #include "KeyBoardHandler.h"
+#include "..\Screens\PauseScreen.h"
 
 KeyboardHandler *KeyboardHandler::khandler_instance = NULL;
 
@@ -80,16 +81,23 @@ void KeyboardHandler::keyboard_events(SDL_Event &event, bool &isDone, Rocket *ro
 		{
 			isDone = true;
 		}
+		if (event.type == SDL_KEYDOWN)
+		{
+			if (event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				PauseScreen::active = true;
+			}
+		}
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_s))
 		{
-			//std::cout << "Shoot" << std::endl;
-			// Calculate bullets starting position which will be the rockets top middle
-			// the rockets top middle with respect to its angle of rotation
-			//std::cout << rocket->rect.x << "," << rocket->rect.y << std::endl;
+			// std::cout << "Shoot" << std::endl;
+			//  Calculate bullets starting position which will be the rockets top middle
+			//  the rockets top middle with respect to its angle of rotation
+			// std::cout << rocket->rect.x << "," << rocket->rect.y << std::endl;
 			float cx = ((rocket->rect.x) + (rocket->rect.w / 2));
 			float cy = ((rocket->rect.y) + (rocket->rect.h / 2));
 			float angle = rocket->getAngle();
-			//std::cout <<"Making bullet with centres: "<< cx << "," << cy << std::endl;
+			// std::cout <<"Making bullet with centres: "<< cx << "," << cy << std::endl;
 			bm->makeBullet(cx, cy, angle, true);
 
 			// the bullets direction will be the direction the rocket is facing
