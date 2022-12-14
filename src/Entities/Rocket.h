@@ -20,6 +20,7 @@ public:
 
 private:
 	float speed = 70.0f;
+	float score=0.0f;
 	float max_speed = 200.0f;
 	float speed_ph = 70.0f;
 	float tspeed = 0;

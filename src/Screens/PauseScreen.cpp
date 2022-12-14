@@ -10,9 +10,12 @@ PauseScreen::~PauseScreen(){};
 void PauseScreen::render(SDL_Renderer *r, int sW, int sH, bool gOver)
 {
     gameOver = gOver;
-    if(gameOver)
+    if (gameOver)
     {
-        active=true;
+        active = true;
+        // check if playerscore is greater than currentscore
+        // if so update current players highscore
+        FileManager::updateHScore();
     }
     while (active)
     {

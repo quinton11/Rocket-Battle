@@ -2,8 +2,9 @@
 
 FileManager *FileManager::fInstance = nullptr;
 std::string FileManager::fileName = "scores.txt";
-std::string FileManager::currentPlayer;
+std::string FileManager::currentPlayer = "";
 int FileManager::currentScore;
+int FileManager::playerScore;
 std::map<std::string, int> FileManager::playerScores;
 
 FileManager::FileManager()
@@ -17,11 +18,11 @@ FileManager::FileManager()
     {
         // file does not exist, create file
         std::ofstream outfile(fileName);
-       // std::cout << "HS File Created" << std::endl;
+        // std::cout << "HS File Created" << std::endl;
     }
     else
     {
-        //std::cout << "HS File exists" << std::endl;
+        // std::cout << "HS File exists" << std::endl;
     }
 }
 
@@ -42,6 +43,26 @@ FileManager *FileManager::getInstance()
     return fInstance;
 }
 
+void FileManager::updateHScore()
+{
+    if (currentPlayer == "")
+    {
+        // std::cout << "No Player" << std::endl;
+        return;
+    }
+    if (playerScore > currentScore)
+    {
+        //std::cout << "Writing new score " << playerScore << " " << currentScore << std::endl;
+        //std::cout << currentPlayer << std::endl;
+        bool d = writeHSM(currentPlayer, playerScore);
+        /* if (d)
+        {
+            std::cout << "Done" << std::endl;
+        } */
+        //std::cout << "After writing score " << std::endl;
+    }
+}
+
 void FileManager::createInstance()
 {
     if (fInstance == nullptr)
@@ -51,14 +72,14 @@ void FileManager::createInstance()
     bool done = readHS();
     if (done)
     {
-       // std::cout << "Entries" << std::endl;
+        // std::cout << "Entries" << std::endl;
     }
     else
     {
-        //std::cout << "No Entries" << std::endl;
+        // std::cout << "No Entries" << std::endl;
     }
     int s = playerScores.size();
-    //std::cout << "Entries: " << s << std::endl;
+    // std::cout << "Entries: " << s << std::endl;
 }
 
 // Read all players and highscores to be displayed in highscore screen
@@ -105,6 +126,7 @@ bool FileManager::writeHS()
 
     for (it = playerScores.begin(); it != playerScores.end(); it++)
     {
+        //std::cout << it->first << " - write HS " << it->second << std::endl;
         temp << it->first << "\t" << it->second << std::endl;
     }
     // write stream to file
@@ -116,7 +138,7 @@ bool FileManager::writeHS()
     {
         // file does not exist, create file
         std::ofstream outfile(fileName);
-        //std::cout << "HS File Created" << std::endl;
+        // std::cout << "HS File Created" << std::endl;
     }
     outfile << temp.str();
 }
@@ -134,16 +156,17 @@ bool FileManager::writeHSM(std::string player, int score)
     // player exists
     // hence we update the scores
     playerScores[player] = score;
+    //std::cout << player << " " << score << std::endl;
     return false;
 }
 
 bool FileManager::nameExists(std::string name)
 {
-    //std::cout << fileName << std::endl;
+    // std::cout << fileName << std::endl;
     std::map<std::string, int>::iterator it;
     for (it = playerScores.begin(); it != playerScores.end(); it++)
     {
-        if (it->first == fileName)
+        if (it->first == currentPlayer)
         {
             return true;
         }

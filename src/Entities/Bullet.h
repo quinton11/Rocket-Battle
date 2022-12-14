@@ -2,15 +2,17 @@
 #include "SDL.h"
 #include "GameEntity.h"
 #include "..\VectorMath\Vector2d.h"
+#include "..\Utils\CustomEnums.h"
 
 class Bullet : public GameEntity
 {
 public:
-    Bullet(float sx, float sy, float angle, bool from); // Constructor
+    Bullet(float sx, float sy, float angle, bool from,CustomEnums::BulletT bt); // Constructor
     Bullet();
     ~Bullet();      // Destructor
     SDL_FRect rect; // holds bullet position and size
     bool from;
+    CustomEnums::BulletT btype;
 
 private:
     float speed = 50.0f; // how fast it changes position

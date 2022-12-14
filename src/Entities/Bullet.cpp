@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float sx, float sy, float ang, bool f)
+Bullet::Bullet(float sx, float sy, float ang, bool f, CustomEnums::BulletT bt)
 {
     // Instantiate bullet object
     // std::cout<<"Direction vector: "<<d.getx()<<","<<d.gety()<<std::endl;
@@ -13,6 +13,7 @@ Bullet::Bullet(float sx, float sy, float ang, bool f)
     angle = ang;
     deltax = speed * sin(angle * degtorad);
     deltay = speed * (-1 * cos(angle * degtorad));
+    btype = bt;
 }
 
 Bullet::Bullet()

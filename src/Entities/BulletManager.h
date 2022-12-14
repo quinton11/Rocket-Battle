@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include "..\Utils\CustomEnums.h"
+#include "..\GameManager\FileManager.h"
 
 struct BulletTypes
 {
@@ -44,7 +45,7 @@ public:
     void setEnemyList(std::list<Enemy *> &aE);
     bool checkCollision(Bullet *b);
     void render(SDL_Renderer *r, double dt, const int wW, const int wH); // Render bullets
-    void makeBullet(float cx, float cy, float angle, bool playerShot);   // make bullet takes in a rocket pointer and  instantiates a new bullet
+    void makeBullet(float cx, float cy, float angle, bool playerShot,CustomEnums::BulletT bt);   // make bullet takes in a rocket pointer and  instantiates a new bullet
     // into the bullets list
     void stallShooting(bool check);
     bool isStalled();

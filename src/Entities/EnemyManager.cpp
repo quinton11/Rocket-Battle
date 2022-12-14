@@ -162,7 +162,7 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rock
         {
             float cx = (*enemy)->rect.x + (*enemy)->rect.w / 2;
             float cy = (*enemy)->rect.y + (*enemy)->rect.h / 2;
-            bm->makeBullet(cx, cy, (*enemy)->angle, false);
+            bm->makeBullet(cx, cy, (*enemy)->angle, false,shoot.btype);
         }
         if ((*enemy)->lifeEmpty())
         {

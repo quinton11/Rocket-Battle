@@ -306,7 +306,7 @@ void MinScreen::matchPlayers()
     std::string nm;
     if (sizeps == 0)
     {
-        std::cout << "Zero players" << std::endl;
+        //std::cout << "Zero players" << std::endl;
     }
     if (sizeps != sizep)
     {
@@ -382,7 +382,7 @@ void MinScreen::matchPlayerButtons(SDL_Renderer *r)
 
     if (sizep == 0)
     {
-        std::cout << "Empty" << std::endl;
+        //std::cout << "Empty" << std::endl;
         // return;
     }
     else if (sizep != sizepb)

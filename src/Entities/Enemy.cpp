@@ -181,29 +181,20 @@ EnemyShoot Enemy::attack(Rocket rocket)
     // based on enemy type, we perform certain actions
     if (type == CustomEnums::EnemyT::Regular)
     {
-        // Do something if enemy is regular
-        // If distance between rocket and ship is within a range
-        // decrease interval by one
-        // if interval is less than 0,set interval to 2 x init value - 1
-        // return shoot with appropriate bullet
-        // return shoot
-        // std::cout << "Shoot" << std::endl;
-        // std::cout << distance << "," << attackRange << std::endl;
+        
         if (attackRange > distance)
         {
-            if ((interval % 50) == 0)
+            if(interval==0)
+            //if ((interval % 50) == 0)
             {
                 shoot.btype = CustomEnums::BulletT::RegularB;
                 shoot.shoot = true;
                 shoot.speed = 50.0f;
-                // std::cout << "Enemy shoot" << std::endl;
-                if (interval < 0)
-                {
-                    // std::cout << "Less than" << std::endl;
-                    interval = 100;
-                }
+                
+                interval=100;
             }
-            interval -= 1.0f;
+            
+            interval -= 1;
             return shoot;
         }
     }

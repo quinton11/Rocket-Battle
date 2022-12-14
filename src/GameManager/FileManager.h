@@ -24,11 +24,13 @@ private:
 public:
     static std::string currentPlayer;
     static int currentScore;
+    static int playerScore;
     static std::map<std::string, int> playerScores;
     static FileManager *getInstance();
     static void createInstance();
     static void release();
     static bool readHS();
     static bool writeHS();
+    static void updateHScore();
     static bool writeHSM(std::string player, int score);
 };

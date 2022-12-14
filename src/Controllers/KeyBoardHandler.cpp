@@ -90,23 +90,23 @@ void KeyboardHandler::keyboard_events(SDL_Event &event, bool &isDone, Rocket *ro
 		}
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_s))
 		{
-			// std::cout << "Shoot" << std::endl;
-			//  Calculate bullets starting position which will be the rockets top middle
-			//  the rockets top middle with respect to its angle of rotation
-			// std::cout << rocket->rect.x << "," << rocket->rect.y << std::endl;
+
 			float cx = ((rocket->rect.x) + (rocket->rect.w / 2));
 			float cy = ((rocket->rect.y) + (rocket->rect.h / 2));
 			float angle = rocket->getAngle();
 			// std::cout <<"Making bullet with centres: "<< cx << "," << cy << std::endl;
-			bm->makeBullet(cx, cy, angle, true);
+			bm->makeBullet(cx, cy, angle, true, CustomEnums::BulletT::RegularB);
 
-			// the bullets direction will be the direction the rocket is facing
-
-			// For player,when key is pressed,
-			// Call make bullet function which adds a new bullet with
-			// its starting position and direction
-			// then in game manager, every iteration,the bullets position
-			// are updated and rendered
+			/* If A or D is pressed, the type of bullet changes
+			Type of bullet implies different speed and life deductions */
+			/* 
+				Add different bullet powerups to screen and defence   objects
+				when user interacts, count increases and user can utilize them.
+				User can collect defence objects from begining. User starts with zero
+				medium and high bullet types. as user increases in high score based on enemies 
+				destroyed, different bullet cases appear and user can obtain them and power up
+				HighScore is recorded and saved when user dies in game
+			 */
 		}
 	}
 }

@@ -21,4 +21,4 @@ clean:
 	rm -f ./bin/run.exe
 
 play:
-	./bin/run
+	cd ./bin && ./run
