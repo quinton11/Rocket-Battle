@@ -66,7 +66,7 @@ void Rocket::takeHit(CustomEnums::Entity e)
 		// Bullet collision
 		if (health >= 0)
 		{
-			health -= 1;
+			health -= 0.05;
 		}
 	}
 	else if (e == CustomEnums::Entity::Rock)
@@ -92,6 +92,15 @@ void Rocket::calcHealthP()
 	}
 	healthPercent = (health / healthMax) * 1.0f;
 }
+
+bool Rocket::gameOver()
+{
+	if (health <= 0.0f)
+	{
+		return true;
+	}
+	return false;
+};
 
 void Rocket::renderHealthBar(SDL_Renderer *renderer)
 {
@@ -274,6 +283,7 @@ void Rocket::reset()
 {
 	rect.x = 300;
 	rect.y = 350;
+	health = 50.0f;
 }
 
 Rocket::Rocket()
@@ -290,3 +300,5 @@ Rocket::Rocket()
 Rocket::~Rocket()
 {
 }
+
+/* Game Over Screen if rocket health is empty */

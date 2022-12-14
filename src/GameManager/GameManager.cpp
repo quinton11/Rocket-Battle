@@ -71,6 +71,7 @@ void GameManager::Run()
 	// Enemy attributes
 	bm->setTextures(laser_text, sniper_text, kb_text);
 	bm->setEnemyList(em.enemyships);
+	bm->setRocket(rocket);
 
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), TextureManager::font);
 	PauseScreen pausescreen = PauseScreen();
@@ -118,7 +119,7 @@ void GameManager::Run()
 			// keyboard input
 			kb_handler->keyboard_input(state, &rocket, dt);
 			// std::cout<<"After keyboard input"<<std::endl;
-			pausescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
+			pausescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height, rocket.gameOver());
 
 			// single hit keys
 			//

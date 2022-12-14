@@ -13,10 +13,11 @@ public:
     ~PauseScreen();
 
     static bool active;
-    void render(SDL_Renderer *r, int sW, int sH);
+    void render(SDL_Renderer *r, int sW, int sH,bool gOver);
 
 private:
     std::list<Button> buttons;
+    bool gameOver=false;
     int mx,my;
     SDL_Event events;
     void renderButtons(SDL_Renderer *r, int sW, int sH);

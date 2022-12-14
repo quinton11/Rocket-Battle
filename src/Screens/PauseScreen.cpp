@@ -7,8 +7,13 @@ PauseScreen::PauseScreen(){
 };
 PauseScreen::~PauseScreen(){};
 
-void PauseScreen::render(SDL_Renderer *r, int sW, int sH)
+void PauseScreen::render(SDL_Renderer *r, int sW, int sH, bool gOver)
 {
+    gameOver = gOver;
+    if(gameOver)
+    {
+        active=true;
+    }
     while (active)
     {
         // std::cout << "Pause Event Checker" << std::endl;
@@ -33,8 +38,10 @@ void PauseScreen::renderButtons(SDL_Renderer *r, int sW, int sH)
         // create buttons
         float yoff = midCon.y + 20;
         Button btempr;
+        Button btempng;
         Button btempq;
         btempr = createButton(r, "Resume", sW, sH);
+        btempng = createButton(r, "New Game", sW, sH);
         btempq = createButton(r, "quit", sW, sH);
 
         // buttons position
@@ -43,10 +50,16 @@ void PauseScreen::renderButtons(SDL_Renderer *r, int sW, int sH)
 
         yoff += btempr.dest.h + 5;
 
+        btempng.dest.x = (midCon.x + midCon.w / 2) - (btempng.dest.w / 2);
+        btempng.dest.y = yoff;
+
+        yoff += btempng.dest.h + 5;
+
         btempq.dest.x = (midCon.x + midCon.w / 2) - (btempq.dest.w / 2);
         btempq.dest.y = yoff;
 
         buttons.push_back(btempr);
+        buttons.push_back(btempng);
         buttons.push_back(btempq);
     }
     // render container
@@ -57,15 +70,24 @@ void PauseScreen::renderButtons(SDL_Renderer *r, int sW, int sH)
     SDL_RenderFillRectF(r, &midCon);
     SDL_RenderCopyF(r, nullptr, nullptr, &midCon);
 
-    for (std::list<Button>::iterator it = buttons.begin(); it != buttons.end(); it++)
+    for (std::list<Button>::iterator it = buttons.begin(); it != buttons.end();)
     {
+        if (gameOver)
+        {
+            if (it->name == "Resume")
+            {
+                it++;
+            }
+        }
         if (it->isActive)
         {
             SDL_RenderCopyF(r, it->hovertext, nullptr, &(it->dest));
+            it++;
         }
         else
         {
             SDL_RenderCopyF(r, it->text, nullptr, &(it->dest));
+            it++;
         }
     }
     SDL_RenderPresent(r);
@@ -89,12 +111,18 @@ void PauseScreen::inButton(bool isClicked)
             it->isActive = true;
             if (isClicked)
             {
-                //std::cout << it->name << " was clicked" << std::endl;
+                // std::cout << it->name << " was clicked" << std::endl;
                 if (it->name == "Resume")
                 {
                     active = false;
                 }
                 if (it->name == "quit")
+                {
+                    active = false;
+                    HomeScreen::ismounted = false;
+                    HomeScreen::quit = true;
+                }
+                if (it->name == "New Game")
                 {
                     active = false;
                     HomeScreen::ismounted = true;
@@ -112,6 +140,7 @@ void PauseScreen::eventChecker()
         switch (events.type)
         {
         case SDL_QUIT:
+            active = false;
             HomeScreen::ismounted = false;
             HomeScreen::quit = true;
             break;

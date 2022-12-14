@@ -28,21 +28,23 @@ private:
 public:
     std::list<Bullet *> all;
     std::list<Enemy *> *allE;
+    Rocket *player;
 
 private:
-    void update(SDL_Renderer *r,double dt, const int wW, const int wH); // loop through bullet list and update each bullet position
-    BulletManager();                                                                     // constructor
-    ~BulletManager();                                                                    // Destructor
+    void update(SDL_Renderer *r, double dt, const int wW, const int wH); // loop through bullet list and update each bullet position
+    BulletManager();                                                     // constructor
+    ~BulletManager();                                                    // Destructor
 
 public:
     static BulletManager *getBMInstance(); // get instance of bullet manager
     static void release();                 // Instance Released at end of game
     void clearBullets();
+    void setRocket(Rocket &r);
     void setTextures(SDL_Texture *rtext, SDL_Texture *riftext, SDL_Texture *wvtext);
     void setEnemyList(std::list<Enemy *> &aE);
     bool checkCollision(Bullet *b);
     void render(SDL_Renderer *r, double dt, const int wW, const int wH); // Render bullets
-    void makeBullet(float cx, float cy, float angle, bool playerShot);                   // make bullet takes in a rocket pointer and  instantiates a new bullet
+    void makeBullet(float cx, float cy, float angle, bool playerShot);   // make bullet takes in a rocket pointer and  instantiates a new bullet
     // into the bullets list
     void stallShooting(bool check);
     bool isStalled();

@@ -30,7 +30,7 @@ private:
 
 	float deltax = 0;
 	float deltay = 0;
-	float health = 20.0f;
+	float health = 50.0f;
 	float healthMax = 20.0f;
 	float healthPercent = 1.0f;
 
@@ -52,6 +52,7 @@ public:
 	void aimPoint();
 	void calcHealthP();
 	bool collision(SDL_FRect other);
+	bool gameOver();
 
 	Vector2d getDirection();
 

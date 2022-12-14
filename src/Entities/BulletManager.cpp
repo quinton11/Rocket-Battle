@@ -63,8 +63,26 @@ bool BulletManager::checkCollision(Bullet *b)
             // std::cout << "Bullet Collided with enemy ship" << std::endl;
             //   call enemy takehit function
         }
+
+        // if(b->collision(rocke))
+        /* check if bullet collided with rocket, if yes,call bullet hit function */
+        if (!b->from && b->collision(player->rect))
+        {
+            // bullet shot by enemy
+            // std::cout << "Collided with rocket!" << std::endl;
+            CustomEnums::Entity a = CustomEnums::Entity::Bullet;
+            collided = true;
+            player->takeHit(a);
+        }
     }
     return collided;
+}
+
+void BulletManager::setRocket(Rocket &r)
+{
+    // std::cout << "In" << std::endl;
+    player = &r;
+    // std::cout << "After" << std::endl;
 }
 
 void BulletManager::makeBullet(float cx, float cy, float angle, bool playerShot)
