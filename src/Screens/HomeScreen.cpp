@@ -609,6 +609,7 @@ void HomeScreen::inButton(bool isClicked)
 						// std::cout << "In start" << std::endl;
 						ismounted = false;
 						activeMenu = &Start;
+						FileManager::playerScore = 0;
 						// std::cout << FileManager::currentPlayer << " " << FileManager::currentScore << std::endl;
 						break;
 					}

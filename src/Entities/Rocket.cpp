@@ -118,6 +118,7 @@ void Rocket::renderHealthBar(SDL_Renderer *renderer)
 	SDL_RenderFillRectF(renderer, &bgrect);
 	// GREEN FOREGROUND
 	SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+	//std::cout << "In rocket " << healthPercent << std::endl;
 	float fw = bgw * healthPercent;
 	float fx = bgx + (bgw - fw);
 	SDL_FRect fgrect = {fx, bgy, fw, bgh};

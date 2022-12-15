@@ -17,6 +17,8 @@ public:
 
 	bool thrust = false;
 	bool reverse = false;
+	float healthPercent = 1.0f;
+
 
 private:
 	float speed = 70.0f;
@@ -33,7 +35,6 @@ private:
 	float deltay = 0;
 	float health = 50.0f;
 	float healthMax = 20.0f;
-	float healthPercent = 1.0f;
 
 public:
 	Rocket();

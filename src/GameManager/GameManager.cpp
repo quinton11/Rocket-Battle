@@ -10,6 +10,7 @@
 #include "..\Entities\EnemyManager.h"
 #include "SDL_ttf.h"
 #include "..\Screens\PauseScreen.h"
+#include "..\Entities\StatDrawer.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -55,10 +56,14 @@ void GameManager::Run()
 	SDL_Texture *sniper_text = txman.loadTexture("textures/laser24.png", nGraphics->getrenderer());
 	SDL_Texture *kb_text = txman.loadTexture("textures/laser64.png", nGraphics->getrenderer());
 
-	// FONTS
-	// std::string fontPath = "textures/fonts/Starjedi.ttf";
-	// TTF_Font *font = TTF_OpenFont(fontPath.c_str(), 25);
-
+	// StatDrawer
+	SDL_Texture *sD = txman.loadTexture("textures/r3.png", nGraphics->getrenderer());
+	SDL_Texture *health = txman.loadTexture("textures/firstaid12.png", nGraphics->getrenderer());
+	SDL_Texture *lbolt = txman.loadTexture("textures/lbolt12.png", nGraphics->getrenderer());
+	SDL_Texture *sun = txman.loadTexture("textures/sun.png", nGraphics->getrenderer());
+	SDL_Texture *hbgt = txman.loadTexture("textures/healthbg.png", nGraphics->getrenderer());
+	SDL_Texture *hfgt = txman.loadTexture("textures/healthfg.png", nGraphics->getrenderer());
+	SDL_Texture *shield = txman.loadTexture("textures/shield.png", nGraphics->getrenderer());
 	/*
 	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
 	by ROcket depending on the level.
@@ -75,6 +80,9 @@ void GameManager::Run()
 
 	HomeScreen homescreen = HomeScreen(nGraphics->getrenderer(), TextureManager::font);
 	PauseScreen pausescreen = PauseScreen();
+	StatDrawer statDrawer = StatDrawer(hbgt, hfgt);
+	statDrawer.setRocket(rocket);
+	statDrawer.setTextures(health, lbolt, sun, shield);
 	// HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
 
 	KeyboardHandler *kb_handler = KeyboardHandler::instance();
@@ -145,6 +153,7 @@ void GameManager::Run()
 			// ship.render(nGraphics->getrenderer(), e_text, rocket, dt);
 			bm->render(nGraphics->getrenderer(), dt, nGraphics->window_width, nGraphics->window_height);
 			// std::cout<<"Bullet Manager render"<<std::endl;
+			statDrawer.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height, sD);
 
 			// Updating screen
 			SDL_RenderPresent(nGraphics->getrenderer());
