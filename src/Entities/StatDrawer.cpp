@@ -16,12 +16,13 @@ void StatDrawer::setRocket(Rocket &rkt)
     rocket = &rkt;
 }
 
-void StatDrawer::setTextures(SDL_Texture *h, SDL_Texture *lb, SDL_Texture *s, SDL_Texture *sh)
+void StatDrawer::setTextures(SDL_Texture *h, SDL_Texture *lb, SDL_Texture *s, SDL_Texture *sh, SDL_Texture *pr)
 {
     healtht = h;
     lbolt = lb;
     sun = s;
     shield = sh;
+    prect = pr;
 }
 
 void StatDrawer::render(SDL_Renderer *r, int sW, int sH, SDL_Texture *sD)
@@ -50,13 +51,33 @@ void StatDrawer::render(SDL_Renderer *r, int sW, int sH, SDL_Texture *sD)
     // if possible render text tutorial showing keys to use
 }
 
+SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &dest)
+{
+    SDL_Surface *surf;
+    SDL_Texture *txture;
+    if (text == "")
+    {
+        text = "Player";
+    }
+    surf = TTF_RenderText_Blended(TextureManager::font, text.c_str(), {255, 255, 255});
+    txture = SDL_CreateTextureFromSurface(r, surf);
+    dest.w = surf->w * 0.4;
+    dest.h = surf->h * 0.4;
+    SDL_FreeSurface(surf);
+
+    return txture;
+}
+std::string StatDrawer::toString(int amt)
+{
+    std::ostringstream s;
+    s << amt;
+    std::string text(s.str());
+    return text;
+}
+
 void StatDrawer::renderHealthBar(SDL_Renderer *r)
 {
-    // use percentage to render life
-    // White background
-    // SDL_SetRenderDrawColor(r, 255, 255, 255, SDL_ALPHA_OPAQUE);
-    // SDL_RenderFillRectF(r, &health);
-    // SDL_RenderCopyF(r, hbgtext, nullptr, &health);
+
     healthfg.w = health.w * rocket->healthPercent;
     // std::cout << "In drawer " << rocket->healthPercent << std::endl;
 
@@ -68,38 +89,95 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     SDL_SetRenderDrawColor(r, 19, 62, 81, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRectF(r, &healthfg);
 
+    /* Render three boxes */
+    SDL_FRect defence;
+    SDL_FRect banebullet;
+    SDL_FRect vetbullet;
+    float offset = 40;
+    defence.x = health.x + health.w + offset + 30;
+    defence.y = health.y - 20;
+    defence.w = 45;
+    defence.h = 40;
+
+    banebullet.x = defence.x + defence.w + offset;
+    banebullet.y = health.y - 20;
+    banebullet.w = 45;
+    banebullet.h = 40;
+
+    vetbullet.x = banebullet.x + banebullet.w + offset;
+    vetbullet.y = health.y - 20;
+    vetbullet.w = 45;
+    vetbullet.h = 40;
+
     // render health
     SDL_FRect healthrect;
     healthrect.w = 18;
     healthrect.h = 18;
     healthrect.x = health.x - healthrect.w / 2;
     healthrect.y = health.y - healthrect.h / 2;
+
+    SDL_FRect defencerect;
+    defencerect.w = 18;
+    defencerect.h = 18;
+    defencerect.x = defence.x - defencerect.w / 2;
+    defencerect.y = defence.y - defencerect.h / 2;
+
+    SDL_FRect bbrect;
+    bbrect.w = 18;
+    bbrect.h = 18;
+    bbrect.x = banebullet.x - bbrect.w / 2;
+    bbrect.y = banebullet.y - bbrect.h / 2;
+
+    SDL_FRect vbrect;
+    vbrect.w = 18;
+    vbrect.h = 18;
+    vbrect.x = vetbullet.x - vbrect.w / 2;
+    vbrect.y = vetbullet.y - vbrect.h / 2;
     // SDL_SetRenderDrawColor(r, 255, 255, 255, SDL_ALPHA_OPAQUE);
     // SDL_RenderFillRectF(r, &healthrect);
+
+    // if (!textSet)
+    //{
+    temph = getText(r, FileManager::currentPlayer, hname);
+    tempd = getText(r, "Defence", dname);
+    tempb = getText(r, "Bane", bname);
+    tempv = getText(r, "Vet", vname);
+    textSet = true;
+    //}
+    // SDL_FRect hname;
+    hname.x = health.x;
+    hname.y = health.y + health.h + 10;
+    // SDL_FRect dname;
+    dname.x = (defence.x + defence.w / 2) - dname.w / 2;
+    dname.y = defence.y + defence.h + 10;
+    // SDL_FRect bname;
+    bname.x = (banebullet.x + banebullet.w / 2) - bname.w / 2;
+    bname.y = banebullet.y + banebullet.h + 10;
+    // SDL_FRect vname;
+    vname.x = (vetbullet.x + vetbullet.w / 2) - vname.w / 2;
+    vname.y = vetbullet.y + vetbullet.h + 10;
+
+    // SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
+    SDL_RenderCopyF(r, prect, nullptr, &defence);
+    SDL_RenderCopyF(r, prect, nullptr, &banebullet);
+    SDL_RenderCopyF(r, prect, nullptr, &vetbullet);
+
     SDL_RenderCopyF(r, healtht, nullptr, &healthrect);
+    SDL_RenderCopyF(r, shield, nullptr, &defencerect);
+    SDL_RenderCopyF(r, lbolt, nullptr, &bbrect);
+    SDL_RenderCopyF(r, sun, nullptr, &vbrect);
 
-    /* Render three boxes */
-    SDL_FRect defence;
-    SDL_FRect banebullet;
-    SDL_FRect vetbullet;
-    float offset = 40;
-    defence.x = health.x + health.w + offset+30;
-    defence.y = health.y;
-    defence.w = 45;
-    defence.h = 40;
+    SDL_RenderCopyF(r, temph, nullptr, &hname);
+    SDL_RenderCopyF(r, tempd, nullptr, &dname);
+    SDL_RenderCopyF(r, tempb, nullptr, &bname);
+    SDL_RenderCopyF(r, tempv, nullptr, &vname);
 
-    banebullet.x = defence.x + defence.w + offset;
-    banebullet.y = health.y;
-    banebullet.w = 45;
-    banebullet.h = 40;
+    SDL_DestroyTexture(temph);
+    SDL_DestroyTexture(tempb);
+    SDL_DestroyTexture(tempd);
+    SDL_DestroyTexture(tempv);
 
-    vetbullet.x = banebullet.x + banebullet.w + offset;
-    vetbullet.y = health.y;
-    vetbullet.w = 45;
-    vetbullet.h = 40;
-
-    SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
-    SDL_RenderFillRectF(r, &defence);
+    /* SDL_RenderFillRectF(r, &defence);
     SDL_RenderFillRectF(r, &banebullet);
-    SDL_RenderFillRectF(r, &vetbullet);
+    SDL_RenderFillRectF(r, &vetbullet); */
 }

@@ -195,7 +195,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 			//(*activeMenu).buttons[0].
 			for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 			{
-				if ((*b)->name == "Start-Button")
+				if ((*b)->name == "Arcade")
 				{
 					// std::cout << "In start" a<< std::endl;
 
@@ -263,7 +263,7 @@ void HomeScreen::renderMenu(SDL_Renderer *renderer, int screenW, int screenH)
 		// Rendering
 		for (std::list<Button *>::iterator b = (*activeMenu).buttons.begin(); b != (*activeMenu).buttons.end();)
 		{
-			if ((*b)->name == "Start-Button")
+			if ((*b)->name == "Arcade")
 			{
 				if (!(*b)->isActive)
 				{
@@ -545,7 +545,7 @@ void HomeScreen::inButton(bool isClicked)
 				if (isClicked)
 				{
 					// std::cout << (*b)->name << " -- Clicked" << std::endl;
-					if ((*b)->name == "Start-Button")
+					if ((*b)->name == "Arcade")
 					{
 
 						activeMenu = &Play;

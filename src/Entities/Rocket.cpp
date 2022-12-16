@@ -114,15 +114,15 @@ void Rocket::renderHealthBar(SDL_Renderer *renderer)
 	float bgw = rect.w + 20;
 	float bgh = 2;
 	SDL_FRect bgrect = {bgx, bgy, bgw, bgh};
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderFillRectF(renderer, &bgrect);
+	//SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+	//SDL_RenderFillRectF(renderer, &bgrect);
 	// GREEN FOREGROUND
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+	//SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
 	//std::cout << "In rocket " << healthPercent << std::endl;
 	float fw = bgw * healthPercent;
 	float fx = bgx + (bgw - fw);
 	SDL_FRect fgrect = {fx, bgy, fw, bgh};
-	SDL_RenderFillRectF(renderer, &fgrect);
+	//SDL_RenderFillRectF(renderer, &fgrect);
 	// Setting color to white
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 }
@@ -134,8 +134,8 @@ void Rocket::render(SDL_Renderer *renderer, SDL_Texture *texture, double dt)
 
 	SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
-	SDL_RenderDrawPointF(renderer, rect.x, rect.y);
+	//SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y), (rect.x + rect.w / 2), (rect.y - 40.f));
+	//SDL_RenderDrawPointF(renderer, rect.x, rect.y);
 
 	renderHealthBar(renderer);
 }

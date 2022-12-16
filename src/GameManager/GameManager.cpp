@@ -60,10 +60,12 @@ void GameManager::Run()
 	SDL_Texture *sD = txman.loadTexture("textures/r3.png", nGraphics->getrenderer());
 	SDL_Texture *health = txman.loadTexture("textures/firstaid12.png", nGraphics->getrenderer());
 	SDL_Texture *lbolt = txman.loadTexture("textures/lbolt12.png", nGraphics->getrenderer());
-	SDL_Texture *sun = txman.loadTexture("textures/sun.png", nGraphics->getrenderer());
+	SDL_Texture *sun = txman.loadTexture("textures/sun12.png", nGraphics->getrenderer());
 	SDL_Texture *hbgt = txman.loadTexture("textures/healthbg.png", nGraphics->getrenderer());
 	SDL_Texture *hfgt = txman.loadTexture("textures/healthfg.png", nGraphics->getrenderer());
-	SDL_Texture *shield = txman.loadTexture("textures/shield.png", nGraphics->getrenderer());
+	SDL_Texture *shield = txman.loadTexture("textures/shield12.png", nGraphics->getrenderer());
+	SDL_Texture *prect = txman.loadTexture("textures/rect8.png", nGraphics->getrenderer());
+
 	/*
 	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
 	by ROcket depending on the level.
@@ -82,7 +84,7 @@ void GameManager::Run()
 	PauseScreen pausescreen = PauseScreen();
 	StatDrawer statDrawer = StatDrawer(hbgt, hfgt);
 	statDrawer.setRocket(rocket);
-	statDrawer.setTextures(health, lbolt, sun, shield);
+	statDrawer.setTextures(health, lbolt, sun, shield, prect);
 	// HomeScreen homescreen = HomeScreen(nGraphics->getrenderer());
 
 	KeyboardHandler *kb_handler = KeyboardHandler::instance();
@@ -123,6 +125,7 @@ void GameManager::Run()
 		else
 		{
 			// std::cout<<"Starting Loop"<<std::endl;
+			SDL_RenderClear(nGraphics->getrenderer());
 
 			// keyboard input
 			kb_handler->keyboard_input(state, &rocket, dt);
@@ -137,7 +140,6 @@ void GameManager::Run()
 			kb_handler->keyboard_events(nevents, isDone, &rocket, bm);
 			// std::cout<<"Keyboard events"<<std::endl;
 
-			SDL_RenderClear(nGraphics->getrenderer());
 			// std::cout<<"Clearing Renderer"<<std::endl;
 			//   Renderscreen
 			nGraphics->render(screen_texture);

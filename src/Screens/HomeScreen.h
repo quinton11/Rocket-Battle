@@ -24,7 +24,7 @@ public:
 	Menu mainM = {"Main-Menu", {start, settings, mquit}, true, false};
 
 	// Start menu
-	Button *startButton = new Button{"Start-Button", false, false};
+	Button *startButton = new Button{"Arcade", false, false};
 	Button *newPlayer = new Button{"New Player", false, false};
 	Button *selectPlayer = new Button{"Select Player", false, false};
 	Button *highScore = new Button{"High Score", false, false};
