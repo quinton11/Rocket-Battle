@@ -294,6 +294,10 @@ Rocket::Rocket()
 	rect.w = 60;
 	rect.h = 45;
 
+	dPacket=0;
+	vPacket=0;
+	bPacket=0;
+
 	rectvec.setvector(rect.x, rect.y);
 	rotvec.setvector(rect.x, rect.y);
 }

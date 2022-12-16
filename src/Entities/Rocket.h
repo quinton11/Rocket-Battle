@@ -19,10 +19,9 @@ public:
 	bool reverse = false;
 	float healthPercent = 1.0f;
 
-
 private:
 	float speed = 70.0f;
-	float score=0.0f;
+	float score = 0.0f;
 	float max_speed = 200.0f;
 	float speed_ph = 70.0f;
 	float tspeed = 0;
@@ -35,14 +34,20 @@ private:
 	float deltay = 0;
 	float health = 50.0f;
 	float healthMax = 20.0f;
+	/* float dPacket=0;
+	float bPacket=0;
+	float vPacket=0; */
 
 public:
 	Rocket();
 	~Rocket();
+	float dPacket = 0;
+	float bPacket = 0;
+	float vPacket = 0;
 	void takeHit(CustomEnums::Entity e);
 	void update(double dt);
 	void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
-    void renderHealthBar(SDL_Renderer *renderer);
+	void renderHealthBar(SDL_Renderer *renderer);
 	void reset();
 
 	void moveleft(double dt);

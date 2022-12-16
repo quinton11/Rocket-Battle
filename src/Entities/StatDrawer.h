@@ -57,6 +57,6 @@ public:
     void setTextures(SDL_Texture *h, SDL_Texture *lb, SDL_Texture *s, SDL_Texture *sh, SDL_Texture *pr);
 
 private:
-    SDL_Texture *getText(SDL_Renderer *r, std::string text, SDL_FRect &dest);
+    SDL_Texture *getText(SDL_Renderer *r, std::string text, SDL_FRect &dest,SDL_Color col);
     std::string toString(int amt);
 };

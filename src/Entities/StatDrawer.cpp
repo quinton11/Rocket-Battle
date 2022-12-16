@@ -51,7 +51,7 @@ void StatDrawer::render(SDL_Renderer *r, int sW, int sH, SDL_Texture *sD)
     // if possible render text tutorial showing keys to use
 }
 
-SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &dest)
+SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &dest,SDL_Color col)
 {
     SDL_Surface *surf;
     SDL_Texture *txture;
@@ -59,7 +59,7 @@ SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &d
     {
         text = "Player";
     }
-    surf = TTF_RenderText_Blended(TextureManager::font, text.c_str(), {255, 255, 255});
+    surf = TTF_RenderText_Blended(TextureManager::font, text.c_str(), col);
     txture = SDL_CreateTextureFromSurface(r, surf);
     dest.w = surf->w * 0.4;
     dest.h = surf->h * 0.4;
@@ -77,6 +77,7 @@ std::string StatDrawer::toString(int amt)
 
 void StatDrawer::renderHealthBar(SDL_Renderer *r)
 {
+    //std::cout << rocket->healthPercent << std::endl;
 
     healthfg.w = health.w * rocket->healthPercent;
     // std::cout << "In drawer " << rocket->healthPercent << std::endl;
@@ -138,11 +139,36 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
 
     // if (!textSet)
     //{
-    temph = getText(r, FileManager::currentPlayer, hname);
-    tempd = getText(r, "Defence", dname);
-    tempb = getText(r, "Bane", bname);
-    tempv = getText(r, "Vet", vname);
+    temph = getText(r, FileManager::currentPlayer, hname,{255,255,255});
+    tempd = getText(r, "Defence", dname,{255,255,255});
+    tempb = getText(r, "Bane", bname,{255,255,255});
+    tempv = getText(r, "Vet", vname,{255,255,255});
     textSet = true;
+
+    // For amount of packets collected by rocket
+    SDL_FRect tempdamrect;
+    SDL_FRect tempbamrect;
+    SDL_FRect tempvamrect;
+
+    tempdamrect.w = 10;
+    tempdamrect.h = 10;
+    tempdamrect.x = (defence.x + defence.w / 2) - tempdamrect.w / 2;
+    tempdamrect.y = (defence.y + defence.h / 2) - tempdamrect.h / 2;
+
+    tempbamrect.w = 10;
+    tempbamrect.h = 10;
+    tempbamrect.x = (banebullet.x + banebullet.w / 2) - tempbamrect.w / 2;
+    tempbamrect.y = (banebullet.y + banebullet.h / 2) - tempbamrect.h / 2;
+
+    tempvamrect.w = 10;
+    tempvamrect.h = 10;
+    tempvamrect.x = (vetbullet.x + vetbullet.w / 2) - tempvamrect.w / 2;
+    tempvamrect.y = (vetbullet.y + vetbullet.h / 2) - tempvamrect.h / 2;
+
+    SDL_Texture *tempdam = getText(r, "x" + toString(rocket->dPacket), tempdamrect,{0,0,0});
+    SDL_Texture *tempbam = getText(r, "x" + toString(rocket->bPacket), tempbamrect,{0,0,0});
+    SDL_Texture *tempvam = getText(r, "x" + toString(rocket->vPacket), tempvamrect,{0,0,0});
+
     //}
     // SDL_FRect hname;
     hname.x = health.x;
@@ -172,10 +198,18 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     SDL_RenderCopyF(r, tempb, nullptr, &bname);
     SDL_RenderCopyF(r, tempv, nullptr, &vname);
 
+    SDL_RenderCopyF(r, tempdam, nullptr, &tempdamrect);
+    SDL_RenderCopyF(r, tempbam, nullptr, &tempbamrect);
+    SDL_RenderCopyF(r, tempvam, nullptr, &tempvamrect);
+
     SDL_DestroyTexture(temph);
     SDL_DestroyTexture(tempb);
     SDL_DestroyTexture(tempd);
     SDL_DestroyTexture(tempv);
+
+    SDL_DestroyTexture(tempbam);
+    SDL_DestroyTexture(tempdam);
+    SDL_DestroyTexture(tempvam);
 
     /* SDL_RenderFillRectF(r, &defence);
     SDL_RenderFillRectF(r, &banebullet);
