@@ -162,10 +162,13 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rock
         {
             float cx = (*enemy)->rect.x + (*enemy)->rect.w / 2;
             float cy = (*enemy)->rect.y + (*enemy)->rect.h / 2;
-            bm->makeBullet(cx, cy, (*enemy)->angle, false,shoot.btype);
+            bm->makeBullet(cx, cy, (*enemy)->angle, false, shoot.btype);
         }
         if ((*enemy)->lifeEmpty())
         {
+            kills += 1;
+            std::cout <<"Kills: "<< kills << std::endl;
+            spawnPowerUp((*enemy)->rect.x, (*enemy)->rect.y);
             delete (*enemy);
             enemyships.erase(enemy++);
         }
@@ -186,4 +189,25 @@ bool EnemyManager::checkLife(Enemy &ship)
 {
     // Check if enemy ship life is empty
     // If yes, pop from list of enemy ships
+}
+
+void EnemyManager::setReference(PowerUpManager &pum)
+{
+    puManager = &pum;
+}
+
+void EnemyManager::resetKills()
+{
+    kills = 0;
+}
+
+void EnemyManager::spawnPowerUp(float x, float y)
+{
+    if (kills >= 10)
+    {
+        // add defence powerup
+        std::cout << "Spawning Defence " << x << ", " << y << std::endl;
+        puManager->addPowerUp(CustomEnums::Upgrades::Defence, x, y);
+        kills = 0;
+    }
 }

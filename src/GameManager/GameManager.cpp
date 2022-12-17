@@ -11,6 +11,7 @@
 #include "SDL_ttf.h"
 #include "..\Screens\PauseScreen.h"
 #include "..\Entities\StatDrawer.h"
+#include "..\Entities\PowerUpManager.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -74,6 +75,13 @@ void GameManager::Run()
 	*/
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager(e_text, sb_text, wv_text);
+	PowerUpManager pum = PowerUpManager();
+
+	// powerup
+	pum.setReference(rocket);
+	pum.addTextures(shield, lbolt, sun);
+
+	em.setReference(pum);
 
 	// Enemy attributes
 	bm->setTextures(laser_text, sniper_text, kb_text);
@@ -94,6 +102,7 @@ void GameManager::Run()
 
 	float dt; // deltaTime
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
+
 
 	while (!isDone)
 	{
@@ -135,7 +144,7 @@ void GameManager::Run()
 			// single hit keys
 			//
 			// SDL Poll Event logs every event in some sort of ds .
-
+			
 			// Check event queue to exeute events
 			kb_handler->keyboard_events(nevents, isDone, &rocket, bm);
 			// std::cout<<"Keyboard events"<<std::endl;
@@ -152,6 +161,8 @@ void GameManager::Run()
 			em.render(nGraphics->getrenderer(), bm, rocket, dt, nGraphics->window_width, nGraphics->window_height);
 			// std::cout<<"Enemy Manager render"<<std::endl;
 
+			// Power up renderer
+			pum.render(nGraphics->getrenderer());
 			// ship.render(nGraphics->getrenderer(), e_text, rocket, dt);
 			bm->render(nGraphics->getrenderer(), dt, nGraphics->window_width, nGraphics->window_height);
 			// std::cout<<"Bullet Manager render"<<std::endl;

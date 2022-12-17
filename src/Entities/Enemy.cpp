@@ -181,19 +181,19 @@ EnemyShoot Enemy::attack(Rocket rocket)
     // based on enemy type, we perform certain actions
     if (type == CustomEnums::EnemyT::Regular)
     {
-        
+
         if (attackRange > distance)
         {
-            if(interval==0)
-            //if ((interval % 50) == 0)
+            if (interval == 0)
+            // if ((interval % 50) == 0)
             {
                 shoot.btype = CustomEnums::BulletT::RegularB;
                 shoot.shoot = true;
                 shoot.speed = 50.0f;
-                
-                interval=100;
+
+                interval = 100;
             }
-            
+
             interval -= 1;
             return shoot;
         }
@@ -257,12 +257,8 @@ void Enemy::render(SDL_Renderer *renderer, SDL_Texture *texture, Rocket rocket, 
 
     SDL_RenderCopyExF(renderer, texture, nullptr, &rect, angle, NULL, SDL_FLIP_NONE);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    // SDL_RenderFillRectF(renderer, &rect);
     renderHealthBar(renderer);
-    // SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), rect.y, (rect.x + rect.w / 2), (rect.y - 50));
-
-    // Drawing enemy ship aim
-    // SDL_RenderDrawLineF(renderer, (rect.x + rect.w / 2), (rect.y + rect.h / 2), (normx), (normy));
-    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 }
 
 // angle and position should change based on rocket position

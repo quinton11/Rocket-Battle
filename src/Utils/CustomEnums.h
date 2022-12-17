@@ -32,4 +32,11 @@ public:
         Rifle,
         Kaboom
     };
+
+    enum Upgrades
+    {
+        Defence,
+        Bane,
+        Vet
+    };
 };

@@ -5,6 +5,7 @@
 #include <list>
 #include "Rocket.h"
 #include "..\Utils\CustomEnums.h"
+#include "PowerUpManager.h"
 
 struct EnemyTypes
 {
@@ -16,6 +17,7 @@ class EnemyManager
 private:
     int max = 5;
     int deviation = 5;
+    int kills=0;
     EnemyTypes reg = EnemyTypes();
     EnemyTypes sbane = EnemyTypes();
     EnemyTypes wv = EnemyTypes();
@@ -25,7 +27,9 @@ public:
     EnemyManager(SDL_Texture *r, SDL_Texture *s, SDL_Texture *w);
     ~EnemyManager();               // Destructor
     std::list<Enemy *> enemyships; // hold list of enemy ships
+
     int max_ships;
+    PowerUpManager* puManager;
     CustomEnums::Spawn positions[4] = {CustomEnums::Spawn::Top, CustomEnums::Spawn::Bottom, CustomEnums::Spawn::Right, CustomEnums::Spawn::Left};
 
 public:
@@ -35,10 +39,13 @@ public:
     void spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH);
     void InitSpawn(int ScreenW, int ScreenH);
     void clearEShips();
+    void resetKills();
+    void spawnPowerUp(float x,float y);
 
     // Set each enemy ship starting position randomly within the bounds of screen
     // returns an SDL_FRect with its start position calculated randomly
     void randomSpawn(int spawnAmt, int ScreenW, int ScreenH);
+    void setReference(PowerUpManager &pum);
 
     // Function to check list of enemy ships for their life.
     // If life is empty then delete ship
