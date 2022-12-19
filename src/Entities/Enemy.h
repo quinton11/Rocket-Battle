@@ -35,7 +35,7 @@ private:
     float aimmag = 30.0f;
     float attackRange = 200.0f;
     int interval=100;
-    float health = 5.0f;
+    float health = 10.0f;
     float healthMax = 5.0f;
     float healthPercent =1.0f;
 

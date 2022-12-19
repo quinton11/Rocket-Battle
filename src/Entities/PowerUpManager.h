@@ -16,11 +16,13 @@ public:
     SDL_Texture *defenceTxt;
     SDL_Texture *baneTxt;
     SDL_Texture *vetTxt;
+    SDL_Texture *healthTxt;
     Rocket *rocket;
 
     std::list<PowerUp *> powerUps;
     void addPowerUp(CustomEnums::Upgrades pUps, float x, float y);
+    bool checkCollision(PowerUp pUp);
     void render(SDL_Renderer *r);
     void setReference(Rocket &rkt);
-    void addTextures(SDL_Texture *dtxt, SDL_Texture *btxt, SDL_Texture *vtxt);
+    void addTextures(SDL_Texture *dtxt, SDL_Texture *btxt, SDL_Texture *vtxt, SDL_Texture *htxt);
 };

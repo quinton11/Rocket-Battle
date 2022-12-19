@@ -167,7 +167,7 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rock
         if ((*enemy)->lifeEmpty())
         {
             kills += 1;
-            std::cout <<"Kills: "<< kills << std::endl;
+            // std::cout << "Kills: " << kills << std::endl;
             spawnPowerUp((*enemy)->rect.x, (*enemy)->rect.y);
             delete (*enemy);
             enemyships.erase(enemy++);
@@ -203,11 +203,16 @@ void EnemyManager::resetKills()
 
 void EnemyManager::spawnPowerUp(float x, float y)
 {
-    if (kills >= 10)
+    if (kills >= 15)
     {
         // add defence powerup
-        std::cout << "Spawning Defence " << x << ", " << y << std::endl;
+        // std::cout << "Spawning Defence " << x << ", " << y << std::endl;
         puManager->addPowerUp(CustomEnums::Upgrades::Defence, x, y);
         kills = 0;
+    }
+    if (kills % 10 == 0)
+    {
+        // health
+        puManager->addPowerUp(CustomEnums::Upgrades::Health, x, y);
     }
 }

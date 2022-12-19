@@ -129,7 +129,7 @@ void Enemy::takeHit(CustomEnums::Entity e)
         // Bullet collision
         if (health >= 0)
         {
-            health -= 1;
+            health -= 0.5f;
         }
     }
     else if (e == CustomEnums::Entity::Rock)

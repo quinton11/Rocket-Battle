@@ -59,7 +59,9 @@ void GameManager::Run()
 
 	// StatDrawer
 	SDL_Texture *sD = txman.loadTexture("textures/r3.png", nGraphics->getrenderer());
-	SDL_Texture *health = txman.loadTexture("textures/firstaid12.png", nGraphics->getrenderer());
+	SDL_Texture *health = txman.loadTexture("textures/healthlogo.png", nGraphics->getrenderer());
+	SDL_Texture *heart = txman.loadTexture("textures/redheart.png", nGraphics->getrenderer());
+
 	SDL_Texture *lbolt = txman.loadTexture("textures/lbolt12.png", nGraphics->getrenderer());
 	SDL_Texture *sun = txman.loadTexture("textures/sun12.png", nGraphics->getrenderer());
 	SDL_Texture *hbgt = txman.loadTexture("textures/healthbg.png", nGraphics->getrenderer());
@@ -79,7 +81,7 @@ void GameManager::Run()
 
 	// powerup
 	pum.setReference(rocket);
-	pum.addTextures(shield, lbolt, sun);
+	pum.addTextures(shield, lbolt, sun, heart);
 
 	em.setReference(pum);
 
@@ -102,7 +104,6 @@ void GameManager::Run()
 
 	float dt; // deltaTime
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
-
 
 	while (!isDone)
 	{
@@ -144,7 +145,7 @@ void GameManager::Run()
 			// single hit keys
 			//
 			// SDL Poll Event logs every event in some sort of ds .
-			
+
 			// Check event queue to exeute events
 			kb_handler->keyboard_events(nevents, isDone, &rocket, bm);
 			// std::cout<<"Keyboard events"<<std::endl;

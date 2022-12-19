@@ -49,6 +49,7 @@ public:
 	void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
 	void renderHealthBar(SDL_Renderer *renderer);
 	void reset();
+	void addHealth(float add);
 
 	void moveleft(double dt);
 	void moveright(double dt);

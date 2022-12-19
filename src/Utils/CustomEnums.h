@@ -37,6 +37,7 @@ public:
     {
         Defence,
         Bane,
-        Vet
+        Vet,
+        Health
     };
 };
