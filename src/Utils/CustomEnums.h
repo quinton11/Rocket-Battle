@@ -40,4 +40,11 @@ public:
         Vet,
         Health
     };
+
+    enum Levels
+    {
+        RegLevel,
+        BaneLevel,
+        VetLevel
+    };
 };

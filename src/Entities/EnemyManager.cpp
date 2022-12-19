@@ -203,16 +203,35 @@ void EnemyManager::resetKills()
 
 void EnemyManager::spawnPowerUp(float x, float y)
 {
-    if (kills >= 15)
+    if (LevelManager::level == CustomEnums::Levels::RegLevel)
     {
-        // add defence powerup
-        // std::cout << "Spawning Defence " << x << ", " << y << std::endl;
-        puManager->addPowerUp(CustomEnums::Upgrades::Defence, x, y);
-        kills = 0;
+        if (kills >= 15)
+        {
+            // add defence powerup
+            // std::cout << "Spawning Defence " << x << ", " << y << std::endl;
+            puManager->addPowerUp(CustomEnums::Upgrades::Defence, x, y);
+            kills = 0;
+        }
+        else if (kills % 10 == 0)
+        {
+            // health
+            puManager->addPowerUp(CustomEnums::Upgrades::Health, x, y);
+        }
     }
-    if (kills % 10 == 0)
+    else if (LevelManager::level == CustomEnums::Levels::BaneLevel)
     {
-        // health
-        puManager->addPowerUp(CustomEnums::Upgrades::Health, x, y);
+        // check if user has killed a certain number of bane enemies
+        // if yes add power up to puManager
+        // when user collects it, he can shoot a specific amount of bane bullets
+        // based on his bane power up count
     }
+    else if (LevelManager::level == CustomEnums::Levels::VetLevel)
+    {
+        /* Check if user has killed a certain number of vet enemies
+        If yes add power up to pumanager
+        when user collects it,he can shoot a specific amount of vet bombs
+        based on his vet power up count */
+    }
+
+    /* Also fix enemy spawn frequency and entity based on level */
 }

@@ -4,6 +4,8 @@
 #include "PowerUp.h"
 #include "..\Utils\CustomEnums.h"
 #include "Rocket.h"
+#include "..\GameManager\LevelManager.h"
+
 
 // handle rendering of power ups
 // creating one at a position and deleting one when collided with rect

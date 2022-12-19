@@ -285,6 +285,8 @@ void Rocket::reset()
 	rect.x = 300;
 	rect.y = 350;
 	health = 50.0f;
+	kills = 0;
+	LevelManager::changelevel(kills);
 }
 
 Rocket::Rocket()

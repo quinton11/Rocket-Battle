@@ -26,7 +26,6 @@ void PowerUpManager::render(SDL_Renderer *r)
         else if ((*it)->type == CustomEnums::Upgrades::Health)
         {
             (*it)->render(r, healthTxt);
-           
         }
         // check if powerup is collided with rocket
         if (checkCollision(*(*it)))
@@ -75,6 +74,8 @@ bool PowerUpManager::checkCollision(PowerUp pUp)
 
 void PowerUpManager::addPowerUp(CustomEnums::Upgrades pUps, float x, float y)
 {
+    rocket->kills += 1;
+    LevelManager::changelevel(rocket->kills);
     PowerUp *pU = new PowerUp(pUps, x, y);
     powerUps.push_back(pU);
 }

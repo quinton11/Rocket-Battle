@@ -3,6 +3,7 @@
 #include "GameEntity.h"
 #include "..\VectorMath\Vector2d.h"
 #include "..\Utils\CustomEnums.h"
+#include "..\GameManager\LevelManager.h"
 
 class Rocket : public GameEntity
 {
@@ -44,6 +45,7 @@ public:
 	float dPacket = 0;
 	float bPacket = 0;
 	float vPacket = 0;
+	int kills = 0;
 	void takeHit(CustomEnums::Entity e);
 	void update(double dt);
 	void render(SDL_Renderer *renderer, SDL_Texture *texture, double dt);
