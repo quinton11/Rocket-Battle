@@ -50,6 +50,8 @@ public:
     SDL_Texture *tempd;
     SDL_Texture *tempb;
     SDL_Texture *tempv;
+    SDL_Texture *kills;
+    SDL_Texture *kscore;
 
     void render(SDL_Renderer *r, int sW, int sH, SDL_Texture *sD);
     void renderHealthBar(SDL_Renderer *r);
@@ -57,6 +59,6 @@ public:
     void setTextures(SDL_Texture *h, SDL_Texture *lb, SDL_Texture *s, SDL_Texture *sh, SDL_Texture *pr);
 
 private:
-    SDL_Texture *getText(SDL_Renderer *r, std::string text, SDL_FRect &dest,SDL_Color col);
+    SDL_Texture *getText(SDL_Renderer *r, std::string text, SDL_FRect &dest,SDL_Color col,float xp,float yp);
     std::string toString(int amt);
 };

@@ -74,7 +74,8 @@ bool PowerUpManager::checkCollision(PowerUp pUp)
 
 void PowerUpManager::addPowerUp(CustomEnums::Upgrades pUps, float x, float y)
 {
-    rocket->kills += 1;
+    //rocket->kills += 1;
+    //std::cout << rocket->kills << std::endl;
     LevelManager::changelevel(rocket->kills);
     PowerUp *pU = new PowerUp(pUps, x, y);
     powerUps.push_back(pU);

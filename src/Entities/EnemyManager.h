@@ -6,6 +6,7 @@
 #include "Rocket.h"
 #include "..\Utils\CustomEnums.h"
 #include "PowerUpManager.h"
+#include "..\GameManager\LevelManager.h"
 
 struct EnemyTypes
 {
@@ -35,7 +36,7 @@ public:
 public:
     // Loop through list of enemy ships to render each of them
     // Ships for now would have the same look
-    void render(SDL_Renderer *renderer,BulletManager *bm,Rocket rocket, double dt, int ScreenW, int ScreenH);
+    void render(SDL_Renderer *renderer,BulletManager *bm,Rocket &rocket, double dt, int ScreenW, int ScreenH);
     void spawn(CustomEnums::Spawn pos, int ScreenW, int ScreenH);
     void InitSpawn(int ScreenW, int ScreenH);
     void clearEShips();

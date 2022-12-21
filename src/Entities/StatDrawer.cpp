@@ -51,7 +51,7 @@ void StatDrawer::render(SDL_Renderer *r, int sW, int sH, SDL_Texture *sD)
     // if possible render text tutorial showing keys to use
 }
 
-SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &dest,SDL_Color col)
+SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &dest, SDL_Color col, float xp, float yp)
 {
     SDL_Surface *surf;
     SDL_Texture *txture;
@@ -61,8 +61,8 @@ SDL_Texture *StatDrawer::getText(SDL_Renderer *r, std::string text, SDL_FRect &d
     }
     surf = TTF_RenderText_Blended(TextureManager::font, text.c_str(), col);
     txture = SDL_CreateTextureFromSurface(r, surf);
-    dest.w = surf->w * 0.4;
-    dest.h = surf->h * 0.4;
+    dest.w = surf->w * xp;
+    dest.h = surf->h * yp;
     SDL_FreeSurface(surf);
 
     return txture;
@@ -77,7 +77,7 @@ std::string StatDrawer::toString(int amt)
 
 void StatDrawer::renderHealthBar(SDL_Renderer *r)
 {
-    //std::cout << rocket->healthPercent << std::endl;
+    // std::cout << rocket->healthPercent << std::endl;
 
     healthfg.w = health.w * rocket->healthPercent;
     // std::cout << "In drawer " << rocket->healthPercent << std::endl;
@@ -87,6 +87,7 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     healthfg.y = health.y;
     healthfg.h = health.h;
     // SDL_RenderCopyF(r, hfgtext, nullptr, &healthfg);
+    // 19, 62, 81,
     SDL_SetRenderDrawColor(r, 19, 62, 81, SDL_ALPHA_OPAQUE);
     SDL_RenderFillRectF(r, &healthfg);
 
@@ -94,6 +95,8 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     SDL_FRect defence;
     SDL_FRect banebullet;
     SDL_FRect vetbullet;
+    SDL_FRect killsRect;
+    SDL_FRect kScoreRect;
     float offset = 40;
     defence.x = health.x + health.w + offset + 30;
     defence.y = health.y - 20;
@@ -109,6 +112,9 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     vetbullet.y = health.y - 20;
     vetbullet.w = 45;
     vetbullet.h = 40;
+
+    killsRect.x = vetbullet.x + vetbullet.w + offset + 20;
+    killsRect.y = health.y - 10;
 
     // render health
     SDL_FRect healthrect;
@@ -139,11 +145,18 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
 
     // if (!textSet)
     //{
-    temph = getText(r, FileManager::currentPlayer, hname,{255,255,255});
-    tempd = getText(r, "Defence", dname,{255,255,255});
-    tempb = getText(r, "Bane", bname,{255,255,255});
-    tempv = getText(r, "Vet", vname,{255,255,255});
+    temph = getText(r, FileManager::currentPlayer, hname, {255, 255, 255}, 0.4, 0.4);
+    tempd = getText(r, "Defence", dname, {255, 255, 255}, 0.4, 0.4);
+    tempb = getText(r, "Bane", bname, {255, 255, 255}, 0.4, 0.4);
+    tempv = getText(r, "Vet", vname, {255, 255, 255}, 0.4, 0.4);
+    // std::cout << rocket->kills << std::endl;
+    kills = getText(r, "Kills -", killsRect, {255, 255, 255}, 0.4, 0.4);
+    kScoreRect.x = killsRect.x + killsRect.w + offset;
+    kScoreRect.y = killsRect.y - kScoreRect.h / 2;
+    std::string rkills = toString(rocket->kills);
+    kscore = getText(r, rkills, kScoreRect, {255, 255, 255}, 1, 1);
     textSet = true;
+    // killsRect.y = kScoreRect.y + kScoreRect.h / 2;
 
     // For amount of packets collected by rocket
     SDL_FRect tempdamrect;
@@ -165,9 +178,9 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     tempvamrect.x = (vetbullet.x + vetbullet.w / 2) - tempvamrect.w / 2;
     tempvamrect.y = (vetbullet.y + vetbullet.h / 2) - tempvamrect.h / 2;
 
-    SDL_Texture *tempdam = getText(r, "x" + toString(rocket->dPacket), tempdamrect,{0,0,0});
-    SDL_Texture *tempbam = getText(r, "x" + toString(rocket->bPacket), tempbamrect,{0,0,0});
-    SDL_Texture *tempvam = getText(r, "x" + toString(rocket->vPacket), tempvamrect,{0,0,0});
+    SDL_Texture *tempdam = getText(r, "x" + toString(rocket->dPacket), tempdamrect, {0, 0, 0}, 0.4, 0.4);
+    SDL_Texture *tempbam = getText(r, "x" + toString(rocket->bPacket), tempbamrect, {0, 0, 0}, 0.4, 0.4);
+    SDL_Texture *tempvam = getText(r, "x" + toString(rocket->vPacket), tempvamrect, {0, 0, 0}, 0.4, 0.4);
 
     //}
     // SDL_FRect hname;
@@ -187,6 +200,8 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     SDL_RenderCopyF(r, prect, nullptr, &defence);
     SDL_RenderCopyF(r, prect, nullptr, &banebullet);
     SDL_RenderCopyF(r, prect, nullptr, &vetbullet);
+    SDL_RenderCopyF(r, kills, nullptr, &killsRect);
+    SDL_RenderCopyF(r, kscore, nullptr, &kScoreRect);
 
     SDL_RenderCopyF(r, healtht, nullptr, &healthrect);
     SDL_RenderCopyF(r, shield, nullptr, &defencerect);
@@ -206,6 +221,8 @@ void StatDrawer::renderHealthBar(SDL_Renderer *r)
     SDL_DestroyTexture(tempb);
     SDL_DestroyTexture(tempd);
     SDL_DestroyTexture(tempv);
+    SDL_DestroyTexture(kills);
+    SDL_DestroyTexture(kscore);
 
     SDL_DestroyTexture(tempbam);
     SDL_DestroyTexture(tempdam);

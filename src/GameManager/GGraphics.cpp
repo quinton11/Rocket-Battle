@@ -7,7 +7,7 @@ bool GameGraphics::gInitialized = false;
 void GameGraphics::render(SDL_Texture *texture)
 {
 	// Render screen background
-	SDL_SetRenderDrawColor(renderer, 26, 26, 26, 255);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 }
 

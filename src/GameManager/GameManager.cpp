@@ -12,6 +12,7 @@
 #include "..\Screens\PauseScreen.h"
 #include "..\Entities\StatDrawer.h"
 #include "..\Entities\PowerUpManager.h"
+//#include "LevelManager.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -58,7 +59,7 @@ void GameManager::Run()
 	SDL_Texture *kb_text = txman.loadTexture("textures/laser64.png", nGraphics->getrenderer());
 
 	// StatDrawer
-	SDL_Texture *sD = txman.loadTexture("textures/r3.png", nGraphics->getrenderer());
+	SDL_Texture *sD = txman.loadTexture("textures/R3B.png", nGraphics->getrenderer());
 	SDL_Texture *health = txman.loadTexture("textures/healthlogo.png", nGraphics->getrenderer());
 	SDL_Texture *heart = txman.loadTexture("textures/redheart.png", nGraphics->getrenderer());
 
@@ -78,6 +79,7 @@ void GameManager::Run()
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager(e_text, sb_text, wv_text);
 	PowerUpManager pum = PowerUpManager();
+	//LevelManager lm = LevelManager();
 
 	// powerup
 	pum.setReference(rocket);

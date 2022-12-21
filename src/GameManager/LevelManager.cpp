@@ -1,6 +1,6 @@
 #include "LevelManager.h"
 
-CustomEnums::Levels level = CustomEnums::Levels::RegLevel;
+CustomEnums::Levels LevelManager::level = CustomEnums::Levels::RegLevel;
 
 LevelManager::LevelManager() {}
 LevelManager::~LevelManager() {}

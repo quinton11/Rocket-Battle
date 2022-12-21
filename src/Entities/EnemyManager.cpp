@@ -117,7 +117,7 @@ void EnemyManager::clearEShips()
     }
 }
 
-void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rocket, double dt, int ScreenW, int ScreenH)
+void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket &rocket, double dt, int ScreenW, int ScreenH)
 {
     // Check length of enemy ship list(number of enemy ships on screen)
     int length = enemyships.size();
@@ -167,6 +167,7 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket rock
         if ((*enemy)->lifeEmpty())
         {
             kills += 1;
+            rocket.kills += 1;
             // std::cout << "Kills: " << kills << std::endl;
             spawnPowerUp((*enemy)->rect.x, (*enemy)->rect.y);
             delete (*enemy);
@@ -205,6 +206,7 @@ void EnemyManager::spawnPowerUp(float x, float y)
 {
     if (LevelManager::level == CustomEnums::Levels::RegLevel)
     {
+
         if (kills >= 15)
         {
             // add defence powerup
@@ -229,7 +231,7 @@ void EnemyManager::spawnPowerUp(float x, float y)
     {
         /* Check if user has killed a certain number of vet enemies
         If yes add power up to pumanager
-        when user collects it,he can shoot a specific amount of vet bombs
+        when user collects it,he can shoot a specifc amount of vet bombs
         based on his vet power up count */
     }
 
