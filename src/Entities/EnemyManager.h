@@ -7,6 +7,7 @@
 #include "..\Utils\CustomEnums.h"
 #include "PowerUpManager.h"
 #include "..\GameManager\LevelManager.h"
+#include "..\GameManager\FileManager.h"
 
 struct EnemyTypes
 {

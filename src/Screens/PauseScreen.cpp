@@ -124,11 +124,13 @@ void PauseScreen::inButton(bool isClicked)
                     active = false;
                     HomeScreen::ismounted = false;
                     HomeScreen::quit = true;
+                    FileManager::updateHScore();
                 }
                 if (it->name == "New Game")
                 {
                     active = false;
                     HomeScreen::ismounted = true;
+                    FileManager::updateHScore();
                 }
             }
             return;

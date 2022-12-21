@@ -60,7 +60,7 @@ bool BulletManager::checkCollision(Bullet *b)
             CustomEnums::Entity a = CustomEnums::Entity::Bullet;
             collided = true;
             (*ene)->takeHit(a);
-            FileManager::playerScore += 1;
+            //FileManager::playerScore += 1;
             // std::cout << "Bullet Collided with enemy ship" << std::endl;
             //   call enemy takehit function
         }

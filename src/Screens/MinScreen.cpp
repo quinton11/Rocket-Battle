@@ -36,13 +36,13 @@ void MinScreen::eventChecker(bool &im, bool &quit)
             break;
 
         case SDL_TEXTINPUT:
-            std::cout << "Before text input" << std::endl;
+            //std::cout << "Before text input" << std::endl;
             if (name == "New Player")
             {
                 textInput += events.text.text;
                 
 
-                std::cout << "Text Input" << std::endl;
+                //std::cout << "Text Input" << std::endl;
                 // std::cout << textInput << std::endl;
             }
             break;

@@ -168,6 +168,8 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket &roc
         {
             kills += 1;
             rocket.kills += 1;
+            //std::cout << "Player Score: " << FileManager::playerScore << std::endl;
+            FileManager::playerScore += 3;
             // std::cout << "Kills: " << kills << std::endl;
             spawnPowerUp((*enemy)->rect.x, (*enemy)->rect.y);
             delete (*enemy);
