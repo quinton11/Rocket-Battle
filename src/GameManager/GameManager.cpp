@@ -12,7 +12,8 @@
 #include "..\Screens\PauseScreen.h"
 #include "..\Entities\StatDrawer.h"
 #include "..\Entities\PowerUpManager.h"
-//#include "LevelManager.h"
+#include "string"
+// #include "LevelManager.h"
 
 GameManager *GameManager::gmInstance = NULL;
 
@@ -39,6 +40,10 @@ GameManager::~GameManager()
 
 void GameManager::Run()
 {
+	/* std::string fp = "ab";
+	char tb = 'a';
+	fp += tb;
+	std::cout << fp << std::endl; */
 	// --- TEXTURES ---
 	// Rocket object
 	Rocket rocket = Rocket();
@@ -79,7 +84,7 @@ void GameManager::Run()
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager(e_text, sb_text, wv_text);
 	PowerUpManager pum = PowerUpManager();
-	//LevelManager lm = LevelManager();
+	// LevelManager lm = LevelManager();
 
 	// powerup
 	pum.setReference(rocket);

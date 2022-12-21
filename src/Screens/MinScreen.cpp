@@ -11,6 +11,7 @@ void MinScreen::setfont(TTF_Font *f) { font = f; }
 void MinScreen::eventChecker(bool &im, bool &quit)
 {
     int leng;
+    std::string test;
     while (SDL_PollEvent(&events))
     {
         switch (events.type)
@@ -35,10 +36,13 @@ void MinScreen::eventChecker(bool &im, bool &quit)
             break;
 
         case SDL_TEXTINPUT:
+            std::cout << "Before text input" << std::endl;
             if (name == "New Player")
             {
-                // add to text input
                 textInput += events.text.text;
+                
+
+                std::cout << "Text Input" << std::endl;
                 // std::cout << textInput << std::endl;
             }
             break;
@@ -52,7 +56,7 @@ void MinScreen::eventChecker(bool &im, bool &quit)
                     break;
 
                 case SDLK_BACKSPACE:
-                    //std::cout << "Back Space hit" << std::endl;
+                    // std::cout << "Back Space hit" << std::endl;
                     leng = textInput.size();
                     ////std::cout << leng << std::endl;
 
@@ -63,8 +67,8 @@ void MinScreen::eventChecker(bool &im, bool &quit)
                     break;
 
                 case SDLK_RETURN:
-                    //std::cout << "Enter hit" << std::endl;
-                    //std::cout << textInput << std::endl;
+                    // std::cout << "Enter hit" << std::endl;
+                    // std::cout << textInput << std::endl;
                     addPlayer();
                     movetoplay();
                     // textInput = "";
@@ -72,7 +76,20 @@ void MinScreen::eventChecker(bool &im, bool &quit)
                     break;
                 }
             }
-            break;
+            else if (name == "Select Player")
+            {
+                switch (events.key.keysym.sym)
+                {
+                case SDLK_DELETE:
+                    if (isSelected)
+                    {
+                        //std::cout << "Delete: " << FileManager::currentPlayer << " ?" << std::endl;
+                        removePlayer();
+                        //movetoplay();
+                    }
+                    break;
+                }
+            }
         }
     }
 }
@@ -91,6 +108,7 @@ void MinScreen::inButton(bool isClicked)
             // std::cout << "Back Button clicked" << std::endl;
             isMtd = false;
             isActive = false;
+            isSelected = false;
         }
         return;
     }
@@ -109,7 +127,7 @@ void MinScreen::inButton(bool isClicked)
                     setSelectedPButton(*it);
                     FileManager::currentPlayer = it->name;
                     FileManager::currentScore = FileManager::playerScores[it->name];
-                    //std::cout << it->name << " is selected" << std::endl;
+                    // std::cout << it->name << " is selected" << std::endl;
                 }
             }
         }
@@ -144,6 +162,17 @@ void MinScreen::render(SDL_Renderer *r, int sW, int sH)
         renderSettings(r, sW, sH);
     }
     SDL_RenderPresent(r);
+}
+
+void MinScreen::removePlayer()
+{
+    FileManager::currentScore = 0;
+    FileManager::playerScores.erase(FileManager::currentPlayer);
+    FileManager::currentPlayer = "";
+    Button temp;
+    setSelectedPButton(temp);
+    matchPlayers();
+    return;
 }
 
 void MinScreen::addPlayer()
@@ -216,6 +245,7 @@ void MinScreen::renderTitle(SDL_Renderer *r, int sW, int sH)
 
 void MinScreen::renderInputBox(SDL_Renderer *r, int sW, int sH)
 {
+    // std::cout << "In render Input Box" << std::endl;
     SDL_FRect container;
     SDL_Surface *temps;
     SDL_FRect tinp;
@@ -306,7 +336,7 @@ void MinScreen::matchPlayers()
     std::string nm;
     if (sizeps == 0)
     {
-        //std::cout << "Zero players" << std::endl;
+        // std::cout << "Zero players" << std::endl;
     }
     if (sizeps != sizep)
     {
@@ -382,8 +412,8 @@ void MinScreen::matchPlayerButtons(SDL_Renderer *r)
 
     if (sizep == 0)
     {
-        //std::cout << "Empty" << std::endl;
-        // return;
+        // std::cout << "Empty" << std::endl;
+        //  return;
     }
     else if (sizep != sizepb)
     {
@@ -446,6 +476,7 @@ void MinScreen::matchPlayerScoreDisplay(SDL_Renderer *r, int sW, int sH)
 void MinScreen::setSelectedPButton(Button &b)
 {
     selectedB = &b;
+    isSelected = true;
 }
 
 std::pair<SDL_Texture *, SDL_Texture *> MinScreen::buttonText(SDL_Renderer *r, std::string nm, SDL_FRect &dest)

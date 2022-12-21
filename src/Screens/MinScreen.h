@@ -1,10 +1,10 @@
 #pragma once
 #include "Screen.h"
-#include <string>
 #include "list"
 #include "SDL_ttf.h"
 #include "..\GameManager\FileManager.h"
 #include "..\Utils\Components.h"
+#include "string"
 
 struct MinScreen
 {
@@ -22,7 +22,10 @@ struct MinScreen
 	SDL_Texture *titleImage;
 	SDL_Texture *textImage;
 	std::string textInput;
+	
 	SDL_Event events;
+	bool isSelected = false;
+
 	SDL_FRect backButton;
 	SDL_FRect createPlayer;
 	bool backTextSet = false;
@@ -40,6 +43,7 @@ struct MinScreen
 	void matchPlayerButtons(SDL_Renderer *r);
 	void matchPlayerScoreDisplay(SDL_Renderer *r, int sW, int sH);
 	void addPlayer();
+	void removePlayer();
 	void movetoplay();
 	void renderPlayersScroll(SDL_Renderer *r, float offset, int sW, int sH);
 	std::pair<SDL_Texture *, SDL_Texture *> buttonText(SDL_Renderer *r, std::string nm, SDL_FRect &dest);
