@@ -12,3 +12,6 @@ My attempt at game dev. Mimics the 90s arcade rocket games.
 - For windows x86 platforms, run `cmake -G "MinGW Makefiles" ..`
 - After successfuly creating build system, run `make`
 - run Rocket_Battle.exe binary and enjoy
+
+#### **Preview**
+
