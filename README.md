@@ -14,4 +14,5 @@ My attempt at game dev. Mimics the 90s arcade rocket games.
 - run Rocket_Battle.exe binary and enjoy
 
 #### **Preview**
+![Rocket Battle 2022-12-22 11-52-16](https://user-images.githubusercontent.com/70300837/209135298-98c849e4-5efd-457a-af5b-77a1f3cf3c02.gif)
 
