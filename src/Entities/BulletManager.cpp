@@ -60,9 +60,9 @@ bool BulletManager::checkCollision(Bullet *b)
             CustomEnums::Entity a = CustomEnums::Entity::Bullet;
             collided = true;
             (*ene)->takeHit(a);
-            //FileManager::playerScore += 1;
-            // std::cout << "Bullet Collided with enemy ship" << std::endl;
-            //   call enemy takehit function
+            // FileManager::playerScore += 1;
+            //  std::cout << "Bullet Collided with enemy ship" << std::endl;
+            //    call enemy takehit function
         }
 
         // if(b->collision(rocke))
@@ -89,7 +89,7 @@ void BulletManager::setRocket(Rocket &r)
 void BulletManager::makeBullet(float cx, float cy, float angle, bool playerShot, CustomEnums::BulletT bt)
 {
     Bullet *bullet = new Bullet(cx, cy, angle, playerShot, bt);
-
+    Mix_PlayChannel(1, SoundManager::laser_shot, 0);
     all.push_back(bullet);
 };
 

@@ -8,6 +8,7 @@
 #include "PowerUpManager.h"
 #include "..\GameManager\LevelManager.h"
 #include "..\GameManager\FileManager.h"
+#include "..\GameManager\SoundManager.h"
 
 struct EnemyTypes
 {

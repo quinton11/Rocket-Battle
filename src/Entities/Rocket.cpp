@@ -97,6 +97,7 @@ bool Rocket::gameOver()
 {
 	if (health <= 0.0f)
 	{
+		Mix_PlayChannel(2, SoundManager::player_dead, 0);
 		return true;
 	}
 	return false;

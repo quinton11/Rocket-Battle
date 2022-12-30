@@ -4,6 +4,7 @@
 #include "..\VectorMath\Vector2d.h"
 #include "..\Utils\CustomEnums.h"
 #include "..\GameManager\LevelManager.h"
+#include "..\GameManager\SoundManager.h"
 
 class Rocket : public GameEntity
 {

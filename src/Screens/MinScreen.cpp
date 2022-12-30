@@ -36,14 +36,13 @@ void MinScreen::eventChecker(bool &im, bool &quit)
             break;
 
         case SDL_TEXTINPUT:
-            //std::cout << "Before text input" << std::endl;
+            // std::cout << "Before text input" << std::endl;
             if (name == "New Player")
             {
                 textInput += events.text.text;
-                
 
-                //std::cout << "Text Input" << std::endl;
-                // std::cout << textInput << std::endl;
+                // std::cout << "Text Input" << std::endl;
+                //  std::cout << textInput << std::endl;
             }
             break;
         case SDL_KEYDOWN:
@@ -83,9 +82,9 @@ void MinScreen::eventChecker(bool &im, bool &quit)
                 case SDLK_DELETE:
                     if (isSelected)
                     {
-                        //std::cout << "Delete: " << FileManager::currentPlayer << " ?" << std::endl;
+                        // std::cout << "Delete: " << FileManager::currentPlayer << " ?" << std::endl;
                         removePlayer();
-                        //movetoplay();
+                        // movetoplay();
                     }
                     break;
                 }
@@ -105,6 +104,8 @@ void MinScreen::inButton(bool isClicked)
         // hover
         if (isClicked)
         {
+            Mix_PlayChannel(3, SoundManager::menu_change, 0);
+
             // std::cout << "Back Button clicked" << std::endl;
             isMtd = false;
             isActive = false;
@@ -123,11 +124,12 @@ void MinScreen::inButton(bool isClicked)
                 it->isActive = true;
                 if (isClicked)
                 {
-                    // it->isSelected = true;
+                    Mix_PlayChannel(1, SoundManager::menu_change, 0);
+
                     setSelectedPButton(*it);
                     FileManager::currentPlayer = it->name;
                     FileManager::currentScore = FileManager::playerScores[it->name];
-                    // std::cout << it->name << " is selected" << std::endl;
+                    break;
                 }
             }
         }

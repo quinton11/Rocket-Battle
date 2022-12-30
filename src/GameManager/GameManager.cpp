@@ -12,6 +12,7 @@
 #include "..\Screens\PauseScreen.h"
 #include "..\Entities\StatDrawer.h"
 #include "..\Entities\PowerUpManager.h"
+#include "SoundManager.h"
 #include "string"
 // #include "LevelManager.h"
 
@@ -40,14 +41,12 @@ GameManager::~GameManager()
 
 void GameManager::Run()
 {
-	/* std::string fp = "ab";
-	char tb = 'a';
-	fp += tb;
-	std::cout << fp << std::endl; */
 	// --- TEXTURES ---
 	// Rocket object
 	Rocket rocket = Rocket();
 	std::string fontPath = "textures/fonts/Starjedi.ttf";
+	std::string soundPath = "textures/audio";
+	SoundManager sm = SoundManager(soundPath);
 
 	TextureManager txman = TextureManager(fontPath);
 	SDL_Texture *texture = txman.loadTexture("textures/rockblue.png", nGraphics->getrenderer());
@@ -75,12 +74,6 @@ void GameManager::Run()
 	SDL_Texture *shield = txman.loadTexture("textures/shield12.png", nGraphics->getrenderer());
 	SDL_Texture *prect = txman.loadTexture("textures/rect8.png", nGraphics->getrenderer());
 
-	/*
-	Spawn enemy ships to attack player rocket. Enemy ships number should be able to be updated
-	by ROcket depending on the level.
-
-	Add bullet shooting mechanism for rocket when 'b' is pressed. Bullets should be small and indefinite for now
-	*/
 	BulletManager *bm = BulletManager::getBMInstance();
 	EnemyManager em = EnemyManager(e_text, sb_text, wv_text);
 	PowerUpManager pum = PowerUpManager();
@@ -111,6 +104,7 @@ void GameManager::Run()
 
 	float dt; // deltaTime
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
+	Mix_PlayMusic(SoundManager::music, -1);
 
 	while (!isDone)
 	{
@@ -127,9 +121,7 @@ void GameManager::Run()
 			bm->clearBullets();
 			em.clearEShips();
 			homescreen.render(nGraphics->getrenderer(), nGraphics->window_width, nGraphics->window_height);
-			// std::cout << "After home screen render" << std::endl;
 		}
-		// else if(homescreen.getisquit()){}
 
 		else if (!homescreen.getismounted() && homescreen.getisquit())
 		{
@@ -195,8 +187,3 @@ GameManager::GameManager()
 	if (!GameGraphics::getInitialized())
 		isDone = true;
 }
-
-/*
-	TODO:: Adjust menu buttons positioning Done
-	Add player life deduction and game over
- */

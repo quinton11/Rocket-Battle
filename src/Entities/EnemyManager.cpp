@@ -166,9 +166,10 @@ void EnemyManager::render(SDL_Renderer *renderer, BulletManager *bm, Rocket &roc
         }
         if ((*enemy)->lifeEmpty())
         {
+            Mix_PlayChannel(2, SoundManager::player_dead, 0);
             kills += 1;
             rocket.kills += 1;
-            //std::cout << "Player Score: " << FileManager::playerScore << std::endl;
+            // std::cout << "Player Score: " << FileManager::playerScore << std::endl;
             FileManager::playerScore += 3;
             // std::cout << "Kills: " << kills << std::endl;
             spawnPowerUp((*enemy)->rect.x, (*enemy)->rect.y);

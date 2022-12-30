@@ -3,6 +3,7 @@
 #include "list"
 #include "SDL_ttf.h"
 #include "..\GameManager\FileManager.h"
+#include "..\GameManager\SoundManager.h"
 #include "..\Utils\Components.h"
 #include "string"
 
@@ -22,7 +23,7 @@ struct MinScreen
 	SDL_Texture *titleImage;
 	SDL_Texture *textImage;
 	std::string textInput;
-	
+
 	SDL_Event events;
 	bool isSelected = false;
 
@@ -47,11 +48,11 @@ struct MinScreen
 	void movetoplay();
 	void renderPlayersScroll(SDL_Renderer *r, float offset, int sW, int sH);
 	std::pair<SDL_Texture *, SDL_Texture *> buttonText(SDL_Renderer *r, std::string nm, SDL_FRect &dest);
-	std::pair<SDL_Texture *, SDL_Texture *> displayText(SDL_Renderer *r, std::string nm,std::string score, SDL_FRect &dest);
+	std::pair<SDL_Texture *, SDL_Texture *> displayText(SDL_Renderer *r, std::string nm, std::string score, SDL_FRect &dest);
 
 private:
 	void renderNewPlayer(SDL_Renderer *r, int sW, int sH);
-    void renderBackButton(SDL_Renderer *r);
+	void renderBackButton(SDL_Renderer *r);
 	void renderSelectPlayer(SDL_Renderer *r, int sW, int sH);
 	void renderHS(SDL_Renderer *r, int sW, int sH);
 	void renderSettings(SDL_Renderer *r, int sW, int sH);

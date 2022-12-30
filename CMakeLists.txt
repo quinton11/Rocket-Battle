@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME} src/main.cpp
                 src/GameManager/GameManager.cpp
                 src/GameManager/GGraphics.cpp
                 src/GameManager/TextureManager.cpp
+                src/GameManager/SoundManager.cpp
                 src/GameManager/FileManager.cpp
                 src/GameManager/LevelManager.cpp
                 src/Entities/GameEntity.cpp
@@ -43,6 +44,7 @@ if(WIN32)
     message("Windows")
     target_link_libraries(${PROJECT_NAME} PUBLIC
                         ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/SDL2/lib/windows/x64/SDL2_ttf.lib
+                        ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/SDL2/lib/windows/x64/SDL2_mixer.lib
                         ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/SDL2/lib/windows/x64/SDL2_image.lib
                         ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/SDL2/lib/windows/x64/SDL2.lib)
 

@@ -2,11 +2,11 @@
 #include "Screen.h"
 #include "..\GameManager\TextureManager.h"
 #include "..\GameManager\FileManager.h"
+#include "..\GameManager\SoundManager.h"
 #include <string>
 #include "list"
 #include "SDL_ttf.h"
 #include "MinScreen.h"
-
 
 class HomeScreen : public Screen
 {
@@ -15,7 +15,6 @@ public:
 	TextureManager textm;
 	static bool quit;
 	static bool ismounted;
-
 
 	// Main menu
 	Button *start = new Button{"start", false, false};
@@ -58,12 +57,10 @@ public:
 	void setismounted(bool);
 	void release();
 	bool mouse_in_play(int &x, int &y, SDL_FRect &rect);
-	std::pair<SDL_Texture*,SDL_Texture*> getTexturePair(SDL_Renderer* r,std::string nm);
-    std::pair<SDL_Texture *, SDL_Texture *> getTextPairR(SDL_Renderer *r, std::string nm, SDL_FRect &dest);
-
+	std::pair<SDL_Texture *, SDL_Texture *> getTexturePair(SDL_Renderer *r, std::string nm);
+	std::pair<SDL_Texture *, SDL_Texture *> getTextPairR(SDL_Renderer *r, std::string nm, SDL_FRect &dest);
 
 	HomeScreen(SDL_Renderer *renderer, TTF_Font *font);
-	
 
 	HomeScreen();
 	~HomeScreen();

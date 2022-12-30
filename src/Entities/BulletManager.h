@@ -8,6 +8,8 @@
 #include <memory>
 #include "..\Utils\CustomEnums.h"
 #include "..\GameManager\FileManager.h"
+#include "..\GameManager\SoundManager.h"
+
 
 struct BulletTypes
 {

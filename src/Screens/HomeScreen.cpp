@@ -502,9 +502,12 @@ void HomeScreen::inButton(bool isClicked)
 				if (isClicked)
 				{
 					// std::cout << (*b)->name << " -- Clicked" << std::endl;
+					Mix_PlayChannel(2, SoundManager::menu_change, 0);
+
 					if ((*b)->name == "start")
 					{
 						// std::cout << "In start" << std::endl
+						// SoundManager::menu_change
 						activeMenu = &Start;
 						// std::cout << "To start screen" << std::endl;
 						break;
@@ -545,6 +548,8 @@ void HomeScreen::inButton(bool isClicked)
 				if (isClicked)
 				{
 					// std::cout << (*b)->name << " -- Clicked" << std::endl;
+					Mix_PlayChannel(2, SoundManager::menu_change, 0);
+
 					if ((*b)->name == "Arcade")
 					{
 
@@ -604,9 +609,16 @@ void HomeScreen::inButton(bool isClicked)
 				if (isClicked)
 				{
 					// std::cout << (*b)->name << " -- Clicked" << std::endl;
+					Mix_PlayChannel(2, SoundManager::menu_change, 0);
+
 					if ((*b)->name == "Play")
 					{
 						// std::cout << "In start" << std::endl;
+						if (Mix_PlayingMusic())
+						{
+							Mix_FadeOutMusic(2000);
+							//Mix_PauseMusic();
+						}
 						ismounted = false;
 						activeMenu = &Start;
 						FileManager::playerScore = 0;
